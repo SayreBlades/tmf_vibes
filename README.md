@@ -1,10 +1,5 @@
 # tmf_vibes
 
-## Resources
-
-- [Excalidraw](https://excalidraw.com/#room=9bb5a9a19e10793c9ce9,lx0sDFlFuupSXP51WrAORQ)
-- [AI Studio](https://aistudio.google.com/app/prompts?state=%7B%22ids%22:%5B%221CSEMj0J1W_OeHfAUOpz8CSvmmFxETTNV%22%5D,%22action%22:%22open%22,%22userId%22:%22102676693169168925003%22,%22resourceKeys%22:%7B%7D%7D&usp=sharing)
-
 ## Development Setup
 
 1.  **Clone the repository:**
@@ -32,24 +27,13 @@
     ```
 
 4.  **Run tools:**
-    Ensure your virtual environment is activated (`source .venv/bin/activate`) before running these commands, or prefix them with `uv run`.
+    Ensure your virtual environment is activated (`source .venv/bin/activate`). This project uses a `Makefile` to simplify common development tasks.
 
-    *   **Tests:**
+    *   **Run all checks (format, lint, typecheck, test):**
         ```bash
-        uv run pytest
+        make check
         ```
-    *   **Linting & Formatting Check:**
-        ```bash
-        uv run ruff check .
-        ```
-    *   **Formatting Apply:**
-        ```bash
-        uv run ruff format .
-        ```
-    *   **Type Checking:**
-        ```bash
-        uv run mypy src
-        ```
+        *(You can also run the underlying tools directly, e.g., `uv run pytest`)*
 
 ## Relevant TMF API Specifications for End-to-End Product Ordering Playbook
 
@@ -93,3 +77,8 @@ Here is a list of TMF API specifications relevant to the process of discovering,
 
 13. **TMF641 Service Order Management:**
     * Often represents the *downstream* fulfillment process triggered by a TMF622 Product Order, handling the technical provisioning and activation of underlying services. Understanding this relationship helps define the complete end-to-end flow, although direct interaction might be internal to the provider's systems.
+
+## Resources
+
+- [Excalidraw](https://excalidraw.com/#room=9bb5a9a19e10793c9ce9,lx0sDFlFuupSXP51WrAORQ)
+- [AI Studio](https://aistudio.google.com/app/prompts?state=%7B%22ids%22:%5B%221CSEMj0J1W_OeHfAUOpz8CSvmmFxETTNV%22%5D,%22action%22:%22open%22,%22userId%22:%22102676693169168925003%22,%22resourceKeys%22:%7B%7D%7D&usp=sharing)
