@@ -1,25 +1,19 @@
-```markdown
-# TM Forum Specification
+# TM Forum Specification: Party Management (TMF632)
 
-**Party Management**
-
-**TMF632**
-
-|                       |                                   |
-| :-------------------- | :-------------------------------- |
-| **Maturity Level:**   | General availability              |
-| **Release Status:** | Production                        |
-| **Version 5.0.0**     |                                   |
-| **Team Approved Date:** | 29-09-2023                        |
-| **Approval Status:**  | Team Approved                     |
-| **IPR Mode:**         | RAND                              |
+|                           |                                 |
+| :------------------------ | :------------------------------ |
+| **Maturity Level:**       | General availability            |
+| **Release Status:**       | Production                      |
+| **Version 5.0.0**         |                                 |
+| **Team Approved Date:**   | 29-09-2023                      |
+| **Approval Status:**      | Team Approved                   |
+| **IPR Mode:**             | RAND                            |
 
 © TM Forum 2023. All Rights Reserved.
-tmforum.org
 
 ---
 
-# NOTICE
+## NOTICE
 
 Copyright © TM Forum 2023. All Rights Reserved.
 
@@ -38,49 +32,49 @@ TM Forum Web Page: www.tmforum.org
 
 ---
 
-# Table of Contents
+## Table of Contents
 
-*   [NOTICE](#notice) . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . i
-*   [Introduction](#introduction) . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 1
-*   [Sample Use Cases](#sample-use-cases) . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 3
-*   [Support of polymorphism and extension patterns.](#support-of-polymorphism-and-extension-patterns) . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 5
-*   [RESOURCE MODEL](#resource-model) . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 6
-    *   [Managed Entity and Task Resource Models.](#managed-entity-and-task-resource-models) . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 6
-        *   [Individual resource](#individual-resource) . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 6
-        *   [Organization resource.](#organization-resource) . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 27
-    *   [Notification Resource Models](#notification-resource-models) . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 47
-        *   [Individual Delete Event](#individual-delete-event) . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 48
-        *   [Individual Create Event](#individual-create-event) . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 49
-        *   [Individual State Change Event](#individual-state-change-event) . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 53
-        *   [Individual Attribute Value Change Event](#individual-attribute-value-change-event) . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 54
-        *   [Organization Delete Event](#organization-delete-event) . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 54
-        *   [Organization Attribute Value Change Event](#organization-attribute-value-change-event) . . . . . . . . . . . . . . . . . . . . 55
-        *   [Organization State Change Event.](#organization-state-change-event) . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 56
-        *   [Organization Create Event](#organization-create-event) . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 56
-*   [API OPERATIONS](#api-operations) . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 61
-    *   [Operations on Individual](#operations-on-individual) . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 61
-        *   [Retrieves a Individual by ID.](#retrieves-a-individual-by-id) . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 61
-        *   [List or find Individual objects](#list-or-find-individual-objects) . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 65
-        *   [Creates a Individual.](#creates-a-individual) . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 66
-        *   [Updates partially a Individual](#updates-partially-a-individual) . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 67
-        *   [Deletes a Individual.](#deletes-a-individual) . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 83
-    *   [Operations on Organization](#operations-on-organization) . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 84
-        *   [List or find Organization objects](#list-or-find-organization-objects) . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 84
-        *   [Retrieves a Organization by ID](#retrieves-a-organization-by-id) . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 84
-        *   [Creates a Organization](#creates-a-organization) . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 88
-        *   [Updates partially a Organization](#updates-partially-a-organization) . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 89
-        *   [Deletes a Organization](#deletes-a-organization) . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 104
-*   [API NOTIFICATIONS](#api-notifications) . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 105
-    *   [Register listener](#register-listener) . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 105
-    *   [Unregister listener](#unregister-listener) . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 106
-    *   [Publish Event to listener](#publish-event-to-listener) . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 106
-*   [Acknowledgements](#acknowledgements) . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 108
-*   [VERSION History](#version-history) . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 108
-*   [Release History.](#release-history) . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 108
+*   NOTICE . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . i
+*   Introduction . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 1
+*   Sample Use Cases . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 3
+*   Support of polymorphism and extension patterns. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 5
+*   RESOURCE MODEL . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 6
+    *   Managed Entity and Task Resource Models. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 6
+        *   Individual resource . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 6
+        *   Organization resource. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 27
+    *   Notification Resource Models . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 47
+        *   Individual Delete Event . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 48
+        *   Individual Create Event . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 49
+        *   Individual State Change Event . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 53
+        *   Individual Attribute Value Change Event . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 54
+        *   Organization Delete Event . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 54
+        *   Organization Attribute Value Change Event . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 55
+        *   Organization State Change Event. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 56
+        *   Organization Create Event . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 56
+*   API OPERATIONS . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 61
+    *   Operations on Individual . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 61
+        *   Retrieves a Individual by ID. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 61
+        *   List or find Individual objects . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 65
+        *   Creates a Individual. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 66
+        *   Updates partially a Individual . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 67
+        *   Deletes a Individual. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 83
+    *   Operations on Organization . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 84
+        *   List or find Organization objects . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 84
+        *   Retrieves a Organization by ID . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 84
+        *   Creates a Organization . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 88
+        *   Updates partially a Organization . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 89
+        *   Deletes a Organization . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 104
+*   API NOTIFICATIONS . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 105
+    *   Register listener . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 105
+    *   Unregister listener . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 106
+    *   Publish Event to listener . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 106
+*   Acknowledgements . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 108
+*   VERSION History . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 108
+*   Release History. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 108
 
 ---
 
-# Introduction
+## Introduction
 
 The following document is the specification of the REST API for Party Management. It includes the model definition as well as all available operations. Possible actions are creating, updating and retrieving parties (individuals or organizations), including filtering.
 
@@ -94,15 +88,15 @@ In summary, these TM Forum Open APIs are related to managing parties and their a
 
 The following diagram illustrates the involved entities in a global party domain overview, referencing related TM Forum Open APIs and resource model entities:
 
-[Figure: Diagram illustrating the global party domain overview. It shows the relationships between various TM Forum APIs (TMF632 Party Management, TMF672 User Roles and Permissions, TMF669 Party Role, TMF629 Customer, TMF720 Digital Identity, TMF691 Federated Identity) and key resource model entities like Party (Individual, Organization), Party Role, Permission, Characteristic, User Role, Digital Identity, Credential, etc. Lines indicate dependencies and relationships like 'identifies', 'grants', 'has', 'is identified by'.]
+[Figure: UML-like diagram illustrating the global party domain. It shows the TMF632 Party API (Party, Individual, Organization) interacting with TMF672 User Roles and Permissions (Permission, UserRole, RoleSpecification, Characteristic) and TMF669 Party Role (PartyRole, PartyRoleSpecification). It also connects Party to TMF720 Digital Identity (DigitalIdentity, credential) and TMF691 Federated Identity (Userinfo, ClaimsSpecification). Key relationships shown include Party having contactMedium, creditRating, externalReference, relatedParty, partyCharacteristic, and taxExemptionCertificate. Party is an abstract class specialized by Individual and Organization. PartyRole links to Party. UserRole links to PartyRole. Permission is linked to UserRole and RoleSpecification. DigitalIdentity links to PartyRole.]
 
 The Party API manages the following data resources:
 
-**Individual**
+### Individual
 
 *   Individual represents a single human being (a man, woman or child). The individual can be a customer, an employee or any other person that the organization needs to store information about.
 
-**Organization**
+### Organization
 
 *   Organization represents a group of people identified by shared interests or purpose. Examples include business, department and enterprise. Because of the complex nature of many businesses, both organizations and organization units are represented by the same data.
 
@@ -117,23 +111,21 @@ The party API performs the following operations on individuals and organizations
 
 ---
 
-# Sample Use Cases
+## Sample Use Cases
 
 To illustrate JSON representation of resources concerned by this API, we use the two use cases detailed below.
 
-**Use case 1 (UC1): An individual employee of an organization**
+### Use case 1 (UC1): An individual employee of an organization
 
-[Image: Illustration depicting Jane Lamborgizzia, an individual employee. Various icons represent her attributes: American flag (nationality), graduation cap (skills), speech bubbles (languages), ring (marital status), calendar (birth/marriage dates), location pin (@ - contact medium), passport/certificate icons (identification/exemption), credit score icon, hobby icons (music note/film reel), family icon (children number). Text bubbles provide details like "American woman born in the United States", "employee of the Coffee do Brazil Fair Trade company", "skills in project management and marketing", "speaks French and Spanish", "married on 06/15/2015", "preferred contact medium is email", "partial tax exemption", "good credit score", "hobby: dance modern jazz", "1 child".]
+[Image: Illustration depicting Jane Lamborgizzia, an individual. Various icons surround her representing her attributes: skills (project management, marketing), languages (French, Spanish), nationality (US flag), personal info (marital status, birth date), contact info (@ symbol, address), professional info (employee of Coffee do Brazil), financial info (credit score, tax exemption certificate), and other characteristics (hobbies).]
 
-*   + *
+### Use case 2 (UC2): a company (organization) with two departments (organizations)
 
-**Use case 2 (UC2): a company (organization) with two departments (organizations)**
-
-[Image: Illustration depicting Coffee Do Brazil, an organization. Icons represent its attributes: Certificate icon (tax exemption), credit score icon, person icon (Director Carlos Mafalda), location pin (@ - contact medium), employee count icon (125), factory icon (food wholesale), building icon (created 2015). Text bubbles provide details like "granted a total tax exemption", "credit score (400)", "Director is Carlos Mafalda", "known characteristics: 125 employees, food wholesale", "Coffee Do Brazil Fair Trade company created in 2015", "preferred contact medium is email", "postal address also available". An organization chart shows the company branching into "Marketing Department" and "Operations department".]
+[Image: Illustration depicting Coffee do Brazil, an organization. Icons represent its attributes: type (coffee beans), location/creation (map pin, 2015), director (Carlos Mafalda), financial (credit score, tax exemption), characteristics (employee count, wholesale segment), contact info (@ symbol, address), and structure (linked to Marketing and Operations departments).]
 
 ---
 
-# Support of polymorphism and extension patterns
+## Support of polymorphism and extension patterns
 
 Support of polymorphic collections and types and schema based extension is provided by means of a list of generic meta-attributes that we describe below. Polymorphism in collections occurs when entities inherit from base entities, for instance a PricingRequest and Quoting inheriting properties from the abstract Quote entity.
 
@@ -143,934 +135,998 @@ The `@type` attribute provides a way to represent the actual class type of an en
 
 The `@referredType` can be used within reference entities (like for instance a QuoteRef object) to explicitly denote the actual entity type of the referred class. Notice that in reference entities the `@type`, when used, denotes the class type of the reference itself, such as PricingRequestRef or QuotingRef, and not the class type of the referred object. However since reference classes are rarely sub-classed, `@type` is generally not useful in reference objects.
 
-The `@schemaLocation` property can be used in resources to allow specifying user-defined properties of an Entity or to specify the expected *characteristics* of an entity.
+The `@schemaLocation` property can be used in resources to allow specifying user-defined properties of an Entity or to specify the expected characteristics of an entity.
 
 The `@baseType` attribute gives a way to provide explicitly the base of class of a given resource that has been extended.
 
 ---
 
-# RESOURCE MODEL
+## RESOURCE MODEL
 
-## Managed Entity and Task Resource Models
+### Managed Entity and Task Resource Models
 
-### Individual resource
+#### Individual resource
 
 Individual represents a single human being (a man, woman or child). The individual can be a customer, an employee or any other person that the organization needs to store information about.
 
-**Resource model**
-
-```plantuml
-@startuml
-skinparam classAttributeIconSize 0
-
-abstract class Party {
-  contactMedium : ContactMedium [0..*]
-  creditRating : PartyCreditProfile [0..*]
-  externalReference : ExternalIdentifier [0..*]
-  href : String
-  id : String
-  partyCharacteristic : Characteristic [0..*]
-  relatedParty : RelatedPartyOrPartyRole [0..*]
-  taxExemptionCertificate : TaxExemptionCertificate [0..*]
-  '@baseType' : String
-  '@schemaLocation' : String
-  '@type' : String {frozen}
-  discriminator : String
-  +Organization
-  +Individual
-}
-
-class Individual extends Party {
-  aristocraticTitle : String
-  birthDate : DateTime
-  countryOfBirth : String
-  deathDate : DateTime
-  familyName : String
-  familyNamePrefix : String
-  formattedName : String
-  gender : String
-  generation : String
-  givenName : String
-  href : String {redefines}
-  id : String {redefines}
-  languageAbility : LanguageAbility [0..*]
-  legalName : String
-  location : String
-  maritalStatus : String
-  middleName : String
-  name : String
-  nationality : String
-  placeOfBirth : String
-  preferredGivenName : String
-  status : IndividualStateType
-  title : String
-  '@baseType' : String {redefines}
-  '@schemaLocation' : String {redefines}
-  '@type' : Individual {redefines}
-}
-
-enum IndividualStateType {
-  deceased
-  initialized
-  validated
-}
-
-class Disability {
-  disabilityCode : String
-  disabilityName : String
-  validFor : TimePeriod
-}
-
-class LanguageAbility {
-  isFavouriteLanguage : Boolean
-  languageCode : String
-  languageName : String
-  listeningProficiency : String
-  readingProficiency : String
-  speakingProficiency : String
-  validFor : TimePeriod
-  writingProficiency : String
-}
-
-class Skill {
-  comment : String
-  evaluatedLevel : String
-  skillCode : String
-  skillName : String
-  validFor : TimePeriod
-}
-
-class IndividualIdentification {
-  attachment : AttachmentRefOrValue [0..1]
-  identificationId : String
-  identificationType : String
-  issuingAuthority : String
-  issuingDate : DateTime
-  validFor : TimePeriod
-  '@baseType' : String
-  '@schemaLocation' : String
-  '@type' : String [1]
-}
-
-class OtherNameIndividual {
-  aristocraticTitle : String
-  familyName : String
-  familyNamePrefix : String
-  formattedName : String
-  fullName : String
-  generation : String
-  givenName : String
-  legalName : String
-  middleName : String
-  preferredGivenName : String
-  title : String
-  validFor : TimePeriod
-}
-
-class AttachmentRefOrValue <<(V,orchid)>> {
-  discriminator : String
-  +Attachment
-  +AttachmentRef
-}
-
-class Attachment {
-  attachmentType : String
-  content : Base64
-  description : String
-  href : String
-  id : String
-  mimeType : String
-  name : String
-  size : Quantity
-  url : String
-  validFor : TimePeriod
-  '@baseType' : String
-  '@schemaLocation' : String
-  '@type' : Attachment
-}
-
-Individual "1" *--> "0..*" Disability : disability
-Individual "1" *--> "0..*" Skill : skill
-Individual "1" *--> "0..*" LanguageAbility : languageAbility
-Individual "1" *--> "0..*" OtherNameIndividual : otherName
-Individual "1" *--> "0..*" IndividualIdentification : individualIdentification
-
-IndividualIdentification "1" *--> "0..1" AttachmentRefOrValue : attachment
-
-hide empty members
-@enduml
-```
-*Figure 1 - Individual*
-
-```plantuml
-@startuml
-skinparam classAttributeIconSize 0
-
-abstract class ContactMedium {
-  contactType : String
-  id : String
-  preferred : Boolean
-  validFor : TimePeriod
-  '@baseType' : String
-  '@schemaLocation' : String
-  '@type' : String {frozen}
-  discriminator : String
-  + GeographicAddressContactMedium
-  + PhoneContactMedium
-  + SocialContactMedium
-  + EmailContactMedium
-  + FaxContactMedium
-}
-
-class GeographicAddressRef {
-  href : String
-  id : String
-  name : String
-  '@baseType' : String
-  '@referredType' : String
-  '@schemaLocation' : String
-  '@type' : String [1]
-}
-
-class GeographicAddressContactMedium extends ContactMedium {
-  city : String
-  country : String
-  postCode : String
-  stateOrProvince : String
-  street1 : String
-  street2 : String
-  '@type' : GeographicAddressContactMedium {redefines}
-}
-
-class FaxContactMedium extends ContactMedium {
-  faxNumber : String
-  '@type' = FaxContactMedium {redefines}
-}
-
-class EmailContactMedium extends ContactMedium {
-  emailAddress : String
-  '@type' = EmailContactMedium {redefines}
-}
-
-class PhoneContactMedium extends ContactMedium {
-  phoneNumber : String
-  '@type' = PhoneContactMedium {redefines}
-}
-
-class SocialContactMedium extends ContactMedium {
-  socialNetworkId : String
-  '@type' = SocialContactMedium {redefines}
-}
-
-GeographicAddressContactMedium "1" --> "0..1" GeographicAddressRef : geographicAddress
-
-hide empty members
-@enduml
-```
-*Figure 2 - ContactMedium*
-
-```plantuml
-@startuml
-skinparam classAttributeIconSize 0
-
-abstract class Characteristic {
-  id : String
-  name : String
-  valueType : String
-  '@baseType' : String
-  '@schemaLocation' : String
-  '@type' : String [1]
-}
-
-class CharacteristicRelationship {
-  href : String
-  id : String
-  relationshipType : String
-}
-
-Characteristic "1" *--> "0..*" CharacteristicRelationship : characteristicRelationship
-
-abstract class Party {
-  contactMedium : ContactMedium [0..*]
-  creditRating : PartyCreditProfile [0..*]
-  externalReference : ExternalIdentifier [0..*]
-  href : String
-  id : String
-  partyCharacteristic : Characteristic [0..*]
-  relatedParty : RelatedPartyOrPartyRole [0..*]
-  taxExemptionCertificate : TaxExemptionCertificate [0..*]
-  '@baseType' : String
-  '@schemaLocation' : String
-  '@type' : String {frozen}
-  discriminator : String
-  +Organization
-  +Individual
-}
-
-class ExternalIdentifier {
-  externalIdentifierType : String
-  id : String
-  owner : String
-  '@baseType' : String
-  '@schemaLocation' : String
-  '@type' : String [1]
-}
-
-class PartyCreditProfile {
-  creditAgencyName : String
-  creditAgencyType : String
-  href : String
-  id : String
-  ratingReference : String
-  ratingScore : Integer
-  validFor : TimePeriod
-  '@baseType' : String
-  '@schemaLocation' : String
-  '@type' : String [1]
-}
-
-class RelatedPartyOrPartyRole <<(V,orchid)>> {
-  role : String
-  '@baseType' : String
-  '@schemaLocation' : String
-  '@type' : String [1]
-}
-
-class PartyOrPartyRole {
-  discriminator: String
-  +PartyRef
-  +PartyRole
-  +Customer
-  +BusinessPartner
-  +PartyRoleRef
-}
-
-class TaxExemptionCertificate {
-  attachment : AttachmentRefOrValue [0..1]
-  certificateNumber : String
-  id : String
-  issuingJurisdiction : String
-  reason : String
-  validFor : TimePeriod
-  '@baseType' : String
-  '@schemaLocation' : String
-  '@type' : String [1]
-}
-
-class TaxDefinition {
-  id : String
-  jurisdictionLevel : String
-  jurisdictionName : String
-  name : String
-  taxType : String
-  validFor : TimePeriod
-  '@baseType' : String
-  '@schemaLocation' : String
-  '@type' : String [1]
-}
-
-class AttachmentRefOrValue <<(V,orchid)>> {
-  discriminator : String
-  +Attachment
-  +AttachmentRef
-}
-class Attachment {
-  attachmentType : String
-  content : Base64
-  description : String
-  href : String
-  id : String
-  mimeType : String
-  name : String
-  size : Quantity
-  url : String
-  validFor : TimePeriod
-  '@baseType' : String
-  '@schemaLocation' : String
-  '@type' : Attachment
-}
-class AttachmentRef {
- description : String
- href : String
- id : String
- name : String
- url : String
- '@baseType' : String
- '@referredType' : String
- '@schemaLocation' : String
- '@type' : AttachmentRef
-}
-
-abstract class ContactMedium {
-  contactType : String
-  id : String
-  preferred : Boolean
-  validFor : TimePeriod
-  '@baseType' : String
-  '@schemaLocation' : String
-  '@type' : String {frozen}
-  discriminator : String
-  + GeographicAddressContactMedium
-  + PhoneContactMedium
-  + SocialContactMedium
-  + EmailContactMedium
-  + FaxContactMedium
-}
-
-
-Party "1" *--> "0..*" ExternalIdentifier : externalReference
-Party "1" *--> "0..*" PartyCreditProfile : creditRating
-Party "1" *--> "0..*" RelatedPartyOrPartyRole : relatedParty
-Party "1" *--> "0..*" TaxExemptionCertificate : taxExemptionCertificate
-Party "1" *--> "0..*" Characteristic : partyCharacteristic
-Party "1" *--> "0..*" ContactMedium : contactMedium
-TaxExemptionCertificate "1" *--> "0..*" TaxDefinition : taxDefinition
-TaxDefinition "1" *--> "0..1" AttachmentRefOrValue : attachment
-RelatedPartyOrPartyRole "1" *--> "0..1" PartyOrPartyRole : partyOrPartyRole
-
-
-hide empty members
-@enduml
-```
-*Figure 3 - Party*
-
-```plantuml
-@startuml
-skinparam classAttributeIconSize 0
-
-abstract class Characteristic {
-  id : String
-  name : String
-  valueType : String
-  '@baseType' : String
-  '@schemaLocation' : String
-  '@type' : String [1]
-}
-class CharacteristicRelationship {
-  href : String
-  id : String
-  relationshipType : String
-}
-Characteristic "1" *--> "0..*" CharacteristicRelationship : characteristicRelationship
-
-
-class IntegerCharacteristic extends Characteristic {
- value: Integer
- '@type' = IntegerCharacteristic {redefines}
-}
-class StringArrayCharacteristic extends Characteristic {
- value: String[]
- '@type' = StringArrayCharacteristic {redefines}
-}
-class IntegerArrayCharacteristic extends Characteristic {
- value: Integer[]
- '@type' = IntegerArrayCharacteristic {redefines}
-}
-class StringCharacteristic extends Characteristic {
- value: String
- '@type' = StringCharacteristic {redefines}
-}
-class ObjectCharacteristic extends Characteristic {
- value: Object
- '@type' = ObjectCharacteristic {redefines}
-}
-class FloatCharacteristic extends Characteristic {
- value: Float
- '@type' = FloatCharacteristic {redefines}
-}
-class NumberCharacteristic extends Characteristic {
- value: Number
- '@type' = NumberCharacteristic {redefines}
-}
-class BooleanCharacteristic extends Characteristic {
- value: Boolean
- '@type' = BooleanCharacteristic {redefines}
-}
-class ObjectArrayCharacteristic extends Characteristic {
- value: Object[]
- '@type' = ObjectArrayCharacteristic {redefines}
-}
-class NumberArrayCharacteristic extends Characteristic {
- value: Number[]
- '@type' = NumberArrayCharacteristic {redefines}
-}
-
-hide empty members
-@enduml
-```
-*Figure 4 - Characteristic*
-
-## Field descriptions
-
-### Individual fields
-
-| Field                   | Description                                                                                                                                                                                                          |
-| :---------------------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| aristocraticTitle       | A String. E.g. Baron, Graf, Earl.                                                                                                                                                                                    |
-| birthDate               | A DateTime. Birth date.                                                                                                                                                                                              |
-| contactMedium           | A ContactMedium. List of means for contacting the party, e.g. mobile phone, email address.                                                                                                                            |
-| countryOfBirth          | A String. Country where the individual was born.                                                                                                                                                                     |
-| creditRating            | A PartyCreditProfile. List of credit profiles and scores for the party, typically received from an external credit broker.                                                                                             |
-| deathDate               | A DateTime. Date of death.                                                                                                                                                                                           |
-| disability              | A Disability. List of disabilities suffered by the individual.                                                                                                                                                       |
-| externalReference       | An ExternalIdentifier. List of identifiers of the Party in an external system, for example when party information is imported from a commerce system.                                                                   |
-| familyName              | A String. Contains the non-chosen or inherited name. Also known as last name in the Western context.                                                                                                                 |
-| familyNamePrefix        | A String. Family name prefix.                                                                                                                                                                                        |
-| formattedName           | A String. A fully formatted name in one string with all of its pieces in their proper place and all of the necessary punctuation. Useful for specific contexts (Chinese, Japanese, Korean).                            |
-| gender                  | A String. Gender.                                                                                                                                                                                                    |
-| generation              | A String. E.g.. Sr, Jr, III (the third).                                                                                                                                                                             |
-| givenName               | A String. First name of the individual.                                                                                                                                                                              |
-| href                    | A String. Hyperlink reference.                                                                                                                                                                                       |
-| id                      | A String. Unique identifier.                                                                                                                                                                                         |
-| individualIdentification| An IndividualIdentification. List of official identifications issued to the individual, such as passport, driving licence, social security number.                                                                     |
-| languageAbility         | A LanguageAbility. List of national languages known by the individual.                                                                                                                                               |
-| legalName               | A String. Legal name or birth name (name one has for official purposes).                                                                                                                                             |
-| location                | A String. Temporary current location of the individual (may be used if the individual has approved its sharing).                                                                                                       |
-| maritalStatus           | A String. Marital status (married, divorced, widow …).                                                                                                                                                               |
-| middleName              | A String. Middles name or initial.                                                                                                                                                                                   |
-| name                    | A String. Full name flatten (first, middle, and last names) - this is the name that is expected to be presented in reference data types such as PartyRef, RelatedParty, etc. that refer to Individual.                   |
-| nationality             | A String. Nationality.                                                                                                                                                                                               |
-| otherName               | An OtherNameIndividual. List of other names by which this individual is known.                                                                                                                                       |
-| partyCharacteristic     | A Characteristic. List of additional characteristics that a Party can take on.                                                                                                                                       |
-| placeOfBirth            | A String. Reference to the place where the individual was born.                                                                                                                                                      |
-| preferredGivenName      | A String. Contains the chosen name by which the individual prefers to be addressed. Note: This name may be a name other than a given name, such as a nickname.                                                         |
-| relatedParty            | A RelatedPartyOrPartyRole. List of parties and/or party roles related to this party.                                                                                                                                 |
-| skill                   | A Skill. List of skills exhibited by the individual.                                                                                                                                                                 |
-| status                  | An IndividualStateType. Valid values for the lifecycle state of the individual.                                                                                                                                      |
-| taxExemptionCertificate | A TaxExemptionCertificate. List of tax exemptions granted to the party. For example, a war veteran might have partial exemption from state tax and a full exemption from federal tax.                                    |
-| title                   | A String. Useful for titles (aristocratic, social,…) Pr, Dr, Sir, …                                                                                                                                                   |
-| @baseType               | A String. When sub-classing, this defines the super-class.                                                                                                                                                           |
-| @schemaLocation         | A String. A URI to a JSON-Schema file that defines additional attributes and relationships.                                                                                                                          |
-| @type                   | A String. When sub-classing, this defines the sub-class Extensible name.                                                                                                                                             |
-
-### Attachment sub-resource fields
-
-| Field          | Description                                                                                                                          |
-| :------------- | :----------------------------------------------------------------------------------------------------------------------------------- |
-| attachmentType | A String. A business characterization of the purpose of the attachment, for example logo, instructionManual, contractCopy.             |
-| content        | A Base64. The actual contents of the attachment object, if embedded, encoded as base64.                                              |
-| description    | A String. A narrative text describing the content of the attachment.                                                                 |
-| href           | A String. Hyperlink reference.                                                                                                       |
-| id             | A String. Unique identifier.                                                                                                         |
-| mimeType       | A String. A technical characterization of the attachment content format using IETF Mime Types.                                       |
-| name           | A String. The name of the attachment.                                                                                                |
-| size           | A Quantity. An amount in a given unit.                                                                                               |
-| url            | A String. Uniform Resource Locator, is a web page address (a subset of URI).                                                         |
-| validFor       | A TimePeriod. A period of time, either as a deadline (endDateTime only) a startDateTime only, or both.                                |
-| @baseType      | A String. When sub-classing, this defines the super-class.                                                                           |
-| @schemaLocation| A String. A URI to a JSON-Schema file that defines additional attributes and relationships.                                          |
-| @type          | A String. When sub-classing, this defines the sub-class Extensible name.                                                             |
-
-### AttachmentRef sub-resource fields
-
-| Field          | Description                                                                                     |
-| :------------- | :---------------------------------------------------------------------------------------------- |
-| description    | A String. A narrative text describing the content of the attachment.                            |
-| href           | A String. Hyperlink reference.                                                                  |
-| id             | A String. Unique identifier.                                                                    |
-| name           | A String. Name of the referred entity.                                                          |
-| url            | A String. Link to the attachment media/content.                                                 |
-| @baseType      | A String. When sub-classing, this defines the super-class.                                      |
-| @referredType  | A String. The actual type of the target instance when needed for disambiguation.                |
-| @schemaLocation| A String. A URI to a JSON-Schema file that defines additional attributes and relationships.   |
-| @type          | A String. When sub-classing, this defines the sub-class Extensible name.                        |
-
-### BooleanCharacteristic sub-resource fields
-
-| Field                     | Description                                                                                 |
-| :------------------------ | :------------------------------------------------------------------------------------------ |
-| characteristicRelationship| A CharacteristicRelationship. Another Characteristic that is related to the current Characteristic;. |
-| id                        | A String. Unique identifier of the characteristic.                                          |
-| name                      | A String. Name of the characteristic.                                                       |
-| value                     | A Boolean. Value of the characteristic.                                                     |
-| valueType                 | A String. Data type of the value of the characteristic.                                     |
-| @baseType                 | A String. When sub-classing, this defines the super-class.                                  |
-| @schemaLocation           | A String. A URI to a JSON-Schema file that defines additional attributes and relationships. |
-| @type                     | A String. When sub-classing, this defines the sub-class Extensible name.                    |
-
-### Characteristic sub-resource fields
-
-| Field                     | Description                                                                                 |
-| :------------------------ | :------------------------------------------------------------------------------------------ |
-| characteristicRelationship| A CharacteristicRelationship. Another Characteristic that is related to the current Characteristic;. |
-| id                        | A String. Unique identifier of the characteristic.                                          |
-| name                      | A String. Name of the characteristic.                                                       |
-| valueType                 | A String. Data type of the value of the characteristic.                                     |
-| @baseType                 | A String. When sub-classing, this defines the super-class.                                  |
-| @schemaLocation           | A String. A URI to a JSON-Schema file that defines additional attributes and relationships. |
-| @type                     | A String. When sub-classing, this defines the sub-class Extensible name.                    |
-
-### CharacteristicRelationship sub-resource fields
-
-| Field          | Description                                                                                 |
-| :------------- | :------------------------------------------------------------------------------------------ |
-| id             | A String. Unique identifier of the characteristic.                                          |
-| relationshipType| A String. The type of relationship.                                                         |
-| @baseType      | A String. When sub-classing, this defines the super-class.                                  |
-| @schemaLocation| A String. A URI to a JSON-Schema file that defines additional attributes and relationships. |
-| @type          | A String. When sub-classing, this defines the sub-class Extensible name.                    |
-
-### ContactMedium sub-resource fields
-
-| Field          | Description                                                                                                                            |
-| :------------- | :------------------------------------------------------------------------------------------------------------------------------------- |
-| contactType    | A String. Type of the contact medium to qualifiy it like pro email / personal email. This is not used to define the contact medium used. |
-| id             | A String. Identifier for this contact medium.                                                                                          |
-| preferred      | A Boolean. If true, indicates that is the preferred contact medium.                                                                    |
-| validFor       | A TimePeriod. A period of time, either as a deadline (endDateTime only) a startDateTime only, or both.                                  |
-| @baseType      | A String. When sub-classing, this defines the super-class.                                                                             |
-| @schemaLocation| A String. A URI to a JSON-Schema file that defines additional attributes and relationships.                                            |
-| @type          | A String. When sub-classing, this defines the sub-class Extensible name.                                                               |
-
-### Disability sub-resource fields
-
-| Field         | Description                                                                                           |
-| :------------ | :---------------------------------------------------------------------------------------------------- |
-| disabilityCode| A String. Code of the disability.                                                                     |
-| disabilityName| A String. Name of the disability.                                                                     |
-| validFor      | A TimePeriod. A period of time, either as a deadline (endDateTime only) a startDateTime only, or both. |
-
-### EmailContactMedium sub-resource fields
-
-| Field          | Description                                                                                                                            |
-| :------------- | :------------------------------------------------------------------------------------------------------------------------------------- |
-| contactType    | A String. Type of the contact medium to qualifiy it like pro email / personal email. This is not used to define the contact medium used. |
-| emailAddress   | A String. Full email address in standard format.                                                                                       |
-| id             | A String. Identifier for this contact medium.                                                                                          |
-| preferred      | A Boolean. If true, indicates that is the preferred contact medium.                                                                    |
-| validFor       | A TimePeriod. A period of time, either as a deadline (endDateTime only) a startDateTime only, or both.                                  |
-| @baseType      | A String. When sub-classing, this defines the super-class.                                                                             |
-| @schemaLocation| A String. A URI to a JSON-Schema file that defines additional attributes and relationships.                                            |
-| @type          | A String. When sub-classing, this defines the sub-class Extensible name.                                                               |
-
-### ExternalIdentifier sub-resource fields
-
-| Field                 | Description                                                                                 |
-| :-------------------- | :------------------------------------------------------------------------------------------ |
-| externalIdentifierType| A String. Type of the identification, typically would be the type of the entity within the external system. |
-| id                    | A String. Identification of the entity within the external system.                            |
-| owner                 | A String. Name of the external system that owns the entity.                                 |
-| @baseType             | A String. When sub-classing, this defines the super-class.                                  |
-| @schemaLocation       | A String. A URI to a JSON-Schema file that defines additional attributes and relationships. |
-| @type                 | A String. When sub-classing, this defines the sub-class Extensible name.                    |
-
-### FaxContactMedium sub-resource fields
-
-| Field          | Description                                                                                                                            |
-| :------------- | :------------------------------------------------------------------------------------------------------------------------------------- |
-| contactType    | A String. Type of the contact medium to qualifiy it like pro email / personal email. This is not used to define the contact medium used. |
-| faxNumber      | A String. The fax number of the contact.                                                                                               |
-| id             | A String. Identifier for this contact medium.                                                                                          |
-| preferred      | A Boolean. If true, indicates that is the preferred contact medium.                                                                    |
-| validFor       | A TimePeriod. A period of time, either as a deadline (endDateTime only) a startDateTime only, or both.                                  |
-| @baseType      | A String. When sub-classing, this defines the super-class.                                                                             |
-| @schemaLocation| A String. A URI to a JSON-Schema file that defines additional attributes and relationships.                                            |
-| @type          | A String. When sub-classing, this defines the sub-class Extensible name.                                                               |
-
-### FloatCharacteristic sub-resource fields
-
-| Field                     | Description                                                                                 |
-| :------------------------ | :------------------------------------------------------------------------------------------ |
-| characteristicRelationship| A CharacteristicRelationship. Another Characteristic that is related to the current Characteristic;. |
-| id                        | A String. Unique identifier of the characteristic.                                          |
-| name                      | A String. Name of the characteristic.                                                       |
-| value                     | A Float. Value of the characteristic.                                                       |
-| valueType                 | A String. Data type of the value of the characteristic.                                     |
-| @baseType                 | A String. When sub-classing, this defines the super-class.                                  |
-| @schemaLocation           | A String. A URI to a JSON-Schema file that defines additional attributes and relationships. |
-| @type                     | A String. When sub-classing, this defines the sub-class Extensible name.                    |
-
-### GeographicAddressContactMedium sub-resource fields
-
-| Field             | Description                                                                                                                            |
-| :---------------- | :------------------------------------------------------------------------------------------------------------------------------------- |
-| city              | A String. The city.                                                                                                                    |
-| contactType       | A String. Type of the contact medium to qualifiy it like pro email / personal email. This is not used to define the contact medium used. |
-| country           | A String. The country.                                                                                                                 |
-| geographicAddress | A GeographicAddressRef. Reference to a Geographic Address.                                                                             |
-| id                | A String. Identifier for this contact medium.                                                                                          |
-| postCode          | A String. Postcode.                                                                                                                    |
-| preferred         | A Boolean. If true, indicates that is the preferred contact medium.                                                                    |
-| stateOrProvince   | A String. State or province.                                                                                                           |
-| street1           | A String. Describes the street.                                                                                                        |
-| street2           | A String. Complementary street description.                                                                                            |
-| validFor          | A TimePeriod. A period of time, either as a deadline (endDateTime only) a startDateTime only, or both.                                  |
-| @baseType         | A String. When sub-classing, this defines the super-class.                                                                             |
-| @schemaLocation   | A String. A URI to a JSON-Schema file that defines additional attributes and relationships.                                            |
-| @type             | A String. When sub-classing, this defines the sub-class Extensible name.                                                               |
-
-### GeographicAddressRef sub-resource fields
-
-| Field          | Description                                                                                     |
-| :------------- | :---------------------------------------------------------------------------------------------- |
-| href           | A String. Hyperlink reference.                                                                  |
-| id             | A String. Unique identifier.                                                                    |
-| name           | A String. Name of the referred entity.                                                          |
-| @baseType      | A String. When sub-classing, this defines the super-class.                                      |
-| @referredType  | A String. The actual type of the target instance when needed for disambiguation.                |
-| @schemaLocation| A String. A URI to a JSON-Schema file that defines additional attributes and relationships.   |
-| @type          | A String. When sub-classing, this defines the sub-class Extensible name.                        |
-
-### IndividualIdentification sub-resource fields
-
-| Field             | Description                                                                                                                                        |
-| :---------------- | :------------------------------------------------------------------------------------------------------------------------------------------------- |
-| attachment        | An AttachmentRefOrValue. The polymorphic attributes @type, @schemaLocation & @referredType are related to the Attachment entity and not the AttachmentRefOrValue class itself. |
-| identificationId  | A String. Identifier.                                                                                                                              |
-| identificationType| A String. Identification type (passport, national identity card, drivers license, social security number, birth certificate).                        |
-| issuingAuthority  | A String. Authority which has issued the identifier, such as: social security, town hall.                                                          |
-| issuingDate       | A DateTime. Date at which the identifier was issued.                                                                                               |
-| validFor          | A TimePeriod. A period of time, either as a deadline (endDateTime only) a startDateTime only, or both.                                             |
-| @baseType         | A String. When sub-classing, this defines the super-class.                                                                                         |
-| @schemaLocation   | A String. A URI to a JSON-Schema file that defines additional attributes and relationships.                                                        |
-| @type             | A String. When sub-classing, this defines the sub-class Extensible name.                                                                           |
-
-### IntegerArrayCharacteristic sub-resource fields
-
-| Field                     | Description                                                                                 |
-| :------------------------ | :------------------------------------------------------------------------------------------ |
-| characteristicRelationship| A CharacteristicRelationship. Another Characteristic that is related to the current Characteristic;. |
-| id                        | A String. Unique identifier of the characteristic.                                          |
-| name                      | A String. Name of the characteristic.                                                       |
-| value                     | An Integer.                                                                                 |
-| valueType                 | A String. Data type of the value of the characteristic.                                     |
-| @baseType                 | A String. When sub-classing, this defines the super-class.                                  |
-| @schemaLocation           | A String. A URI to a JSON-Schema file that defines additional attributes and relationships. |
-| @type                     | A String. When sub-classing, this defines the sub-class Extensible name.                    |
-
-### IntegerCharacteristic sub-resource fields
-
-| Field                     | Description                                                                                 |
-| :------------------------ | :------------------------------------------------------------------------------------------ |
-| characteristicRelationship| A CharacteristicRelationship. Another Characteristic that is related to the current Characteristic;. |
-| id                        | A String. Unique identifier of the characteristic.                                          |
-| name                      | A String. Name of the characteristic.                                                       |
-| value                     | An Integer. Value of the characteristic.                                                    |
-| valueType                 | A String. Data type of the value of the characteristic.                                     |
-| @baseType                 | A String. When sub-classing, this defines the super-class.                                  |
-| @schemaLocation           | A String. A URI to a JSON-Schema file that defines additional attributes and relationships. |
-| @type                     | A String. When sub-classing, this defines the sub-class Extensible name.                    |
-
-### LanguageAbility sub-resource fields
-
-| Field                 | Description                                                                                                   |
-| :-------------------- | :------------------------------------------------------------------------------------------------------------ |
-| isFavouriteLanguage   | A Boolean. A ?true? value specifies whether the language is considered by the individual as his favourite one.  |
-| languageCode          | A String. Language code (RFC 5646).                                                                           |
-| languageName          | A String. Language name.                                                                                      |
-| listeningProficiency  | A String. Listening proficiency evaluated for this language.                                                  |
-| readingProficiency    | A String. Reading proficiency evaluated for this language.                                                    |
-| speakingProficiency   | A String. Speaking proficiency evaluated for this language.                                                   |
-| validFor              | A TimePeriod. A period of time, either as a deadline (endDateTime only) a startDateTime only, or both.        |
-| writingProficiency    | A String. Writing proficiency evaluated for this language.                                                    |
-
-### NumberArrayCharacteristic sub-resource fields
-
-| Field                     | Description                                                                                 |
-| :------------------------ | :------------------------------------------------------------------------------------------ |
-| characteristicRelationship| A CharacteristicRelationship. Another Characteristic that is related to the current Characteristic;. |
-| id                        | A String. Unique identifier of the characteristic.                                          |
-| name                      | A String. Name of the characteristic.                                                       |
-| value                     | A Number.                                                                                   |
-| valueType                 | A String. Data type of the value of the characteristic.                                     |
-| @baseType                 | A String. When sub-classing, this defines the super-class.                                  |
-| @schemaLocation           | A String. A URI to a JSON-Schema file that defines additional attributes and relationships. |
-| @type                     | A String. When sub-classing, this defines the sub-class Extensible name.                    |
-
-### NumberCharacteristic sub-resource fields
-
-| Field                     | Description                                                                                 |
-| :------------------------ | :------------------------------------------------------------------------------------------ |
-| characteristicRelationship| A CharacteristicRelationship. Another Characteristic that is related to the current Characteristic;. |
-| id                        | A String. Unique identifier of the characteristic.                                          |
-| name                      | A String. Name of the characteristic.                                                       |
-| value                     | A Number. Value of the characteristic.                                                      |
-| valueType                 | A String. Data type of the value of the characteristic.                                     |
-| @baseType                 | A String. When sub-classing, this defines the super-class.                                  |
-| @schemaLocation           | A String. A URI to a JSON-Schema file that defines additional attributes and relationships. |
-| @type                     | A String. When sub-classing, this defines the sub-class Extensible name.                    |
-
-### ObjectArrayCharacteristic sub-resource fields
-
-| Field                     | Description                                                                                 |
-| :------------------------ | :------------------------------------------------------------------------------------------ |
-| characteristicRelationship| A CharacteristicRelationship. Another Characteristic that is related to the current Characteristic;. |
-| id                        | A String. Unique identifier of the characteristic.                                          |
-| name                      | A String. Name of the characteristic.                                                       |
-| value                     | An object.                                                                                  |
-| valueType                 | A String. Data type of the value of the characteristic.                                     |
-| @baseType                 | A String. When sub-classing, this defines the super-class.                                  |
-| @schemaLocation           | A String. A URI to a JSON-Schema file that defines additional attributes and relationships. |
-| @type                     | A String. When sub-classing, this defines the sub-class Extensible name.                    |
-
-### ObjectCharacteristic sub-resource fields
-
-| Field                     | Description                                                                                 |
-| :------------------------ | :------------------------------------------------------------------------------------------ |
-| characteristicRelationship| A CharacteristicRelationship. Another Characteristic that is related to the current Characteristic;. |
-| id                        | A String. Unique identifier of the characteristic.                                          |
-| name                      | A String. Name of the characteristic.                                                       |
-| value                     | An object. Value of the characteristic.                                                     |
-| valueType                 | A String. Data type of the value of the characteristic.                                     |
-| @baseType                 | A String. When sub-classing, this defines the super-class.                                  |
-| @schemaLocation           | A String. A URI to a JSON-Schema file that defines additional attributes and relationships. |
-| @type                     | A String. When sub-classing, this defines the sub-class Extensible name.                    |
-
-### OtherNameIndividual sub-resource fields
-
-| Field              | Description                                                                                                                                                         |
-| :----------------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| aristocraticTitle  | A String. E.g. Baron, Graf, Earl, etc.                                                                                                                              |
-| familyName         | A String. Contains the non-chosen or inherited name. Also known as last name in the Western context.                                                                |
-| familyNamePrefix   | A String. Family name prefix.                                                                                                                                       |
-| formattedName      | A String. . A fully formatted name in one string with all of its pieces in their proper place and all of the necessary punctuation. Useful for specific contexts (Chinese, Japanese, Korean, etc.). |
-| fullName           | A String. Full name flatten (first, middle, and last names).                                                                                                        |
-| generation         | A String. E.g. Sr, Jr, etc.                                                                                                                                         |
-| givenName          | A String. First name.                                                                                                                                               |
-| legalName          | A String. Legal name or birth name (name one has for official purposes).                                                                                            |
-| middleName         | A String. Middle name or initial.                                                                                                                                   |
-| preferredGivenName | A String. Contains the chosen name by which the person prefers to be addressed. Note: This name may be a name other than a given name, such as a nickname.             |
-| title              | A String. Use for titles (aristrocatic, social, …): Pr, Dr, Sir,….                                                                                                  |
-| validFor           | A TimePeriod. A period of time, either as a deadline (endDateTime only) a startDateTime only, or both.                                                              |
-
-### Party sub-resource fields
-
-| Field                  | Description                                                                                                                                                                                                          |
-| :--------------------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| contactMedium          | A ContactMedium. List of means for contacting the party, e.g. mobile phone, email address.                                                                                                                            |
-| creditRating           | A PartyCreditProfile. List of credit profiles and scores for the party, typically received from an external credit broker.                                                                                             |
-| externalReference      | An ExternalIdentifier. List of identifiers of the Party in an external system, for example when party information is imported from a commerce system.                                                                   |
-| href                   | A String. Hyperlink reference.                                                                                                                                                                                       |
-| id                     | A String. Unique identifier.                                                                                                                                                                                         |
-| partyCharacteristic    | A Characteristic. List of additional characteristics that a Party can take on.                                                                                                                                       |
-| relatedParty           | A RelatedPartyOrPartyRole. List of parties and/or party roles related to this party.                                                                                                                                 |
-| taxExemptionCertificate| A TaxExemptionCertificate. List of tax exemptions granted to the party. For example, a war veteran might have partial exemption from state tax and a full exemption from federal tax.                                    |
-| @baseType              | A String. When sub-classing, this defines the super-class.                                                                                                                                                           |
-| @schemaLocation        | A String. A URI to a JSON-Schema file that defines additional attributes and relationships.                                                                                                                          |
-| @type                  | A String. When sub-classing, this defines the sub-class Extensible name.                                                                                                                                             |
-
-### PartyCreditProfile sub-resource fields
-
-| Field           | Description                                                                                                                                                               |
-| :-------------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| creditAgencyName| A String. Name of the credit agency giving the score.                                                                                                                       |
-| creditAgencyType| A String. Type of the credit agency giving the score.                                                                                                                       |
-| href            | A String. Hyperlink reference.                                                                                                                                            |
-| id              | A String. Unique identifier.                                                                                                                                              |
-| ratingReference | A String. Reference corresponding to the credit rating.                                                                                                                     |
-| ratingScore     | An Integer32. A measure of a party's creditworthiness calculated on the basis of a combination of factors such as their income and credit history.                           |
-| validFor        | A TimePeriod. A period of time, either as a deadline (endDateTime only) a startDateTime only, or both.                                                                      |
-| @baseType       | A String. When sub-classing, this defines the super-class.                                                                                                                  |
-| @schemaLocation | A String. A URI to a JSON-Schema file that defines additional attributes and relationships.                                                                               |
-| @type           | A String. When sub-classing, this defines the sub-class Extensible name.                                                                                                  |
-
-### PhoneContactMedium sub-resource fields
-
-| Field          | Description                                                                                                                            |
-| :------------- | :------------------------------------------------------------------------------------------------------------------------------------- |
-| contactType    | A String. Type of the contact medium to qualifiy it like pro email / personal email. This is not used to define the contact medium used. |
-| id             | A String. Identifier for this contact medium.                                                                                          |
-| phoneNumber    | A String. The phone number of the contact.                                                                                             |
-| preferred      | A Boolean. If true, indicates that is the preferred contact medium.                                                                    |
-| validFor       | A TimePeriod. A period of time, either as a deadline (endDateTime only) a startDateTime only, or both.                                  |
-| @baseType      | A String. When sub-classing, this defines the super-class.                                                                             |
-| @schemaLocation| A String. A URI to a JSON-Schema file that defines additional attributes and relationships.                                            |
-| @type          | A String. When sub-classing, this defines the sub-class Extensible name.                                                               |
-
-### RelatedPartyOrPartyRole sub-resource fields
-
-| Field          | Description                                                                                                                                |
-| :------------- | :----------------------------------------------------------------------------------------------------------------------------------------- |
-| partyOrPartyRole| A PartyOrPartyRole.                                                                                                                        |
-| role           | A String. Role played by the related party or party role in the context of the specific entity it is linked to. Such as 'initiator', 'customer', 'salesAgent', 'user'. |
-| @baseType      | A String. When sub-classing, this defines the super-class.                                                                                 |
-| @schemaLocation| A String. A URI to a JSON-Schema file that defines additional attributes and relationships.                                                |
-| @type          | A String. When sub-classing, this defines the sub-class Extensible name.                                                                   |
-
-### Skill sub-resource fields
-
-| Field          | Description                                                                                      |
-| :------------- | :----------------------------------------------------------------------------------------------- |
-| comment        | A String. A free text comment linked to the evaluation done.                                     |
-| evaluatedLevel | A String. Level of expertise in a skill evaluated for an individual.                             |
-| skillCode      | A String. Code of the skill.                                                                     |
-| skillName      | A String. Name of the skill, such as Java language.                                              |
-| validFor       | A TimePeriod. A period of time, either as a deadline (endDateTime only) a startDateTime only, or both. |
-
-### SocialContactMedium sub-resource fields
-
-| Field           | Description                                                                                                                            |
-| :-------------- | :------------------------------------------------------------------------------------------------------------------------------------- |
-| contactType     | A String. Type of the contact medium to qualifiy it like pro email / personal email. This is not used to define the contact medium used. |
-| id              | A String. Identifier for this contact medium.                                                                                          |
-| preferred       | A Boolean. If true, indicates that is the preferred contact medium.                                                                    |
-| socialNetworkId | A String. Identifier as a member of a social network.                                                                                  |
-| validFor        | A TimePeriod. A period of time, either as a deadline (endDateTime only) a startDateTime only, or both.                                  |
-| @baseType       | A String. When sub-classing, this defines the super-class.                                                                             |
-| @schemaLocation | A String. A URI to a JSON-Schema file that defines additional attributes and relationships.                                            |
-| @type           | A String. When sub-classing, this defines the sub-class Extensible name.                                                               |
-
-### StringArrayCharacteristic sub-resource fields
-
-| Field                     | Description                                                                                 |
-| :------------------------ | :------------------------------------------------------------------------------------------ |
-| characteristicRelationship| A CharacteristicRelationship. Another Characteristic that is related to the current Characteristic;. |
-| id                        | A String. Unique identifier of the characteristic.                                          |
-| name                      | A String. Name of the characteristic.                                                       |
-| value                     | A String.                                                                                   |
-| valueType                 | A String. Data type of the value of the characteristic.                                     |
-| @baseType                 | A String. When sub-classing, this defines the super-class.                                  |
-| @schemaLocation           | A String. A URI to a JSON-Schema file that defines additional attributes and relationships. |
-| @type                     | A String. When sub-classing, this defines the sub-class Extensible name.                    |
-
-### StringCharacteristic sub-resource fields
-
-| Field                     | Description                                                                                 |
-| :------------------------ | :------------------------------------------------------------------------------------------ |
-| characteristicRelationship| A CharacteristicRelationship. Another Characteristic that is related to the current Characteristic;. |
-| id                        | A String. Unique identifier of the characteristic.                                          |
-| name                      | A String. Name of the characteristic.                                                       |
-| value                     | A String. Value of the characteristic.                                                      |
-| valueType                 | A String. Data type of the value of the characteristic.                                     |
-| @baseType                 | A String. When sub-classing, this defines the super-class.                                  |
-| @schemaLocation           | A String. A URI to a JSON-Schema file that defines additional attributes and relationships. |
-| @type                     | A String. When sub-classing, this defines the sub-class Extensible name.                    |
-
-### TaxDefinition sub-resource fields
-
-| Field           | Description                                                                                 |
-| :-------------- | :------------------------------------------------------------------------------------------ |
-| id              | A String. Unique identifier of the tax.                                                     |
-| jurisdictionLevel| A String. Level of the jurisdiction that levies the tax.                                    |
-| jurisdictionName| A String. Name of the jurisdiction that levies the tax.                                     |
-| name            | A String. Tax name.                                                                         |
-| taxType         | A String. Type of the tax.                                                                  |
-| validFor        | A TimePeriod. A period of time, either as a deadline (endDateTime only) a startDateTime only, or both. |
-| @baseType       | A String. When sub-classing, this defines the super-class.                                  |
-| @schemaLocation | A String. A URI to a JSON-Schema file that defines additional attributes and relationships. |
-| @type           | A String. When sub-classing, this defines the sub-class Extensible name.                    |
-
-### TaxExemptionCertificate sub-resource fields
-
-| Field             | Description                                                                                                                                                                                                                              |
-| :---------------- | :--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| attachment        | An AttachmentRefOrValue. The polymorphic attributes @type, @schemaLocation & @referredType are related to the Attachment entity and not the AttachmentRefOrValue class itself.                                                                |
-| certificateNumber | A String. Identifier of a document that shows proof of exemption from taxes for the taxing jurisdiction.                                                                                                                                     |
-| id                | A String. Identifier of the tax exemption within list of the exemptions.                                                                                                                                                                   |
-| issuingJurisdiction| A String. Name of the jurisdiction that issued the exemption.                                                                                                                                                                            |
-| reason            | A String. Reason for the tax exemption.                                                                                                                                                                                                  |
-| taxDefinition     | A TaxDefinition. A list of taxes that are covered by the exemption, e.g. City Tax, State Tax. The definition would include the exemption (e.g. for a rate exemption 0% would be a full exemption, 5% could be a partial exemption if the actual rate was 10%). |
-| validFor          | A TimePeriod. A period of time, either as a deadline (endDateTime only) a startDateTime only, or both.                                                                                                                                     |
-| @baseType         | A String. When sub-classing, this defines the super-class.                                                                                                                                                                               |
-| @schemaLocation   | A String. A URI to a JSON-Schema file that defines additional attributes and relationships.                                                                                                                                              |
-| @type             | A String. When sub-classing, this defines the sub-class Extensible name.                                                                                                                                                                   |
-
-## Json representation sample(s)
+#### Resource model
+
+[Figure: Figure 1 - Individual. UML class diagram showing the `Individual` class inheriting from the abstract `Party` class. `Party` has attributes like `contactMedium`, `creditRating`, `externalReference`, `href`, `id`, `partyCharacteristic`, `relatedParty`, `taxExemptionCertificate`, `@baseType`, `@schemaLocation`, `@type`, `discriminator`, `Organization`, `Individual`. `Individual` has attributes like `aristocraticTitle`, `birthDate`, `deathDate`, `familyName`, `familyNamePrefix`, `formattedName`, `fullName`, `gender`, `generation`, `givenName`, `legalName`, `location`, `maritalStatus`, `middleName`, `name`, `nationality`, `placeOfBirth`, `preferredGivenName`, `status`, `title`. It also has relationships to `Disability`, `LanguageAbility`, `IndividualIdentification`, `OtherNameIndividual`, `Skill`, and `AttachmentRefOrValue` (via `IndividualIdentification`). Includes an enumeration `IndividualStateType` (deceased, initialized, validated). A color legend indicates Resource (entity point), Sub-resource, Sub-resource (reference entity), Sub-resource with details in separate diagram, and Mandatory property.]
+
+[Figure: Figure 2 - ContactMedium. UML class diagram showing the abstract `ContactMedium` class with attributes `contactType`, `id`, `preferred`, `validFor`, `@schemaLocation`, `@type`, `discriminator`, and specializations: `GeographicAddressContactMedium`, `EmailContactMedium`, `PhoneContactMedium`, `SocialContactMedium`, `FaxContactMedium`. `GeographicAddressContactMedium` has attributes `city`, `country`, `postCode`, `stateOrProvince`, `street1`, `street2` and a relationship to `GeographicAddressRef`. `EmailContactMedium` has `emailAddress`. `PhoneContactMedium` has `phoneNumber`. `SocialContactMedium` has `socialNetworkId`. `FaxContactMedium` has `faxNumber`. `GeographicAddressRef` has `href`, `id`, `name`, `@baseType`, `@referredType`, `@schemaLocation`, `@type`. A color legend indicates Sub-resource and Mandatory property.]
+
+[Figure: Figure 3 - Party. UML class diagram focusing on the abstract `Party` class and its direct associations. `Party` has relationships to `ContactMedium [0..*]`, `PartyCreditProfile [0..*]`, `ExternalIdentifier [0..*]`, `RelatedPartyOrPartyRole [0..*]`, `Characteristic [0..*]`, and `TaxExemptionCertificate [0..*]`. `PartyCreditProfile` has attributes like `creditAgencyName`, `href`, `id`, `ratingScore`. `ExternalIdentifier` has attributes like `externalIdentifierType`, `id`, `owner`. `TaxExemptionCertificate` has attributes like `certificateNumber`, `issuingJurisdiction`, `reason`, `validFor`, `id` and relationships to `TaxDefinition [1..*]` and `Attachment` (polymorphic). `TaxDefinition` has `id`, `jurisdictionLevel`, `jurisdictionName`, `name`, `taxType`, `validFor`. `RelatedPartyOrPartyRole` has `role`. `PartyOrPartyRole` is shown as an abstract class with specializations `PartyRole` (not detailed) and references like `Consumer`, `BusinessPartner`, `PartyRoleRef`. `Characteristic` has relationships to `CharacteristicRelationship`. `Attachment` has `attachmentType`, `content`, `description`, `href`, `id`, `mimeType`, `name`, `size`, `url`, `validFor`. `AttachmentRefOrValue` is shown as a polymorphic reference potentially pointing to `Attachment` or `AttachmentRef`. A color legend indicates Resource (entity point), Sub-resource, Sub-resource (reference entity), Sub-resource with details in separate diagram, and Mandatory property.]
+
+[Figure: Figure 4 - Characteristic. UML class diagram detailing the `Characteristic` hierarchy. The base `Characteristic` class has `id`, `name`, `valueType`, `@baseType`, `@schemaLocation`, `@type`, and relationships to `CharacteristicRelationship`. Specializations include `IntegerCharacteristic`, `StringArrayCharacteristic`, `IntegerArrayCharacteristic`, `StringCharacteristic`, `ObjectCharacteristic`, `ObjectArrayCharacteristic`, `FloatCharacteristic`, `NumberArrayCharacteristic`, `BooleanCharacteristic`, `NumberCharacteristic`. Each specialization typically adds a `value` attribute of the corresponding type. `CharacteristicRelationship` has `id`, `relationshipType`, `@baseType`, `@schemaLocation`, `@type`. A color legend indicates Sub-resource, Sub-resource (reference entity), and Sub-resource (sub-graph in current diagram).]
+
+### Field descriptions
+
+#### Individual fields
+
+**aristocraticTitle**
+A String. E.g. Baron, Graf, Earl.
+
+**birthDate**
+A DateTime. Birth date.
+
+**contactMedium**
+A ContactMedium. List of means for contacting the party, e.g. mobile phone, email address.
+
+**countryOfBirth**
+A String. Country where the individual was born.
+
+**creditRating**
+A PartyCreditProfile. List of credit profiles and scores for the party, typically received from an external credit broker.
+
+**deathDate**
+A DateTime. Date of death.
+
+**disability**
+A Disability. List of disabilities suffered by the individual.
+
+**externalReference**
+An ExternalIdentifier. List of identifiers of the Party in an external system, for example when party information is imported from a commerce system.
+
+**familyName**
+A String. Contains the non-chosen or inherited name. Also known as last name in the Western context.
+
+**familyNamePrefix**
+A String. Family name prefix.
+
+**formattedName**
+A String. A fully formatted name in one string with all of its pieces in their proper place and all of the necessary punctuation. Useful for specific contexts (Chinese, Japanese, Korean).
+
+**gender**
+A String. Gender.
+
+**generation**
+A String. E.g.. Sr, Jr, III (the third).
+
+**givenName**
+A String. First name of the individual.
+
+**href**
+A String. Hyperlink reference.
+
+**id**
+A String. Unique identifier.
+
+**individualIdentification**
+An IndividualIdentification. List of official identifications issued to the individual, such as passport, driving licence, social security number.
+
+**languageAbility**
+A LanguageAbility. List of national languages known by the individual.
+
+**legalName**
+A String. Legal name or birth name (name one has for official purposes).
+
+**location**
+A String. Temporary current location of the individual (may be used if the individual has approved its sharing).
+
+**maritalStatus**
+A String. Marital status (married, divorced, widow …).
+
+**middleName**
+A String. Middles name or initial.
+
+**name**
+A String. Full name flatten (first, middle, and last names) - this is the name that is expected to be presented in reference data types such as PartyRef, RelatedParty, etc. that refer to Individual.
+
+**nationality**
+A String. Nationality.
+
+**otherName**
+An OtherNameIndividual. List of other names by which this individual is known.
+
+**partyCharacteristic**
+A Characteristic. List of additional characteristics that a Party can take on.
+
+**placeOfBirth**
+A String. Reference to the place where the individual was born.
+
+**preferredGivenName**
+A String. Contains the chosen name by which the individual prefers to be addressed. Note: This name may be a name other than a given name, such as a nickname.
+
+**relatedParty**
+A RelatedPartyOrPartyRole. List of parties and/or party roles related to this party.
+
+**skill**
+A Skill. List of skills exhibited by the individual.
+
+**status**
+An IndividualStateType. Valid values for the lifecycle state of the individual.
+
+**taxExemptionCertificate**
+A TaxExemptionCertificate. List of tax exemptions granted to the party. For example, a war veteran might have partial exemption from state tax and a full exemption from federal tax.
+
+**title**
+A String. Useful for titles (aristocratic, social,…) Pr, Dr, Sir, …
+
+**@baseType**
+A String. When sub-classing, this defines the super-class.
+
+**@schemaLocation**
+A String. A URI to a JSON-Schema file that defines additional attributes and relationships.
+
+**@type**
+A String. When sub-classing, this defines the sub-class Extensible name.
+
+#### Attachment sub-resource fields
+
+**attachmentType**
+A String. A business characterization of the purpose of the attachment, for example logo, instructionManual, contractCopy.
+
+**content**
+A Base64. The actual contents of the attachment object, if embedded, encoded as base64.
+
+**description**
+A String. A narrative text describing the content of the attachment.
+
+**href**
+A String. Hyperlink reference.
+
+**id**
+A String. Unique identifier.
+
+**mimeType**
+A String. A technical characterization of the attachment content format using IETF Mime Types.
+
+**name**
+A String. The name of the attachment.
+
+**size**
+A Quantity. An amount in a given unit.
+
+**url**
+A String. Uniform Resource Locator, is a web page address (a subset of URI).
+
+**validFor**
+A TimePeriod. A period of time, either as a deadline (endDateTime only) a startDateTime only, or both.
+
+**@baseType**
+A String. When sub-classing, this defines the super-class.
+
+**@schemaLocation**
+A String. A URI to a JSON-Schema file that defines additional attributes and relationships.
+
+**@type**
+A String. When sub-classing, this defines the sub-class Extensible name.
+
+#### AttachmentRef sub-resource fields
+
+**description**
+A String. A narrative text describing the content of the attachment.
+
+**href**
+A String. Hyperlink reference.
+
+**id**
+A String. Unique identifier.
+
+**name**
+A String. Name of the referred entity.
+
+**url**
+A String. Link to the attachment media/content.
+
+**@baseType**
+A String. When sub-classing, this defines the super-class.
+
+**@referredType**
+A String. The actual type of the target instance when needed for disambiguation.
+
+**@schemaLocation**
+A String. A URI to a JSON-Schema file that defines additional attributes and relationships.
+
+**@type**
+A String. When sub-classing, this defines the sub-class Extensible name.
+
+#### BooleanCharacteristic sub-resource fields
+
+**characteristicRelationship**
+A CharacteristicRelationship. Another Characteristic that is related to the current Characteristic;.
+
+**id**
+A String. Unique identifier of the characteristic.
+
+**name**
+A String. Name of the characteristic.
+
+**value**
+A Boolean. Value of the characteristic.
+
+**valueType**
+A String. Data type of the value of the characteristic.
+
+**@baseType**
+A String. When sub-classing, this defines the super-class.
+
+**@schemaLocation**
+A String. A URI to a JSON-Schema file that defines additional attributes and relationships.
+
+**@type**
+A String. When sub-classing, this defines the sub-class Extensible name.
+
+#### Characteristic sub-resource fields
+
+**characteristicRelationship**
+A CharacteristicRelationship. Another Characteristic that is related to the current Characteristic;.
+
+**id**
+A String. Unique identifier of the characteristic.
+
+**name**
+A String. Name of the characteristic.
+
+**valueType**
+A String. Data type of the value of the characteristic.
+
+**@baseType**
+A String. When sub-classing, this defines the super-class.
+
+**@schemaLocation**
+A String. A URI to a JSON-Schema file that defines additional attributes and relationships.
+
+**@type**
+A String. When sub-classing, this defines the sub-class Extensible name.
+
+#### CharacteristicRelationship sub-resource fields
+
+**id**
+A String. Unique identifier of the characteristic.
+
+**relationshipType**
+A String. The type of relationship.
+
+**@baseType**
+A String. When sub-classing, this defines the super-class.
+
+**@schemaLocation**
+A String. A URI to a JSON-Schema file that defines additional attributes and relationships.
+
+**@type**
+A String. When sub-classing, this defines the sub-class Extensible name.
+
+#### ContactMedium sub-resource fields
+
+**contactType**
+A String. Type of the contact medium to qualifiy it like pro email / personal email. This is not used to define the contact medium used.
+
+**id**
+A String. Identifier for this contact medium.
+
+**preferred**
+A Boolean. If true, indicates that is the preferred contact medium.
+
+**validFor**
+A TimePeriod. A period of time, either as a deadline (endDateTime only) a startDateTime only, or both.
+
+**@baseType**
+A String. When sub-classing, this defines the super-class.
+
+**@schemaLocation**
+A String. A URI to a JSON-Schema file that defines additional attributes and relationships.
+
+**@type**
+A String. When sub-classing, this defines the sub-class Extensible name.
+
+#### Disability sub-resource fields
+
+**disabilityCode**
+A String. Code of the disability.
+
+**disabilityName**
+A String. Name of the disability.
+
+**validFor**
+A TimePeriod. A period of time, either as a deadline (endDateTime only) a startDateTime only, or both.
+
+#### EmailContactMedium sub-resource fields
+
+**contactType**
+A String. Type of the contact medium to qualifiy it like pro email / personal email. This is not used to define the contact medium used.
+
+**emailAddress**
+A String. Full email address in standard format.
+
+**id**
+A String. Identifier for this contact medium.
+
+**preferred**
+A Boolean. If true, indicates that is the preferred contact medium.
+
+**validFor**
+A TimePeriod. A period of time, either as a deadline (endDateTime only) a startDateTime only, or both.
+
+**@baseType**
+A String. When sub-classing, this defines the super-class.
+
+**@schemaLocation**
+A String. A URI to a JSON-Schema file that defines additional attributes and relationships.
+
+**@type**
+A String. When sub-classing, this defines the sub-class Extensible name.
+
+#### ExternalIdentifier sub-resource fields
+
+**externalIdentifierType**
+A String. Type of the identification, typically would be the type of the entity within the external system.
+
+**id**
+A String. Identification of the entity within the external system.
+
+**owner**
+A String. Name of the external system that owns the entity.
+
+**@baseType**
+A String. When sub-classing, this defines the super-class.
+
+**@schemaLocation**
+A String. A URI to a JSON-Schema file that defines additional attributes and relationships.
+
+**@type**
+A String. When sub-classing, this defines the sub-class Extensible name.
+
+#### FaxContactMedium sub-resource fields
+
+**contactType**
+A String. Type of the contact medium to qualifiy it like pro email / personal email. This is not used to define the contact medium used.
+
+**faxNumber**
+A String. The fax number of the contact.
+
+**id**
+A String. Identifier for this contact medium.
+
+**preferred**
+A Boolean. If true, indicates that is the preferred contact medium.
+
+**validFor**
+A TimePeriod. A period of time, either as a deadline (endDateTime only) a startDateTime only, or both.
+
+**@baseType**
+A String. When sub-classing, this defines the super-class.
+
+**@schemaLocation**
+A String. A URI to a JSON-Schema file that defines additional attributes and relationships.
+
+**@type**
+A String. When sub-classing, this defines the sub-class Extensible name.
+
+#### FloatCharacteristic sub-resource fields
+
+**characteristicRelationship**
+A CharacteristicRelationship. Another Characteristic that is related to the current Characteristic;.
+
+**id**
+A String. Unique identifier of the characteristic.
+
+**name**
+A String. Name of the characteristic.
+
+**value**
+A Float. Value of the characteristic.
+
+**valueType**
+A String. Data type of the value of the characteristic.
+
+**@baseType**
+A String. When sub-classing, this defines the super-class.
+
+**@schemaLocation**
+A String. A URI to a JSON-Schema file that defines additional attributes and relationships.
+
+**@type**
+A String. When sub-classing, this defines the sub-class Extensible name.
+
+#### GeographicAddressContactMedium sub-resource fields
+
+**city**
+A String. The city.
+
+**contactType**
+A String. Type of the contact medium to qualifiy it like pro email / personal email. This is not used to define the contact medium used.
+
+**country**
+A String. The country.
+
+**geographicAddress**
+A GeographicAddressRef. Reference to a Geographic Address.
+
+**id**
+A String. Identifier for this contact medium.
+
+**postCode**
+A String. Postcode.
+
+**preferred**
+A Boolean. If true, indicates that is the preferred contact medium.
+
+**stateOrProvince**
+A String. State or province.
+
+**street1**
+A String. Describes the street.
+
+**street2**
+A String. Complementary street description.
+
+**validFor**
+A TimePeriod. A period of time, either as a deadline (endDateTime only) a startDateTime only, or both.
+
+**@baseType**
+A String. When sub-classing, this defines the super-class.
+
+**@schemaLocation**
+A String. A URI to a JSON-Schema file that defines additional attributes and relationships.
+
+**@type**
+A String. When sub-classing, this defines the sub-class Extensible name.
+
+#### GeographicAddressRef sub-resource fields
+
+**href**
+A String. Hyperlink reference.
+
+**id**
+A String. Unique identifier.
+
+**name**
+A String. Name of the referred entity.
+
+**@baseType**
+A String. When sub-classing, this defines the super-class.
+
+**@referredType**
+A String. The actual type of the target instance when needed for disambiguation.
+
+**@schemaLocation**
+A String. A URI to a JSON-Schema file that defines additional attributes and relationships.
+
+**@type**
+A String. When sub-classing, this defines the sub-class Extensible name.
+
+#### IndividualIdentification sub-resource fields
+
+**attachment**
+An AttachmentRefOrValue. The polymorphic attributes @type, @schemaLocation & @referredType are related to the Attachment entity and not the AttachmentRefOrValue class itself.
+
+**identificationId**
+A String. Identifier.
+
+**identificationType**
+A String. Identification type (passport, national identity card, drivers license, social security number, birth certificate).
+
+**issuingAuthority**
+A String. Authority which has issued the identifier, such as: social security, town hall.
+
+**issuingDate**
+A DateTime. Date at which the identifier was issued.
+
+**validFor**
+A TimePeriod. A period of time, either as a deadline (endDateTime only) a startDateTime only, or both.
+
+**@baseType**
+A String. When sub-classing, this defines the super-class.
+
+**@schemaLocation**
+A String. A URI to a JSON-Schema file that defines additional attributes and relationships.
+
+**@type**
+A String. When sub-classing, this defines the sub-class Extensible name.
+
+#### IntegerArrayCharacteristic sub-resource fields
+
+**characteristicRelationship**
+A CharacteristicRelationship. Another Characteristic that is related to the current Characteristic;.
+
+**id**
+A String. Unique identifier of the characteristic.
+
+**name**
+A String. Name of the characteristic.
+
+**value**
+An Integer.
+
+**valueType**
+A String. Data type of the value of the characteristic.
+
+**@baseType**
+A String. When sub-classing, this defines the super-class.
+
+**@schemaLocation**
+A String. A URI to a JSON-Schema file that defines additional attributes and relationships.
+
+**@type**
+A String. When sub-classing, this defines the sub-class Extensible name.
+
+#### IntegerCharacteristic sub-resource fields
+
+**characteristicRelationship**
+A CharacteristicRelationship. Another Characteristic that is related to the current Characteristic;.
+
+**id**
+A String. Unique identifier of the characteristic.
+
+**name**
+A String. Name of the characteristic.
+
+**value**
+An Integer. Value of the characteristic.
+
+**valueType**
+A String. Data type of the value of the characteristic.
+
+**@baseType**
+A String. When sub-classing, this defines the super-class.
+
+**@schemaLocation**
+A String. A URI to a JSON-Schema file that defines additional attributes and relationships.
+
+**@type**
+A String. When sub-classing, this defines the sub-class Extensible name.
+
+#### LanguageAbility sub-resource fields
+
+**isFavouriteLanguage**
+A Boolean. A ?true? value specifies whether the language is considered by the individual as his favourite one.
+
+**languageCode**
+A String. Language code (RFC 5646).
+
+**languageName**
+A String. Language name.
+
+**listeningProficiency**
+A String. Listening proficiency evaluated for this language.
+
+**readingProficiency**
+A String. Reading proficiency evaluated for this language.
+
+**speakingProficiency**
+A String. Speaking proficiency evaluated for this language.
+
+**validFor**
+A TimePeriod. A period of time, either as a deadline (endDateTime only) a startDateTime only, or both.
+
+**writingProficiency**
+A String. Writing proficiency evaluated for this language.
+
+#### NumberArrayCharacteristic sub-resource fields
+
+**characteristicRelationship**
+A CharacteristicRelationship. Another Characteristic that is related to the current Characteristic;.
+
+**id**
+A String. Unique identifier of the characteristic.
+
+**name**
+A String. Name of the characteristic.
+
+**value**
+A Number.
+
+**valueType**
+A String. Data type of the value of the characteristic.
+
+**@baseType**
+A String. When sub-classing, this defines the super-class.
+
+**@schemaLocation**
+A String. A URI to a JSON-Schema file that defines additional attributes and relationships.
+
+**@type**
+A String. When sub-classing, this defines the sub-class Extensible name.
+
+#### NumberCharacteristic sub-resource fields
+
+**characteristicRelationship**
+A CharacteristicRelationship. Another Characteristic that is related to the current Characteristic;.
+
+**id**
+A String. Unique identifier of the characteristic.
+
+**name**
+A String. Name of the characteristic.
+
+**value**
+A Number. Value of the characteristic.
+
+**valueType**
+A String. Data type of the value of the characteristic.
+
+**@baseType**
+A String. When sub-classing, this defines the super-class.
+
+**@schemaLocation**
+A String. A URI to a JSON-Schema file that defines additional attributes and relationships.
+
+**@type**
+A String. When sub-classing, this defines the sub-class Extensible name.
+
+#### ObjectArrayCharacteristic sub-resource fields
+
+**characteristicRelationship**
+A CharacteristicRelationship. Another Characteristic that is related to the current Characteristic;.
+
+**id**
+A String. Unique identifier of the characteristic.
+
+**name**
+A String. Name of the characteristic.
+
+**value**
+An object.
+
+**valueType**
+A String. Data type of the value of the characteristic.
+
+**@baseType**
+A String. When sub-classing, this defines the super-class.
+
+**@schemaLocation**
+A String. A URI to a JSON-Schema file that defines additional attributes and relationships.
+
+**@type**
+A String. When sub-classing, this defines the sub-class Extensible name.
+
+#### ObjectCharacteristic sub-resource fields
+
+**characteristicRelationship**
+A CharacteristicRelationship. Another Characteristic that is related to the current Characteristic;.
+
+**id**
+A String. Unique identifier of the characteristic.
+
+**name**
+A String. Name of the characteristic.
+
+**value**
+An object. Value of the characteristic.
+
+**valueType**
+A String. Data type of the value of the characteristic.
+
+**@baseType**
+A String. When sub-classing, this defines the super-class.
+
+**@schemaLocation**
+A String. A URI to a JSON-Schema file that defines additional attributes and relationships.
+
+**@type**
+A String. When sub-classing, this defines the sub-class Extensible name.
+
+#### OtherNameIndividual sub-resource fields
+
+**aristocraticTitle**
+A String. E.g. Baron, Graf, Earl, etc.
+
+**familyName**
+A String. Contains the non-chosen or inherited name. Also known as last name in the Western context.
+
+**familyNamePrefix**
+A String. Family name prefix.
+
+**formattedName**
+A String. . A fully formatted name in one string with all of its pieces in their proper place and all of the necessary punctuation. Useful for specific contexts (Chinese, Japanese, Korean, etc.).
+
+**fullName**
+A String. Full name flatten (first, middle, and last names).
+
+**generation**
+A String. E.g. Sr, Jr, etc.
+
+**givenName**
+A String. First name.
+
+**legalName**
+A String. Legal name or birth name (name one has for official purposes).
+
+**middleName**
+A String. Middle name or initial.
+
+**preferredGivenName**
+A String. Contains the chosen name by which the person prefers to be addressed. Note: This name may be a name other than a given name, such as a nickname.
+
+**title**
+A String. Use for titles (aristrocatic, social, …): Pr, Dr, Sir,….
+
+**validFor**
+A TimePeriod. A period of time, either as a deadline (endDateTime only) a startDateTime only, or both.
+
+#### Party sub-resource fields
+
+**contactMedium**
+A ContactMedium. List of means for contacting the party, e.g. mobile phone, email address.
+
+**creditRating**
+A PartyCreditProfile. List of credit profiles and scores for the party, typically received from an external credit broker.
+
+**externalReference**
+An ExternalIdentifier. List of identifiers of the Party in an external system, for example when party information is imported from a commerce system.
+
+**href**
+A String. Hyperlink reference.
+
+**id**
+A String. Unique identifier.
+
+**partyCharacteristic**
+A Characteristic. List of additional characteristics that a Party can take on.
+
+**relatedParty**
+A RelatedPartyOrPartyRole. List of parties and/or party roles related to this party.
+
+**taxExemptionCertificate**
+A TaxExemptionCertificate. List of tax exemptions granted to the party. For example, a war veteran might have partial exemption from state tax and a full exemption from federal tax.
+
+**@baseType**
+A String. When sub-classing, this defines the super-class.
+
+**@schemaLocation**
+A String. A URI to a JSON-Schema file that defines additional attributes and relationships.
+
+**@type**
+A String. When sub-classing, this defines the sub-class Extensible name.
+
+#### PartyCreditProfile sub-resource fields
+
+**creditAgencyName**
+A String. Name of the credit agency giving the score.
+
+**creditAgencyType**
+A String. Type of the credit agency giving the score.
+
+**href**
+A String. Hyperlink reference.
+
+**id**
+A String. Unique identifier.
+
+**ratingReference**
+A String. Reference corresponding to the credit rating.
+
+**ratingScore**
+An Integer32. A measure of a party's creditworthiness calculated on the basis of a combination of factors such as their income and credit history.
+
+**validFor**
+A TimePeriod. A period of time, either as a deadline (endDateTime only) a startDateTime only, or both.
+
+**@baseType**
+A String. When sub-classing, this defines the super-class.
+
+**@schemaLocation**
+A String. A URI to a JSON-Schema file that defines additional attributes and relationships.
+
+**@type**
+A String. When sub-classing, this defines the sub-class Extensible name.
+
+#### PhoneContactMedium sub-resource fields
+
+**contactType**
+A String. Type of the contact medium to qualifiy it like pro email / personal email. This is not used to define the contact medium used.
+
+**id**
+A String. Identifier for this contact medium.
+
+**phoneNumber**
+A String. The phone number of the contact.
+
+**preferred**
+A Boolean. If true, indicates that is the preferred contact medium.
+
+**validFor**
+A TimePeriod. A period of time, either as a deadline (endDateTime only) a startDateTime only, or both.
+
+**@baseType**
+A String. When sub-classing, this defines the super-class.
+
+**@schemaLocation**
+A String. A URI to a JSON-Schema file that defines additional attributes and relationships.
+
+**@type**
+A String. When sub-classing, this defines the sub-class Extensible name.
+
+#### RelatedPartyOrPartyRole sub-resource fields
+
+**partyOrPartyRole**
+A PartyOrPartyRole.
+
+**role**
+A String. Role played by the related party or party role in the context of the specific entity it is linked to. Such as 'initiator', 'customer', 'salesAgent', 'user'.
+
+**@baseType**
+A String. When sub-classing, this defines the super-class.
+
+**@schemaLocation**
+A String. A URI to a JSON-Schema file that defines additional attributes and relationships.
+
+**@type**
+A String. When sub-classing, this defines the sub-class Extensible name.
+
+#### Skill sub-resource fields
+
+**comment**
+A String. A free text comment linked to the evaluation done.
+
+**evaluatedLevel**
+A String. Level of expertise in a skill evaluated for an individual.
+
+**skillCode**
+A String. Code of the skill.
+
+**skillName**
+A String. Name of the skill, such as Java language.
+
+**validFor**
+A TimePeriod. A period of time, either as a deadline (endDateTime only) a startDateTime only, or both.
+
+#### SocialContactMedium sub-resource fields
+
+**contactType**
+A String. Type of the contact medium to qualifiy it like pro email / personal email. This is not used to define the contact medium used.
+
+**id**
+A String. Identifier for this contact medium.
+
+**preferred**
+A Boolean. If true, indicates that is the preferred contact medium.
+
+**socialNetworkId**
+A String. Identifier as a member of a social network.
+
+**validFor**
+A TimePeriod. A period of time, either as a deadline (endDateTime only) a startDateTime only, or both.
+
+**@baseType**
+A String. When sub-classing, this defines the super-class.
+
+**@schemaLocation**
+A String. A URI to a JSON-Schema file that defines additional attributes and relationships.
+
+**@type**
+A String. When sub-classing, this defines the sub-class Extensible name.
+
+#### StringArrayCharacteristic sub-resource fields
+
+**characteristicRelationship**
+A CharacteristicRelationship. Another Characteristic that is related to the current Characteristic;.
+
+**id**
+A String. Unique identifier of the characteristic.
+
+**name**
+A String. Name of the characteristic.
+
+**value**
+A String.
+
+**valueType**
+A String. Data type of the value of the characteristic.
+
+**@baseType**
+A String. When sub-classing, this defines the super-class.
+
+**@schemaLocation**
+A String. A URI to a JSON-Schema file that defines additional attributes and relationships.
+
+**@type**
+A String. When sub-classing, this defines the sub-class Extensible name.
+
+#### StringCharacteristic sub-resource fields
+
+**characteristicRelationship**
+A CharacteristicRelationship. Another Characteristic that is related to the current Characteristic;.
+
+**id**
+A String. Unique identifier of the characteristic.
+
+**name**
+A String. Name of the characteristic.
+
+**value**
+A String. Value of the characteristic.
+
+**valueType**
+A String. Data type of the value of the characteristic.
+
+**@baseType**
+A String. When sub-classing, this defines the super-class.
+
+**@schemaLocation**
+A String. A URI to a JSON-Schema file that defines additional attributes and relationships.
+
+**@type**
+A String. When sub-classing, this defines the sub-class Extensible name.
+
+#### TaxDefinition sub-resource fields
+
+**id**
+A String. Unique identifier of the tax.
+
+**jurisdictionLevel**
+A String. Level of the jurisdiction that levies the tax.
+
+**jurisdictionName**
+A String. Name of the jurisdiction that levies the tax.
+
+**name**
+A String. Tax name.
+
+**taxType**
+A String. Type of the tax.
+
+**validFor**
+A TimePeriod. A period of time, either as a deadline (endDateTime only) a startDateTime only, or both.
+
+**@baseType**
+A String. When sub-classing, this defines the super-class.
+
+**@schemaLocation**
+A String. A URI to a JSON-Schema file that defines additional attributes and relationships.
+
+**@type**
+A String. When sub-classing, this defines the sub-class Extensible name.
+
+#### TaxExemptionCertificate sub-resource fields
+
+**attachment**
+An AttachmentRefOrValue. The polymorphic attributes @type, @schemaLocation & @referredType are related to the Attachment entity and not the AttachmentRefOrValue class itself.
+
+**certificateNumber**
+A String. Identifier of a document that shows proof of exemption from taxes for the taxing jurisdiction.
+
+**id**
+A String. Identifier of the tax exemption within list of the exemptions.
+
+**issuingJurisdiction**
+A String. Name of the jurisdiction that issued the exemption.
+
+**reason**
+A String. Reason for the tax exemption.
+
+**taxDefinition**
+A TaxDefinition. A list of taxes that are covered by the exemption, e.g. City Tax, State Tax. The definition would include the exemption (e.g. for a rate exemption 0% would be a full exemption, 5% could be a partial exemption if the actual rate was 10%).
+
+**validFor**
+A TimePeriod. A period of time, either as a deadline (endDateTime only) a startDateTime only, or both.
+
+**@baseType**
+A String. When sub-classing, this defines the super-class.
+
+**@schemaLocation**
+A String. A URI to a JSON-Schema file that defines additional attributes and relationships.
+
+**@type**
+A String. When sub-classing, this defines the sub-class Extensible name.
+
+#### Json representation sample(s)
 
 We provide below a JSON representation as example of the 'Individual' resource object.
 
 ```json
- {
+{
   "id": "42",
   "href": "https://serverRoot/tmf-api/party/v5/individual/42",
   "@type": "Individual",
@@ -1089,1092 +1145,1129 @@ We provide below a JSON representation as example of the 'Individual' resource o
   "formattedName": "Jane Smith ep Lamborgizzia",
   "status": "validated",
   "externalReference": [
-   {
-    "name": "http://facebook.com/17263635",
-    "externalIdentifierType": "facebookId",
-    "@type": "ExternalIdentifier"
-   },
-   {
-    "name": "http://google.com/17263635",
-    "externalIdentifierType": "googleId",
-    "@type": "ExternalIdentifier"
-   }
+    {
+      "name": "http://facebook.com/17263635",
+      "externalIdentifierType": "facebookId",
+      "@type": "ExternalIdentifier"
+    },
+    {
+      "name": "http://google.com/17263635",
+      "externalIdentifierType": "googleId",
+      "@type": "ExternalIdentifier"
+    }
   ],
   "partyCharacteristic": [
-   {
-    "name": "hobby",
-    "value": [
-     "Modern Jazz",
-     "Cinema"
-    ],
-    "valueType": "array",
-    "@type": "StringArrayCharacteristic"
-   },
-   {
-    "name": "childrenNumber",
-    "value": 1,
-    "valueType": "number",
-    "@type": "IntegerCharacteristic"
-   }
+    {
+      "name": "hobby",
+      "value": ["Modern Jazz","Cinema"],
+      "valueType": "array",
+      "@type": "StringArrayCharacteristic"
+    },
+    {
+      "name": "childrenNumber",
+      "value": 1,
+      "valueType": "number",
+      "@type": "IntegerCharacteristic"
+    }
   ],
   "otherName": [
-   {
-    "@type": "OtherNameIndividual",
-    "givenName": "Jane",
-    "familyName": "Smith",
-    "validFor": {
-     "startDateTime": "1967-09-26T00:00:00.246Z",
-     "endDateTime": "2015-06-15T00:00:00.246Z"
+    {
+      "@type": "OtherNameIndividual",
+      "givenName": "Jane",
+      "familyName": "Smith",
+      "validFor": {
+        "startDateTime": "1967-09-26T00:00:00.246Z",
+        "endDateTime": "2015-06-15T00:00:00.246Z"
+      }
     }
-   }
   ],
   "individualIdentification": [
-   {
-    "@type": "IndividualIdentification",
-    "identificationType": "passport",
-    "identificationId": "51DD1234",
-    "issuingAuthority": "US Government",
-    "issuingDate": "2017-10-22T07:49:25.246Z",
-    "validFor": {
-     "startDateTime": "2017-10-22T07:49:25.246Z",
-     "endDateTime": "2027-10-21T07:49:25.246Z"
-    },
-    "attachment": {
-     "@type": "Attachment",
-     "attachmentType": "passportCopy",
-     "name": "PassportCopy321.pdf",
-     "description": "Scanned copy of the passport",
-     "mimeType": "application/pdf",
-     "url": "http://DocumentManager/321/PassportCopy321.pdf"
+    {
+      "@type": "IndividualIdentification",
+      "identificationType": "passport",
+      "identificationId": "51DD1234",
+      "issuingAuthority": "US Government",
+      "issuingDate": "2017-10-22T07:49:25.246Z",
+      "validFor": {
+        "startDateTime": "2017-10-22T07:49:25.246Z",
+        "endDateTime": "2027-10-21T07:49:25.246Z"
+      },
+      "attachment": {
+        "@type": "Attachment",
+        "attachmentType": "passportCopy",
+        "name": "PassportCopy321.pdf",
+        "description": "Scanned copy of the passport",
+        "mimeType": "application/pdf",
+        "url": "http://DocumentManager/321/PassportCopy321.pdf"
+      }
     }
-   }
   ],
   "taxExemptionCertificate": [
-   {
-    "@type": "TaxExemptionCertificate",
-    "id": "1",
-    "validFor": {
-     "startDateTime": "2018-10-22T07:49:25.246Z"
-    },
-    "certificateNumber": "98765432345",
-    "issuingJurisdiction": "USA",
-    "taxDefinition": [
-     {
-      "@type": "TaxDefinitionRef",
-      "id": "96",
-      "name": "Value Added Tax",
-      "taxType": "federalVat"
-     }
-    ],
-    "attachment": {
-     "@type": "Attachment",
-     "attachmentType": "taxExemptionCertificate",
-     "name": "TaxExemptionCertificate-566655.pdf",
-     "description": "Electronic version of the tax exemption certificate",
-     "mimeType": "application/pdf",
-     "url": "https://mycsp.com:8080/DocumentManager/666/TaxExemptionCertificate-566655.pdf"
+    {
+      "@type": "TaxExemptionCertificate",
+      "id": "1",
+      "validFor": {
+        "startDateTime": "2018-10-22T07:49:25.246Z"
+      },
+      "certificateNumber": "98765432345", 
+      "issuingJurisdiction": "USA", 
+      "taxDefinition": [
+        {
+          "@type": "TaxDefinitionRef",
+          "id": "96",
+          "name": "Value Added Tax",
+          "taxType": "federalVat"
+        }
+      ],
+      "attachment": {
+        "@type": "Attachment",
+        "attachmentType": "taxExemptionCertificate",
+        "name": "TaxExemptionCertificate-566655.pdf",
+        "description": "Electronic version of the tax exemption certificate",
+        "mimeType": "application/pdf",
+        "url": "https://mycsp.com:8080/DocumentManager/666/TaxExemptionCertificate-566655.pdf"
+      }
     }
-   }
   ],
   "creditRating": [
-   {
-    "@type": "CreditRating",
-    "creditAgencyName": "Experian",
-    "creditAgencyType": "externalAgency",
-    "ratingReference": "ref123",
-    "ratingScore": 680,
-    "validFor": {
-     "startDateTime": "2018-10-22T07:49:25.246Z"
+    {
+      "@type": "CreditRating",
+      "creditAgencyName": "Experian",
+      "creditAgencyType": "externalAgency",
+      "ratingReference": "ref123",
+      "ratingScore": 680,
+      "validFor": {
+        "startDateTime": "2018-10-22T07:49:25.246Z"
+      }
     }
-   }
   ],
   "relatedParty": [
-   {
-    "role": "employer",
-    "@type": "RelatedPartyRefOrPartyRoleRef",
-    "partyOrPartyRole": {
-     "id": "128",
-     "href": "https://serverRoot/tmf-api/party/v5/organization/128",
-     "name": "Coffee Do Brazil Fair Trade Marketing Department",
-     "@type": "PartyRef",
-     "@referredType": "Organization"
+    {
+      "role": "employer",
+      "@type": "RelatedPartyRefOrPartyRoleRef",
+      "partyOrPartyRole": {
+        "id": "128",
+        "href": "https://serverRoot/tmf-api/party/v5/organization/128",
+        "name": "Coffee Do Brazil Fair Trade Marketing Department",
+        "@type": "PartyRef",
+        "@referredType": "Organization"
+      }
     }
-   }
   ],
   "contactMedium": [
-   {
-    "preferred": true,
-    "mediumType": "email",
-    "validFor": {
-     "startDateTime": "2017-03-15T07:49:25.246Z"
+    {
+      "preferred": true,
+      "mediumType": "email",
+      "validFor": {
+        "startDateTime": "2017-03-15T07:49:25.246Z"
+      },
+      "@type": "EmailContactMedium",
+      "emailAddress": "jane.lamborgizzia@gmail.com"
     },
-    "@type": "EmailContactMedium",
-    "emailAddress": "jane.lamborgizzia@gmail.com"
-   },
-   {
-    "preferred": false,
-    "mediumType": "postalAddress",
-    "validFor": {
-     "startDateTime": "2017-03-15T07:49:25.246Z"
-    },
-    "@type": "GeographicAddressContactMedium",
-    "city": "Morristown",
-    "country": "USA",
-    "postCode": "07960",
-    "stateOrProvince": "New Jersey",
-    "street1": "240 Headquarters Plazza",
-    "street2": "East Tower - 10th Floor"
-   }
+    {
+      "preferred": false,
+      "mediumType": "postalAddress",
+      "validFor": {
+        "startDateTime": "2017-03-15T07:49:25.246Z"
+      },
+      "@type": "GeographicAddressContactMedium",
+      "city": "Morristown",
+      "country": "USA",
+      "postCode": "07960",
+      "stateOrProvince": "New Jersey",
+      "street1": "240 Headquarters Plazza",
+      "street2": "East Tower - 10th Floor"
+    }
   ],
   "disability": [
-   {
-    "disabilityCode": "BLD",
-    "disabilityName": "Blind",
-    "validFor": {
-     "startDateTime": "1967-09-26T07:49:25.246Z"
+    {
+      "disabilityCode": "BLD",
+      "disabilityName": "Blind",
+      "validFor": {
+        "startDateTime": "1967-09-26T07:49:25.246Z"
+      }
     }
-   }
   ],
   "languageAbility": [
-   {
-    "languageCode": "FR",
-    "languageName": "French",
-    "isFavouriteLanguage": true,
-    "writingProficiency": "advanced",
-    "readingProficiency": "advanced",
-    "speakingProficiency": "intermediate",
-    "listeningProficiency": "intermediate",
-    "validFor": {
-     "startDateTime": "2018-10-22T07:49:25.246Z"
+    {
+      "languageCode": "FR",
+      "languageName": "French",
+      "isFavouriteLanguage": true,
+      "writingProficiency": "advanced",
+      "readingProficiency": "advanced",
+      "speakingProficiency": "intermediate",
+      "listeningProficiency": "intermediate",
+      "validFor": {
+        "startDateTime": "2018-10-22T07:49:25.246Z"
+      }
+    },
+    {
+      "languageCode": "SP",
+      "languageName": "Spanish",
+      "isFavouriteLanguage": false,
+      "writingProficiency": "scholar",
+      "readingProficiency": "scholar",
+      "speakingProficiency": "scholar",
+      "listeningProficiency": "scholar",
+      "validFor": {
+        "startDateTime": "2018-10-22T07:49:25.246Z"
+      }
     }
-   },
-   {
-    "languageCode": "SP",
-    "languageName": "Spanish",
-    "isFavouriteLanguage": false,
-    "writingProficiency": "scholar",
-    "readingProficiency": "scholar",
-    "speakingProficiency": "scholar",
-    "listeningProficiency": "scholar",
-    "validFor": {
-     "startDateTime": "2018-10-22T07:49:25.246Z"
-    }
-   }
   ],
   "skill": [
-   {
-    "skillCode": "SK001",
-    "skillName": "marketing",
-    "evaluatedLevel": "Advanced",
-    "comment": "Ten years experience",
-    "validFor": {
-     "startDateTime": "2018-10-22T07:49:25.246Z"
+    {
+      "skillCode": "SK001",
+      "skillName": "marketing",
+      "evaluatedLevel": "Advanced",
+      "comment": "Ten years experience",
+      "validFor": {
+        "startDateTime": "2018-10-22T07:49:25.246Z"
+      }
+    },
+    {
+      "skillCode": "SK002",
+      "skillName": "Project Management",
+      "evaluatedLevel": "newbie",
+      "comment": "First work experience",
+      "validFor": {
+        "startDateTime": "2018-10-22T07:49:25.246Z"
+      }
     }
-   },
-   {
-    "skillCode": "SK002",
-    "skillName": "Project Management",
-    "evaluatedLevel": "newbie",
-    "comment": "First work experience",
-    "validFor": {
-     "startDateTime": "2018-10-22T07:49:25.246Z"
-    }
-   }
   ]
- }
+}
 ```
 
-### Organization resource
+#### Organization resource
 
 Organization represents a group of people identified by shared interests or purpose. Examples include business, department and enterprise. Because of the complex nature of many businesses, both organizations and organization units are represented by the same data.
 
-**Resource model**
-
-```plantuml
-@startuml
-skinparam classAttributeIconSize 0
-
-abstract class Party {
-  contactMedium : ContactMedium [0..*]
-  creditRating : PartyCreditProfile [0..*]
-  externalReference : ExternalIdentifier [0..*]
-  href : String
-  id : String
-  partyCharacteristic : Characteristic [0..*]
-  relatedParty : RelatedPartyOrPartyRole [0..*]
-  taxExemptionCertificate : TaxExemptionCertificate [0..*]
-  '@baseType' : String
-  '@schemaLocation' : String
-  '@type' : String {frozen}
-  discriminator : String
-  +Organization
-  +Individual
-}
-
-class Organization extends Party {
- existsDuring: TimePeriod
- isHeadOffice: Boolean
- isLegalEntity: Boolean
- name: String
- nameType: String
- organizationType: String
- status: OrganizationStateType
- tradingName: String
- '@type': Organization {redefines}
-}
-
-enum OrganizationStateType {
- initialized
- validated
- closed
-}
-
-class OtherNameOrganization {
- name : String
- nameType : String
- tradingName : String
- validFor : TimePeriod
- '@baseType' : String
- '@schemaLocation' : String
- '@type' : String [1]
-}
-
-class OrganizationParentRelationship {
- relationshipType : String
- '@baseType' : String
- '@schemaLocation' : String
- '@type' : String [1]
-}
-
-class OrganizationChildRelationship {
- relationshipType : String
- '@baseType' : String
- '@schemaLocation' : String
- '@type' : String [1]
-}
-
-class OrganizationIdentification {
- attachment : AttachmentRefOrValue [0..1]
- identificationId : String
- identificationType : String
- issuingAuthority : String
- issuingDate : DateTime
- validFor : TimePeriod
- '@baseType' : String
- '@schemaLocation' : String
- '@type' : String [1]
-}
-
-class OrganizationRef {
- href : String
- id : String
- name : String
- '@baseType' : String
- '@referredType' : String
- '@schemaLocation' : String
- '@type' : String [1]
-}
-
-class AttachmentRefOrValue <<(V,orchid)>> {
-  discriminator : String
-  +Attachment
-  +AttachmentRef
-}
-
-class Attachment {
-  attachmentType : String
-  content : Base64
-  description : String
-  href : String
-  id : String
-  mimeType : String
-  name : String
-  size : Quantity
-  url : String
-  validFor : TimePeriod
-  '@baseType' : String
-  '@schemaLocation' : String
-  '@type' : Attachment
-}
-
-class AttachmentRef {
- description : String
- href : String
- id : String
- name : String
- url : String
- '@baseType' : String
- '@referredType' : String
- '@schemaLocation' : String
- '@type' : AttachmentRef
-}
-
-Organization "1" *--> "0..*" OtherNameOrganization : otherName
-Organization "1" *--> "0..1" OrganizationParentRelationship : organizationParentRelationship
-Organization "1" *--> "0..*" OrganizationChildRelationship : organizationChildRelationship
-Organization "1" *--> "0..*" OrganizationIdentification : organizationIdentification
-
-OrganizationParentRelationship "1" --> "0..1" OrganizationRef : organization
-OrganizationChildRelationship "1" --> "0..1" OrganizationRef : organization
-OrganizationIdentification "1" *--> "0..1" AttachmentRefOrValue : attachment
-
-hide empty members
-@enduml
-```
-*Figure 5 - Organization*
-
-```plantuml
-@startuml
-skinparam classAttributeIconSize 0
-
-abstract class ContactMedium {
-  contactType : String
-  id : String
-  preferred : Boolean
-  validFor : TimePeriod
-  '@baseType' : String
-  '@schemaLocation' : String
-  '@type' : String {frozen}
-  discriminator : String
-  + GeographicAddressContactMedium
-  + PhoneContactMedium
-  + SocialContactMedium
-  + EmailContactMedium
-  + FaxContactMedium
-}
-
-class GeographicAddressRef {
-  href : String
-  id : String
-  name : String
-  '@baseType' : String
-  '@referredType' : String
-  '@schemaLocation' : String
-  '@type' : String [1]
-}
-
-class GeographicAddressContactMedium extends ContactMedium {
-  city : String
-  country : String
-  postCode : String
-  stateOrProvince : String
-  street1 : String
-  street2 : String
-  '@type' : GeographicAddressContactMedium {redefines}
-}
-
-class FaxContactMedium extends ContactMedium {
-  faxNumber : String
-  '@type' = FaxContactMedium {redefines}
-}
-
-class EmailContactMedium extends ContactMedium {
-  emailAddress : String
-  '@type' = EmailContactMedium {redefines}
-}
-
-class PhoneContactMedium extends ContactMedium {
-  phoneNumber : String
-  '@type' = PhoneContactMedium {redefines}
-}
-
-class SocialContactMedium extends ContactMedium {
-  socialNetworkId : String
-  '@type' = SocialContactMedium {redefines}
-}
-
-GeographicAddressContactMedium "1" --> "0..1" GeographicAddressRef : geographicAddress
-
-hide empty members
-@enduml
-```
-*Figure 6 - ContactMedium*
-
-```plantuml
-@startuml
-skinparam classAttributeIconSize 0
-
-abstract class Characteristic {
-  id : String
-  name : String
-  valueType : String
-  '@baseType' : String
-  '@schemaLocation' : String
-  '@type' : String [1]
-}
-
-class CharacteristicRelationship {
-  href : String
-  id : String
-  relationshipType : String
-}
-
-Characteristic "1" *--> "0..*" CharacteristicRelationship : characteristicRelationship
-
-abstract class Party {
-  contactMedium : ContactMedium [0..*]
-  creditRating : PartyCreditProfile [0..*]
-  externalReference : ExternalIdentifier [0..*]
-  href : String
-  id : String
-  partyCharacteristic : Characteristic [0..*]
-  relatedParty : RelatedPartyOrPartyRole [0..*]
-  taxExemptionCertificate : TaxExemptionCertificate [0..*]
-  '@baseType' : String
-  '@schemaLocation' : String
-  '@type' : String {frozen}
-  discriminator : String
-  +Organization
-  +Individual
-}
-
-class ExternalIdentifier {
-  externalIdentifierType : String
-  id : String
-  owner : String
-  '@baseType' : String
-  '@schemaLocation' : String
-  '@type' : String [1]
-}
-
-class PartyCreditProfile {
-  creditAgencyName : String
-  creditAgencyType : String
-  href : String
-  id : String
-  ratingReference : String
-  ratingScore : Integer
-  validFor : TimePeriod
-  '@baseType' : String
-  '@schemaLocation' : String
-  '@type' : String [1]
-}
-
-class RelatedPartyOrPartyRole <<(V,orchid)>> {
-  role : String
-  '@baseType' : String
-  '@schemaLocation' : String
-  '@type' : String [1]
-}
-
-class PartyOrPartyRole {
-  discriminator: String
-  +PartyRef
-  +PartyRole
-  +Customer
-  +BusinessPartner
-  +PartyRoleRef
-}
-
-class TaxExemptionCertificate {
-  attachment : AttachmentRefOrValue [0..1]
-  certificateNumber : String
-  id : String
-  issuingJurisdiction : String
-  reason : String
-  validFor : TimePeriod
-  '@baseType' : String
-  '@schemaLocation' : String
-  '@type' : String [1]
-}
-
-class TaxDefinition {
-  id : String
-  jurisdictionLevel : String
-  jurisdictionName : String
-  name : String
-  taxType : String
-  validFor : TimePeriod
-  '@baseType' : String
-  '@schemaLocation' : String
-  '@type' : String [1]
-}
-
-class AttachmentRefOrValue <<(V,orchid)>> {
-  discriminator : String
-  +Attachment
-  +AttachmentRef
-}
-class Attachment {
-  attachmentType : String
-  content : Base64
-  description : String
-  href : String
-  id : String
-  mimeType : String
-  name : String
-  size : Quantity
-  url : String
-  validFor : TimePeriod
-  '@baseType' : String
-  '@schemaLocation' : String
-  '@type' : Attachment
-}
-class AttachmentRef {
- description : String
- href : String
- id : String
- name : String
- url : String
- '@baseType' : String
- '@referredType' : String
- '@schemaLocation' : String
- '@type' : AttachmentRef
-}
-
-abstract class ContactMedium {
-  contactType : String
-  id : String
-  preferred : Boolean
-  validFor : TimePeriod
-  '@baseType' : String
-  '@schemaLocation' : String
-  '@type' : String {frozen}
-  discriminator : String
-  + GeographicAddressContactMedium
-  + PhoneContactMedium
-  + SocialContactMedium
-  + EmailContactMedium
-  + FaxContactMedium
-}
-
-
-Party "1" *--> "0..*" ExternalIdentifier : externalReference
-Party "1" *--> "0..*" PartyCreditProfile : creditRating
-Party "1" *--> "0..*" RelatedPartyOrPartyRole : relatedParty
-Party "1" *--> "0..*" TaxExemptionCertificate : taxExemptionCertificate
-Party "1" *--> "0..*" Characteristic : partyCharacteristic
-Party "1" *--> "0..*" ContactMedium : contactMedium
-TaxExemptionCertificate "1" *--> "0..*" TaxDefinition : taxDefinition
-TaxDefinition "1" *--> "0..1" AttachmentRefOrValue : attachment
-RelatedPartyOrPartyRole "1" *--> "0..1" PartyOrPartyRole : partyOrPartyRole
-
-
-hide empty members
-@enduml
-```
-*Figure 7 - Party*
-
-```plantuml
-@startuml
-skinparam classAttributeIconSize 0
-
-abstract class Characteristic {
-  id : String
-  name : String
-  valueType : String
-  '@baseType' : String
-  '@schemaLocation' : String
-  '@type' : String [1]
-}
-class CharacteristicRelationship {
-  href : String
-  id : String
-  relationshipType : String
-}
-Characteristic "1" *--> "0..*" CharacteristicRelationship : characteristicRelationship
-
-
-class IntegerCharacteristic extends Characteristic {
- value: Integer
- '@type' = IntegerCharacteristic {redefines}
-}
-class StringArrayCharacteristic extends Characteristic {
- value: String[]
- '@type' = StringArrayCharacteristic {redefines}
-}
-class IntegerArrayCharacteristic extends Characteristic {
- value: Integer[]
- '@type' = IntegerArrayCharacteristic {redefines}
-}
-class StringCharacteristic extends Characteristic {
- value: String
- '@type' = StringCharacteristic {redefines}
-}
-class ObjectCharacteristic extends Characteristic {
- value: Object
- '@type' = ObjectCharacteristic {redefines}
-}
-class FloatCharacteristic extends Characteristic {
- value: Float
- '@type' = FloatCharacteristic {redefines}
-}
-class NumberCharacteristic extends Characteristic {
- value: Number
- '@type' = NumberCharacteristic {redefines}
-}
-class BooleanCharacteristic extends Characteristic {
- value: Boolean
- '@type' = BooleanCharacteristic {redefines}
-}
-class ObjectArrayCharacteristic extends Characteristic {
- value: Object[]
- '@type' = ObjectArrayCharacteristic {redefines}
-}
-class NumberArrayCharacteristic extends Characteristic {
- value: Number[]
- '@type' = NumberArrayCharacteristic {redefines}
-}
-
-hide empty members
-@enduml
-```
-*Figure 8 - Characteristic*
-
-## Field descriptions
-
-### Organization fields
-
-| Field                        | Description                                                                                                                                                                                                          |
-| :--------------------------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| contactMedium                | A ContactMedium. List of means for contacting the party, e.g. mobile phone, email address.                                                                                                                            |
-| creditRating                 | A PartyCreditProfile. List of credit profiles and scores for the party, typically received from an external credit broker.                                                                                             |
-| existsDuring                 | A TimePeriod. A period of time, either as a deadline (endDateTime only) a startDateTime only, or both.                                                                                                              |
-| externalReference            | An ExternalIdentifier. List of identifiers of the Party in an external system, for example when party information is imported from a commerce system.                                                                   |
-| href                         | A String. Hyperlink reference.                                                                                                                                                                                       |
-| id                           | A String. Unique identifier.                                                                                                                                                                                         |
-| isHeadOffice                 | A Boolean. If value is true, the organization is the head office.                                                                                                                                                    |
-| isLegalEntity                | A Boolean. If value is true, the organization is a legal entity known by a national referential.                                                                                                                     |
-| name                         | A String. Organization name (department name for example).                                                                                                                                                           |
-| nameType                     | A String. Type of the name : Co, Inc, Ltd, etc.                                                                                                                                                                      |
-| organizationChildRelationship| An OrganizationChildRelationship. List of organizations that are contained within this organization. For example if this organization is the Legal Department, the child organizations might include Claims, Courts, Contracts. |
-| organizationIdentification   | An OrganizationIdentification. List of official identifiers given to the organization, for example company number in the registry of companies.                                                                       |
-| organizationParentRelationship| An OrganizationParentRelationship. Parent references of an organization in a structure of organizations.                                                                                                           |
-| organizationType             | A String. Type of Organization (company, department…).                                                                                                                                                               |
-| otherName                    | An OtherNameOrganization. List of additional names by which the organization is known.                                                                                                                               |
-| partyCharacteristic          | A Characteristic. List of additional characteristics that a Party can take on.                                                                                                                                       |
-| relatedParty                 | A RelatedPartyOrPartyRole. List of parties and/or party roles related to this party.                                                                                                                                 |
-| status                       | An OrganizationStateType. Valid values for the lifecycle state of the organization.                                                                                                                                  |
-| taxExemptionCertificate      | A TaxExemptionCertificate. List of tax exemptions granted to the party. For example, a war veteran might have partial exemption from state tax and a full exemption from federal tax.                                    |
-| tradingName                  | A String. Name that the organization (unit) trades under.                                                                                                                                                            |
-| @baseType                    | A String. When sub-classing, this defines the super-class.                                                                                                                                                           |
-| @schemaLocation              | A String. A URI to a JSON-Schema file that defines additional attributes and relationships.                                                                                                                          |
-| @type                        | A String. When sub-classing, this defines the sub-class Extensible name.                                                                                                                                             |
-
-### Attachment sub-resource fields
-
-| Field          | Description                                                                                                                          |
-| :------------- | :----------------------------------------------------------------------------------------------------------------------------------- |
-| attachmentType | A String. A business characterization of the purpose of the attachment, for example logo, instructionManual, contractCopy.             |
-| content        | A Base64. The actual contents of the attachment object, if embedded, encoded as base64.                                              |
-| description    | A String. A narrative text describing the content of the attachment.                                                                 |
-| href           | A String. Hyperlink reference.                                                                                                       |
-| id             | A String. Unique identifier.                                                                                                         |
-| mimeType       | A String. A technical characterization of the attachment content format using IETF Mime Types.                                       |
-| name           | A String. The name of the attachment.                                                                                                |
-| size           | A Quantity. An amount in a given unit.                                                                                               |
-| url            | A String. Uniform Resource Locator, is a web page address (a subset of URI).                                                         |
-| validFor       | A TimePeriod. A period of time, either as a deadline (endDateTime only) a startDateTime only, or both.                                |
-| @baseType      | A String. When sub-classing, this defines the super-class.                                                                           |
-| @schemaLocation| A String. A URI to a JSON-Schema file that defines additional attributes and relationships.                                          |
-| @type          | A String. When sub-classing, this defines the sub-class Extensible name.                                                             |
-
-### AttachmentRef sub-resource fields
-
-| Field          | Description                                                                                     |
-| :------------- | :---------------------------------------------------------------------------------------------- |
-| description    | A String. A narrative text describing the content of the attachment.                            |
-| href           | A String. Hyperlink reference.                                                                  |
-| id             | A String. Unique identifier.                                                                    |
-| name           | A String. Name of the referred entity.                                                          |
-| url            | A String. Link to the attachment media/content.                                                 |
-| @baseType      | A String. When sub-classing, this defines the super-class.                                      |
-| @referredType  | A String. The actual type of the target instance when needed for disambiguation.                |
-| @schemaLocation| A String. A URI to a JSON-Schema file that defines additional attributes and relationships.   |
-| @type          | A String. When sub-classing, this defines the sub-class Extensible name.                        |
-
-### BooleanCharacteristic sub-resource fields
-
-| Field                     | Description                                                                                 |
-| :------------------------ | :------------------------------------------------------------------------------------------ |
-| characteristicRelationship| A CharacteristicRelationship. Another Characteristic that is related to the current Characteristic;. |
-| id                        | A String. Unique identifier of the characteristic.                                          |
-| name                      | A String. Name of the characteristic.                                                       |
-| value                     | A Boolean. Value of the characteristic.                                                     |
-| valueType                 | A String. Data type of the value of the characteristic.                                     |
-| @baseType                 | A String. When sub-classing, this defines the super-class.                                  |
-| @schemaLocation           | A String. A URI to a JSON-Schema file that defines additional attributes and relationships. |
-| @type                     | A String. When sub-classing, this defines the sub-class Extensible name.                    |
-
-### Characteristic sub-resource fields
-
-| Field                     | Description                                                                                 |
-| :------------------------ | :------------------------------------------------------------------------------------------ |
-| characteristicRelationship| A CharacteristicRelationship. Another Characteristic that is related to the current Characteristic;. |
-| id                        | A String. Unique identifier of the characteristic.                                          |
-| name                      | A String. Name of the characteristic.                                                       |
-| valueType                 | A String. Data type of the value of the characteristic.                                     |
-| @baseType                 | A String. When sub-classing, this defines the super-class.                                  |
-| @schemaLocation           | A String. A URI to a JSON-Schema file that defines additional attributes and relationships. |
-| @type                     | A String. When sub-classing, this defines the sub-class Extensible name.                    |
-
-### CharacteristicRelationship sub-resource fields
-
-| Field          | Description                                                                                 |
-| :------------- | :------------------------------------------------------------------------------------------ |
-| id             | A String. Unique identifier of the characteristic.                                          |
-| relationshipType| A String. The type of relationship.                                                         |
-| @baseType      | A String. When sub-classing, this defines the super-class.                                  |
-| @schemaLocation| A String. A URI to a JSON-Schema file that defines additional attributes and relationships. |
-| @type          | A String. When sub-classing, this defines the sub-class Extensible name.                    |
-
-### ContactMedium sub-resource fields
-
-| Field          | Description                                                                                                                            |
-| :------------- | :------------------------------------------------------------------------------------------------------------------------------------- |
-| contactType    | A String. Type of the contact medium to qualifiy it like pro email / personal email. This is not used to define the contact medium used. |
-| id             | A String. Identifier for this contact medium.                                                                                          |
-| preferred      | A Boolean. If true, indicates that is the preferred contact medium.                                                                    |
-| validFor       | A TimePeriod. A period of time, either as a deadline (endDateTime only) a startDateTime only, or both.                                  |
-| @baseType      | A String. When sub-classing, this defines the super-class.                                                                             |
-| @schemaLocation| A String. A URI to a JSON-Schema file that defines additional attributes and relationships.                                            |
-| @type          | A String. When sub-classing, this defines the sub-class Extensible name.                                                               |
-
-### EmailContactMedium sub-resource fields
-
-| Field          | Description                                                                                                                            |
-| :------------- | :------------------------------------------------------------------------------------------------------------------------------------- |
-| contactType    | A String. Type of the contact medium to qualifiy it like pro email / personal email. This is not used to define the contact medium used. |
-| emailAddress   | A String. Full email address in standard format.                                                                                       |
-| id             | A String. Identifier for this contact medium.                                                                                          |
-| preferred      | A Boolean. If true, indicates that is the preferred contact medium.                                                                    |
-| validFor       | A TimePeriod. A period of time, either as a deadline (endDateTime only) a startDateTime only, or both.                                  |
-| @baseType      | A String. When sub-classing, this defines the super-class.                                                                             |
-| @schemaLocation| A String. A URI to a JSON-Schema file that defines additional attributes and relationships.                                            |
-| @type          | A String. When sub-classing, this defines the sub-class Extensible name.                                                               |
-
-### ExternalIdentifier sub-resource fields
-
-| Field                 | Description                                                                                 |
-| :-------------------- | :------------------------------------------------------------------------------------------ |
-| externalIdentifierType| A String. Type of the identification, typically would be the type of the entity within the external system. |
-| id                    | A String. Identification of the entity within the external system.                            |
-| owner                 | A String. Name of the external system that owns the entity.                                 |
-| @baseType             | A String. When sub-classing, this defines the super-class.                                  |
-| @schemaLocation       | A String. A URI to a JSON-Schema file that defines additional attributes and relationships. |
-| @type                 | A String. When sub-classing, this defines the sub-class Extensible name.                    |
-
-### FaxContactMedium sub-resource fields
-
-| Field          | Description                                                                                                                            |
-| :------------- | :------------------------------------------------------------------------------------------------------------------------------------- |
-| contactType    | A String. Type of the contact medium to qualifiy it like pro email / personal email. This is not used to define the contact medium used. |
-| faxNumber      | A String. The fax number of the contact.                                                                                               |
-| id             | A String. Identifier for this contact medium.                                                                                          |
-| preferred      | A Boolean. If true, indicates that is the preferred contact medium.                                                                    |
-| validFor       | A TimePeriod. A period of time, either as a deadline (endDateTime only) a startDateTime only, or both.                                  |
-| @baseType      | A String. When sub-classing, this defines the super-class.                                                                             |
-| @schemaLocation| A String. A URI to a JSON-Schema file that defines additional attributes and relationships.                                            |
-| @type          | A String. When sub-classing, this defines the sub-class Extensible name.                                                               |
-
-### FloatCharacteristic sub-resource fields
-
-| Field                     | Description                                                                                 |
-| :------------------------ | :------------------------------------------------------------------------------------------ |
-| characteristicRelationship| A CharacteristicRelationship. Another Characteristic that is related to the current Characteristic;. |
-| id                        | A String. Unique identifier of the characteristic.                                          |
-| name                      | A String. Name of the characteristic.                                                       |
-| value                     | A Float. Value of the characteristic.                                                       |
-| valueType                 | A String. Data type of the value of the characteristic.                                     |
-| @baseType                 | A String. When sub-classing, this defines the super-class.                                  |
-| @schemaLocation           | A String. A URI to a JSON-Schema file that defines additional attributes and relationships. |
-| @type                     | A String. When sub-classing, this defines the sub-class Extensible name.                    |
-
-### GeographicAddressContactMedium sub-resource fields
-
-| Field             | Description                                                                                                                            |
-| :---------------- | :------------------------------------------------------------------------------------------------------------------------------------- |
-| city              | A String. The city.                                                                                                                    |
-| contactType       | A String. Type of the contact medium to qualifiy it like pro email / personal email. This is not used to define the contact medium used. |
-| country           | A String. The country.                                                                                                                 |
-| geographicAddress | A GeographicAddressRef. Reference to a Geographic Address.                                                                             |
-| id                | A String. Identifier for this contact medium.                                                                                          |
-| postCode          | A String. Postcode.                                                                                                                    |
-| preferred         | A Boolean. If true, indicates that is the preferred contact medium.                                                                    |
-| stateOrProvince   | A String. State or province.                                                                                                           |
-| street1           | A String. Describes the street.                                                                                                        |
-| street2           | A String. Complementary street description.                                                                                            |
-| validFor          | A TimePeriod. A period of time, either as a deadline (endDateTime only) a startDateTime only, or both.                                  |
-| @baseType         | A String. When sub-classing, this defines the super-class.                                                                             |
-| @schemaLocation   | A String. A URI to a JSON-Schema file that defines additional attributes and relationships.                                            |
-| @type             | A String. When sub-classing, this defines the sub-class Extensible name.                                                               |
-
-### GeographicAddressRef sub-resource fields
-
-| Field          | Description                                                                                     |
-| :------------- | :---------------------------------------------------------------------------------------------- |
-| href           | A String. Hyperlink reference.                                                                  |
-| id             | A String. Unique identifier.                                                                    |
-| name           | A String. Name of the referred entity.                                                          |
-| @baseType      | A String. When sub-classing, this defines the super-class.                                      |
-| @referredType  | A String. The actual type of the target instance when needed for disambiguation.                |
-| @schemaLocation| A String. A URI to a JSON-Schema file that defines additional attributes and relationships.   |
-| @type          | A String. When sub-classing, this defines the sub-class Extensible name.                        |
-
-### IntegerArrayCharacteristic sub-resource fields
-
-| Field                     | Description                                                                                 |
-| :------------------------ | :------------------------------------------------------------------------------------------ |
-| characteristicRelationship| A CharacteristicRelationship. Another Characteristic that is related to the current Characteristic;. |
-| id                        | A String. Unique identifier of the characteristic.                                          |
-| name                      | A String. Name of the characteristic.                                                       |
-| value                     | An Integer.                                                                                 |
-| valueType                 | A String. Data type of the value of the characteristic.                                     |
-| @baseType                 | A String. When sub-classing, this defines the super-class.                                  |
-| @schemaLocation           | A String. A URI to a JSON-Schema file that defines additional attributes and relationships. |
-| @type                     | A String. When sub-classing, this defines the sub-class Extensible name.                    |
-
-### IntegerCharacteristic sub-resource fields
-
-| Field                     | Description                                                                                 |
-| :------------------------ | :------------------------------------------------------------------------------------------ |
-| characteristicRelationship| A CharacteristicRelationship. Another Characteristic that is related to the current Characteristic;. |
-| id                        | A String. Unique identifier of the characteristic.                                          |
-| name                      | A String. Name of the characteristic.                                                       |
-| value                     | An Integer. Value of the characteristic.                                                    |
-| valueType                 | A String. Data type of the value of the characteristic.                                     |
-| @baseType                 | A String. When sub-classing, this defines the super-class.                                  |
-| @schemaLocation           | A String. A URI to a JSON-Schema file that defines additional attributes and relationships. |
-| @type                     | A String. When sub-classing, this defines the sub-class Extensible name.                    |
-
-### NumberArrayCharacteristic sub-resource fields
-
-| Field                     | Description                                                                                 |
-| :------------------------ | :------------------------------------------------------------------------------------------ |
-| characteristicRelationship| A CharacteristicRelationship. Another Characteristic that is related to the current Characteristic;. |
-| id                        | A String. Unique identifier of the characteristic.                                          |
-| name                      | A String. Name of the characteristic.                                                       |
-| value                     | A Number.                                                                                   |
-| valueType                 | A String. Data type of the value of the characteristic.                                     |
-| @baseType                 | A String. When sub-classing, this defines the super-class.                                  |
-| @schemaLocation           | A String. A URI to a JSON-Schema file that defines additional attributes and relationships. |
-| @type                     | A String. When sub-classing, this defines the sub-class Extensible name.                    |
-
-### NumberCharacteristic sub-resource fields
-
-| Field                     | Description                                                                                 |
-| :------------------------ | :------------------------------------------------------------------------------------------ |
-| characteristicRelationship| A CharacteristicRelationship. Another Characteristic that is related to the current Characteristic;. |
-| id                        | A String. Unique identifier of the characteristic.                                          |
-| name                      | A String. Name of the characteristic.                                                       |
-| value                     | A Number. Value of the characteristic.                                                      |
-| valueType                 | A String. Data type of the value of the characteristic.                                     |
-| @baseType                 | A String. When sub-classing, this defines the super-class.                                  |
-| @schemaLocation           | A String. A URI to a JSON-Schema file that defines additional attributes and relationships. |
-| @type                     | A String. When sub-classing, this defines the sub-class Extensible name.                    |
-
-### ObjectArrayCharacteristic sub-resource fields
-
-| Field                     | Description                                                                                 |
-| :------------------------ | :------------------------------------------------------------------------------------------ |
-| characteristicRelationship| A CharacteristicRelationship. Another Characteristic that is related to the current Characteristic;. |
-| id                        | A String. Unique identifier of the characteristic.                                          |
-| name                      | A String. Name of the characteristic.                                                       |
-| value                     | An object.                                                                                  |
-| valueType                 | A String. Data type of the value of the characteristic.                                     |
-| @baseType                 | A String. When sub-classing, this defines the super-class.                                  |
-| @schemaLocation           | A String. A URI to a JSON-Schema file that defines additional attributes and relationships. |
-| @type                     | A String. When sub-classing, this defines the sub-class Extensible name.                    |
-
-### ObjectCharacteristic sub-resource fields
-
-| Field                     | Description                                                                                 |
-| :------------------------ | :------------------------------------------------------------------------------------------ |
-| characteristicRelationship| A CharacteristicRelationship. Another Characteristic that is related to the current Characteristic;. |
-| id                        | A String. Unique identifier of the characteristic.                                          |
-| name                      | A String. Name of the characteristic.                                                       |
-| value                     | An object. Value of the characteristic.                                                     |
-| valueType                 | A String. Data type of the value of the characteristic.                                     |
-| @baseType                 | A String. When sub-classing, this defines the super-class.                                  |
-| @schemaLocation           | A String. A URI to a JSON-Schema file that defines additional attributes and relationships. |
-| @type                     | A String. When sub-classing, this defines the sub-class Extensible name.                    |
-
-### OrganizationChildRelationship sub-resource fields
-
-| Field          | Description                                                                                 |
-| :------------- | :------------------------------------------------------------------------------------------ |
-| organization   | An OrganizationRef.                                                                         |
-| relationshipType| A String. Type of the relationship. Could be juridical, hierarchical, geographical, functional for example. |
-| @baseType      | A String. When sub-classing, this defines the super-class.                                  |
-| @schemaLocation| A String. A URI to a JSON-Schema file that defines additional attributes and relationships. |
-| @type          | A String. When sub-classing, this defines the sub-class Extensible name.                    |
-
-### OrganizationIdentification sub-resource fields
-
-| Field             | Description                                                                                                                                        |
-| :---------------- | :------------------------------------------------------------------------------------------------------------------------------------------------- |
-| attachment        | An AttachmentRefOrValue. The polymorphic attributes @type, @schemaLocation & @referredType are related to the Attachment entity and not the AttachmentRefOrValue class itself. |
-| identificationId  | A String. Identifier.                                                                                                                              |
-| identificationType| A String. Type of identification information used to identify the company in a country or internationally.                                           |
-| issuingAuthority  | A String. Authority which has issued the identifier (chamber of commerce…).                                                                        |
-| issuingDate       | A DateTime. Date at which the identifier was issued.                                                                                               |
-| validFor          | A TimePeriod. A period of time, either as a deadline (endDateTime only) a startDateTime only, or both.                                             |
-| @baseType         | A String. When sub-classing, this defines the super-class.                                                                                         |
-| @schemaLocation   | A String. A URI to a JSON-Schema file that defines additional attributes and relationships.                                                        |
-| @type             | A String. When sub-classing, this defines the sub-class Extensible name.                                                                           |
-
-### OrganizationParentRelationship sub-resource fields
-
-| Field          | Description                                                                                 |
-| :------------- | :------------------------------------------------------------------------------------------ |
-| organization   | An OrganizationRef.                                                                         |
-| relationshipType| A String. Type of the relationship. Could be juridical, hierarchical, geographical, functional for example. |
-| @baseType      | A String. When sub-classing, this defines the super-class.                                  |
-| @schemaLocation| A String. A URI to a JSON-Schema file that defines additional attributes and relationships. |
-| @type          | A String. When sub-classing, this defines the sub-class Extensible name.                    |
-
-### OrganizationRef sub-resource fields
-
-| Field          | Description                                                                                     |
-| :------------- | :---------------------------------------------------------------------------------------------- |
-| href           | A String. Hyperlink reference.                                                                  |
-| id             | A String. Unique identifier.                                                                    |
-| name           | A String. Name of the referred entity.                                                          |
-| @baseType      | A String. When sub-classing, this defines the super-class.                                      |
-| @referredType  | A String. The actual type of the target instance when needed for disambiguation.                |
-| @schemaLocation| A String. A URI to a JSON-Schema file that defines additional attributes and relationships.   |
-| @type          | A String. When sub-classing, this defines the sub-class Extensible name.                        |
-
-### OtherNameOrganization sub-resource fields
-
-| Field       | Description                                                                                 |
-| :---------- | :------------------------------------------------------------------------------------------ |
-| name        | A String. Organization name (department name for example).                                  |
-| nameType    | A String. Co. , Inc. , Ltd. , Pty Ltd. , Plc; , Gmbh.                                       |
-| tradingName | A String. The name that the organization trades under.                                      |
-| validFor    | A TimePeriod. A period of time, either as a deadline (endDateTime only) a startDateTime only, or both. |
-| @baseType   | A String. When sub-classing, this defines the super-class.                                  |
-| @schemaLocation| A String. A URI to a JSON-Schema file that defines additional attributes and relationships. |
-| @type       | A String. When sub-classing, this defines the sub-class Extensible name.                    |
-
-### Party sub-resource fields
-
-| Field                  | Description                                                                                                                                                                                                          |
-| :--------------------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| contactMedium          | A ContactMedium. List of means for contacting the party, e.g. mobile phone, email address.                                                                                                                            |
-| creditRating           | A PartyCreditProfile. List of credit profiles and scores for the party, typically received from an external credit broker.                                                                                             |
-| externalReference      | An ExternalIdentifier. List of identifiers of the Party in an external system, for example when party information is imported from a commerce system.                                                                   |
-| href                   | A String. Hyperlink reference.                                                                                                                                                                                       |
-| id                     | A String. Unique identifier.                                                                                                                                                                                         |
-| partyCharacteristic    | A Characteristic. List of additional characteristics that a Party can take on.                                                                                                                                       |
-| relatedParty           | A RelatedPartyOrPartyRole. List of parties and/or party roles related to this party.                                                                                                                                 |
-| taxExemptionCertificate| A TaxExemptionCertificate. List of tax exemptions granted to the party. For example, a war veteran might have partial exemption from state tax and a full exemption from federal tax.                                    |
-| @baseType              | A String. When sub-classing, this defines the super-class.                                                                                                                                                           |
-| @schemaLocation        | A String. A URI to a JSON-Schema file that defines additional attributes and relationships.                                                                                                                          |
-| @type                  | A String. When sub-classing, this defines the sub-class Extensible name.                                                                                                                                             |
-
-### PartyCreditProfile sub-resource fields
-
-| Field           | Description                                                                                                                                                               |
-| :-------------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| creditAgencyName| A String. Name of the credit agency giving the score.                                                                                                                       |
-| creditAgencyType| A String. Type of the credit agency giving the score.                                                                                                                       |
-| href            | A String. Hyperlink reference.                                                                                                                                            |
-| id              | A String. Unique identifier.                                                                                                                                              |
-| ratingReference | A String. Reference corresponding to the credit rating.                                                                                                                     |
-| ratingScore     | An Integer32. A measure of a party's creditworthiness calculated on the basis of a combination of factors such as their income and credit history.                           |
-| validFor        | A TimePeriod. A period of time, either as a deadline (endDateTime only) a startDateTime only, or both.                                                                      |
-| @baseType       | A String. When sub-classing, this defines the super-class.                                                                                                                  |
-| @schemaLocation | A String. A URI to a JSON-Schema file that defines additional attributes and relationships.                                                                               |
-| @type           | A String. When sub-classing, this defines the sub-class Extensible name.                                                                                                  |
-
-### PhoneContactMedium sub-resource fields
-
-| Field          | Description                                                                                                                            |
-| :------------- | :------------------------------------------------------------------------------------------------------------------------------------- |
-| contactType    | A String. Type of the contact medium to qualifiy it like pro email / personal email. This is not used to define the contact medium used. |
-| id             | A String. Identifier for this contact medium.                                                                                          |
-| phoneNumber    | A String. The phone number of the contact.                                                                                             |
-| preferred      | A Boolean. If true, indicates that is the preferred contact medium.                                                                    |
-| validFor       | A TimePeriod. A period of time, either as a deadline (endDateTime only) a startDateTime only, or both.                                  |
-| @baseType      | A String. When sub-classing, this defines the super-class.                                                                             |
-| @schemaLocation| A String. A URI to a JSON-Schema file that defines additional attributes and relationships.                                            |
-| @type          | A String. When sub-classing, this defines the sub-class Extensible name.                                                               |
-
-### RelatedPartyOrPartyRole sub-resource fields
-
-| Field          | Description                                                                                                                                |
-| :------------- | :----------------------------------------------------------------------------------------------------------------------------------------- |
-| partyOrPartyRole| A PartyOrPartyRole.                                                                                                                        |
-| role           | A String. Role played by the related party or party role in the context of the specific entity it is linked to. Such as 'initiator', 'customer', 'salesAgent', 'user'. |
-| @baseType      | A String. When sub-classing, this defines the super-class.                                                                                 |
-| @schemaLocation| A String. A URI to a JSON-Schema file that defines additional attributes and relationships.                                                |
-| @type          | A String. When sub-classing, this defines the sub-class Extensible name.                                                                   |
-
-### SocialContactMedium sub-resource fields
-
-| Field           | Description                                                                                                                            |
-| :-------------- | :------------------------------------------------------------------------------------------------------------------------------------- |
-| contactType     | A String. Type of the contact medium to qualifiy it like pro email / personal email. This is not used to define the contact medium used. |
-| id              | A String. Identifier for this contact medium.                                                                                          |
-| preferred       | A Boolean. If true, indicates that is the preferred contact medium.                                                                    |
-| socialNetworkId | A String. Identifier as a member of a social network.                                                                                  |
-| validFor        | A TimePeriod. A period of time, either as a deadline (endDateTime only) a startDateTime only, or both.                                  |
-| @baseType       | A String. When sub-classing, this defines the super-class.                                                                             |
-| @schemaLocation | A String. A URI to a JSON-Schema file that defines additional attributes and relationships.                                            |
-| @type           | A String. When sub-classing, this defines the sub-class Extensible name.                                                               |
-
-### StringArrayCharacteristic sub-resource fields
-
-| Field                     | Description                                                                                 |
-| :------------------------ | :------------------------------------------------------------------------------------------ |
-| characteristicRelationship| A CharacteristicRelationship. Another Characteristic that is related to the current Characteristic;. |
-| id                        | A String. Unique identifier of the characteristic.                                          |
-| name                      | A String. Name of the characteristic.                                                       |
-| value                     | A String.                                                                                   |
-| valueType                 | A String. Data type of the value of the characteristic.                                     |
-| @baseType                 | A String. When sub-classing, this defines the super-class.                                  |
-| @schemaLocation           | A String. A URI to a JSON-Schema file that defines additional attributes and relationships. |
-| @type                     | A String. When sub-classing, this defines the sub-class Extensible name.                    |
-
-### StringCharacteristic sub-resource fields
-
-| Field                     | Description                                                                                 |
-| :------------------------ | :------------------------------------------------------------------------------------------ |
-| characteristicRelationship| A CharacteristicRelationship. Another Characteristic that is related to the current Characteristic;. |
-| id                        | A String. Unique identifier of the characteristic.                                          |
-| name                      | A String. Name of the characteristic.                                                       |
-| value                     | A String. Value of the characteristic.                                                      |
-| valueType                 | A String. Data type of the value of the characteristic.                                     |
-| @baseType                 | A String. When sub-classing, this defines the super-class.                                  |
-| @schemaLocation           | A String. A URI to a JSON-Schema file that defines additional attributes and relationships. |
-| @type                     | A String. When sub-classing, this defines the sub-class Extensible name.                    |
-
-### TaxDefinition sub-resource fields
-
-| Field           | Description                                                                                 |
-| :-------------- | :------------------------------------------------------------------------------------------ |
-| id              | A String. Unique identifier of the tax.                                                     |
-| jurisdictionLevel| A String. Level of the jurisdiction that levies the tax.                                    |
-| jurisdictionName| A String. Name of the jurisdiction that levies the tax.                                     |
-| name            | A String. Tax name.                                                                         |
-| taxType         | A String. Type of the tax.                                                                  |
-| validFor        | A TimePeriod. A period of time, either as a deadline (endDateTime only) a startDateTime only, or both. |
-| @baseType       | A String. When sub-classing, this defines the super-class.                                  |
-| @schemaLocation | A String. A URI to a JSON-Schema file that defines additional attributes and relationships. |
-| @type           | A String. When sub-classing, this defines the sub-class Extensible name.                    |
-
-### TaxExemptionCertificate sub-resource fields
-
-| Field             | Description                                                                                                                                                                                                                              |
-| :---------------- | :--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| attachment        | An AttachmentRefOrValue. The polymorphic attributes @type, @schemaLocation & @referredType are related to the Attachment entity and not the AttachmentRefOrValue class itself.                                                                |
-| certificateNumber | A String. Identifier of a document that shows proof of exemption from taxes for the taxing jurisdiction.                                                                                                                                     |
-| id                | A String. Identifier of the tax exemption within list of the exemptions.                                                                                                                                                                   |
-| issuingJurisdiction| A String. Name of the jurisdiction that issued the exemption.                                                                                                                                                                            |
-| reason            | A String. Reason for the tax exemption.                                                                                                                                                                                                  |
-| taxDefinition     | A TaxDefinition. A list of taxes that are covered by the exemption, e.g. City Tax, State Tax. The definition would include the exemption (e.g. for a rate exemption 0% would be a full exemption, 5% could be a partial exemption if the actual rate was 10%). |
-| validFor          | A TimePeriod. A period of time, either as a deadline (endDateTime only) a startDateTime only, or both.                                                                                                                                     |
-| @baseType         | A String. When sub-classing, this defines the super-class.                                                                                                                                                                               |
-| @schemaLocation   | A String. A URI to a JSON-Schema file that defines additional attributes and relationships.                                                                                                                                              |
-| @type             | A String. When sub-classing, this defines the sub-class Extensible name.                                                                                                                                                                   |
-
-## Json representation sample(s)
+#### Resource model
+
+[Figure: Figure 5 - Organization. UML class diagram showing the `Organization` class inheriting from `Party`. `Organization` has attributes `existsDuring`, `isHeadOffice`, `isLegalEntity`, `name`, `nameType`, `organizationType`, `status`, `tradingName`. It has relationships to `OtherNameOrganization [0..*]`, `OrganizationParentRelationship [0..1]`, `OrganizationChildRelationship [0..*]`, `OrganizationIdentification [0..*]`. `OtherNameOrganization` has `name`, `nameType`, `tradingName`, `validFor`. `OrganizationParentRelationship` and `OrganizationChildRelationship` have `relationshipType` and a link to `OrganizationRef`. `OrganizationIdentification` has `identificationId`, `identificationType`, `issuingAuthority`, `issuingDate`, `validFor` and a link to `AttachmentRefOrValue`. `OrganizationRef` has `href`, `id`, `name`, `@baseType`, `@referredType`, `@schemaLocation`, `@type`. Includes an enumeration `OrganizationStateType` (initialized, validated, closed). A color legend indicates Resource (entity point), Sub-resource, Sub-resource (reference entity), Sub-resource with details in separate diagram, and Mandatory property.]
+
+[Figure: Figure 6 - ContactMedium. UML class diagram showing the abstract `ContactMedium` class and its specializations (GeographicAddress, Email, Phone, Social, Fax) and related `GeographicAddressRef`. Appears identical to Figure 2. A color legend indicates Sub-resource and Mandatory property.]
+
+[Figure: Figure 7 - Party. UML class diagram focusing on the abstract `Party` class and its direct associations (ContactMedium, PartyCreditProfile, ExternalIdentifier, RelatedPartyOrPartyRole, Characteristic, TaxExemptionCertificate, TaxDefinition, Attachment, PartyOrPartyRole). Appears identical to Figure 3. A color legend indicates Resource (entity point), Sub-resource, Sub-resource (reference entity), Sub-resource with details in separate diagram, and Mandatory property.]
+
+[Figure: Figure 8 - Characteristic. UML class diagram detailing the `Characteristic` hierarchy and `CharacteristicRelationship`. Appears identical to Figure 4. A color legend indicates Sub-resource, Sub-resource (reference entity), and Sub-resource (sub-graph in current diagram).]
+
+### Field descriptions
+
+#### Organization fields
+
+**contactMedium**
+A ContactMedium. List of means for contacting the party, e.g. mobile phone, email address.
+
+**creditRating**
+A PartyCreditProfile. List of credit profiles and scores for the party, typically received from an external credit broker.
+
+**existsDuring**
+A TimePeriod. A period of time, either as a deadline (endDateTime only) a startDateTime only, or both.
+
+**externalReference**
+An ExternalIdentifier. List of identifiers of the Party in an external system, for example when party information is imported from a commerce system.
+
+**href**
+A String. Hyperlink reference.
+
+**id**
+A String. Unique identifier.
+
+**isHeadOffice**
+A Boolean. If value is true, the organization is the head office.
+
+**isLegalEntity**
+A Boolean. If value is true, the organization is a legal entity known by a national referential.
+
+**name**
+A String. Organization name (department name for example).
+
+**nameType**
+A String. Type of the name : Co, Inc, Ltd, etc.
+
+**organizationChildRelationship**
+An OrganizationChildRelationship. List of organizations that are contained within this organization. For example if this organization is the Legal Department, the child organizations might include Claims, Courts, Contracts.
+
+**organizationIdentification**
+An OrganizationIdentification. List of official identifiers given to the organization, for example company number in the registry of companies.
+
+**organizationParentRelationship**
+An OrganizationParentRelationship. Parent references of an organization in a structure of organizations.
+
+**organizationType**
+A String. Type of Organization (company, department…).
+
+**otherName**
+An OtherNameOrganization. List of additional names by which the organization is known.
+
+**partyCharacteristic**
+A Characteristic. List of additional characteristics that a Party can take on.
+
+**relatedParty**
+A RelatedPartyOrPartyRole. List of parties and/or party roles related to this party.
+
+**status**
+An OrganizationStateType. Valid values for the lifecycle state of the organization.
+
+**taxExemptionCertificate**
+A TaxExemptionCertificate. List of tax exemptions granted to the party. For example, a war veteran might have partial exemption from state tax and a full exemption from federal tax.
+
+**tradingName**
+A String. Name that the organization (unit) trades under.
+
+**@baseType**
+A String. When sub-classing, this defines the super-class.
+
+**@schemaLocation**
+A String. A URI to a JSON-Schema file that defines additional attributes and relationships.
+
+**@type**
+A String. When sub-classing, this defines the sub-class Extensible name.
+
+#### Attachment sub-resource fields
+
+**attachmentType**
+A String. A business characterization of the purpose of the attachment, for example logo, instructionManual, contractCopy.
+
+**content**
+A Base64. The actual contents of the attachment object, if embedded, encoded as base64.
+
+**description**
+A String. A narrative text describing the content of the attachment.
+
+**href**
+A String. Hyperlink reference.
+
+**id**
+A String. Unique identifier.
+
+**mimeType**
+A String. A technical characterization of the attachment content format using IETF Mime Types.
+
+**name**
+A String. The name of the attachment.
+
+**size**
+A Quantity. An amount in a given unit.
+
+**url**
+A String. Uniform Resource Locator, is a web page address (a subset of URI).
+
+**validFor**
+A TimePeriod. A period of time, either as a deadline (endDateTime only) a startDateTime only, or both.
+
+**@baseType**
+A String. When sub-classing, this defines the super-class.
+
+**@schemaLocation**
+A String. A URI to a JSON-Schema file that defines additional attributes and relationships.
+
+**@type**
+A String. When sub-classing, this defines the sub-class Extensible name.
+
+#### AttachmentRef sub-resource fields
+
+**description**
+A String. A narrative text describing the content of the attachment.
+
+**href**
+A String. Hyperlink reference.
+
+**id**
+A String. Unique identifier.
+
+**name**
+A String. Name of the referred entity.
+
+**url**
+A String. Link to the attachment media/content.
+
+**@baseType**
+A String. When sub-classing, this defines the super-class.
+
+**@referredType**
+A String. The actual type of the target instance when needed for disambiguation.
+
+**@schemaLocation**
+A String. A URI to a JSON-Schema file that defines additional attributes and relationships.
+
+**@type**
+A String. When sub-classing, this defines the sub-class Extensible name.
+
+#### BooleanCharacteristic sub-resource fields
+
+**characteristicRelationship**
+A CharacteristicRelationship. Another Characteristic that is related to the current Characteristic;.
+
+**id**
+A String. Unique identifier of the characteristic.
+
+**name**
+A String. Name of the characteristic.
+
+**value**
+A Boolean. Value of the characteristic.
+
+**valueType**
+A String. Data type of the value of the characteristic.
+
+**@baseType**
+A String. When sub-classing, this defines the super-class.
+
+**@schemaLocation**
+A String. A URI to a JSON-Schema file that defines additional attributes and relationships.
+
+**@type**
+A String. When sub-classing, this defines the sub-class Extensible name.
+
+#### Characteristic sub-resource fields
+
+**characteristicRelationship**
+A CharacteristicRelationship. Another Characteristic that is related to the current Characteristic;.
+
+**id**
+A String. Unique identifier of the characteristic.
+
+**name**
+A String. Name of the characteristic.
+
+**valueType**
+A String. Data type of the value of the characteristic.
+
+**@baseType**
+A String. When sub-classing, this defines the super-class.
+
+**@schemaLocation**
+A String. A URI to a JSON-Schema file that defines additional attributes and relationships.
+
+**@type**
+A String. When sub-classing, this defines the sub-class Extensible name.
+
+#### CharacteristicRelationship sub-resource fields
+
+**id**
+A String. Unique identifier of the characteristic.
+
+**relationshipType**
+A String. The type of relationship.
+
+**@baseType**
+A String. When sub-classing, this defines the super-class.
+
+**@schemaLocation**
+A String. A URI to a JSON-Schema file that defines additional attributes and relationships.
+
+**@type**
+A String. When sub-classing, this defines the sub-class Extensible name.
+
+#### ContactMedium sub-resource fields
+
+**contactType**
+A String. Type of the contact medium to qualifiy it like pro email / personal email. This is not used to define the contact medium used.
+
+**id**
+A String. Identifier for this contact medium.
+
+**preferred**
+A Boolean. If true, indicates that is the preferred contact medium.
+
+**validFor**
+A TimePeriod. A period of time, either as a deadline (endDateTime only) a startDateTime only, or both.
+
+**@baseType**
+A String. When sub-classing, this defines the super-class.
+
+**@schemaLocation**
+A String. A URI to a JSON-Schema file that defines additional attributes and relationships.
+
+**@type**
+A String. When sub-classing, this defines the sub-class Extensible name.
+
+#### EmailContactMedium sub-resource fields
+
+**contactType**
+A String. Type of the contact medium to qualifiy it like pro email / personal email. This is not used to define the contact medium used.
+
+**emailAddress**
+A String. Full email address in standard format.
+
+**id**
+A String. Identifier for this contact medium.
+
+**preferred**
+A Boolean. If true, indicates that is the preferred contact medium.
+
+**validFor**
+A TimePeriod. A period of time, either as a deadline (endDateTime only) a startDateTime only, or both.
+
+**@baseType**
+A String. When sub-classing, this defines the super-class.
+
+**@schemaLocation**
+A String. A URI to a JSON-Schema file that defines additional attributes and relationships.
+
+**@type**
+A String. When sub-classing, this defines the sub-class Extensible name.
+
+#### ExternalIdentifier sub-resource fields
+
+**externalIdentifierType**
+A String. Type of the identification, typically would be the type of the entity within the external system.
+
+**id**
+A String. Identification of the entity within the external system.
+
+**owner**
+A String. Name of the external system that owns the entity.
+
+**@baseType**
+A String. When sub-classing, this defines the super-class.
+
+**@schemaLocation**
+A String. A URI to a JSON-Schema file that defines additional attributes and relationships.
+
+**@type**
+A String. When sub-classing, this defines the sub-class Extensible name.
+
+#### FaxContactMedium sub-resource fields
+
+**contactType**
+A String. Type of the contact medium to qualifiy it like pro email / personal email. This is not used to define the contact medium used.
+
+**faxNumber**
+A String. The fax number of the contact.
+
+**id**
+A String. Identifier for this contact medium.
+
+**preferred**
+A Boolean. If true, indicates that is the preferred contact medium.
+
+**validFor**
+A TimePeriod. A period of time, either as a deadline (endDateTime only) a startDateTime only, or both.
+
+**@baseType**
+A String. When sub-classing, this defines the super-class.
+
+**@schemaLocation**
+A String. A URI to a JSON-Schema file that defines additional attributes and relationships.
+
+**@type**
+A String. When sub-classing, this defines the sub-class Extensible name.
+
+#### FloatCharacteristic sub-resource fields
+
+**characteristicRelationship**
+A CharacteristicRelationship. Another Characteristic that is related to the current Characteristic;.
+
+**id**
+A String. Unique identifier of the characteristic.
+
+**name**
+A String. Name of the characteristic.
+
+**value**
+A Float. Value of the characteristic.
+
+**valueType**
+A String. Data type of the value of the characteristic.
+
+**@baseType**
+A String. When sub-classing, this defines the super-class.
+
+**@schemaLocation**
+A String. A URI to a JSON-Schema file that defines additional attributes and relationships.
+
+**@type**
+A String. When sub-classing, this defines the sub-class Extensible name.
+
+#### GeographicAddressContactMedium sub-resource fields
+
+**city**
+A String. The city.
+
+**contactType**
+A String. Type of the contact medium to qualifiy it like pro email / personal email. This is not used to define the contact medium used.
+
+**country**
+A String. The country.
+
+**geographicAddress**
+A GeographicAddressRef. Reference to a Geographic Address.
+
+**id**
+A String. Identifier for this contact medium.
+
+**postCode**
+A String. Postcode.
+
+**preferred**
+A Boolean. If true, indicates that is the preferred contact medium.
+
+**stateOrProvince**
+A String. State or province.
+
+**street1**
+A String. Describes the street.
+
+**street2**
+A String. Complementary street description.
+
+**validFor**
+A TimePeriod. A period of time, either as a deadline (endDateTime only) a startDateTime only, or both.
+
+**@baseType**
+A String. When sub-classing, this defines the super-class.
+
+**@schemaLocation**
+A String. A URI to a JSON-Schema file that defines additional attributes and relationships.
+
+**@type**
+A String. When sub-classing, this defines the sub-class Extensible name.
+
+#### GeographicAddressRef sub-resource fields
+
+**href**
+A String. Hyperlink reference.
+
+**id**
+A String. Unique identifier.
+
+**name**
+A String. Name of the referred entity.
+
+**@baseType**
+A String. When sub-classing, this defines the super-class.
+
+**@referredType**
+A String. The actual type of the target instance when needed for disambiguation.
+
+**@schemaLocation**
+A String. A URI to a JSON-Schema file that defines additional attributes and relationships.
+
+**@type**
+A String. When sub-classing, this defines the sub-class Extensible name.
+
+#### IntegerArrayCharacteristic sub-resource fields
+
+**characteristicRelationship**
+A CharacteristicRelationship. Another Characteristic that is related to the current Characteristic;.
+
+**id**
+A String. Unique identifier of the characteristic.
+
+**name**
+A String. Name of the characteristic.
+
+**value**
+An Integer.
+
+**valueType**
+A String. Data type of the value of the characteristic.
+
+**@baseType**
+A String. When sub-classing, this defines the super-class.
+
+**@schemaLocation**
+A String. A URI to a JSON-Schema file that defines additional attributes and relationships.
+
+**@type**
+A String. When sub-classing, this defines the sub-class Extensible name.
+
+#### IntegerCharacteristic sub-resource fields
+
+**characteristicRelationship**
+A CharacteristicRelationship. Another Characteristic that is related to the current Characteristic;.
+
+**id**
+A String. Unique identifier of the characteristic.
+
+**name**
+A String. Name of the characteristic.
+
+**value**
+An Integer. Value of the characteristic.
+
+**valueType**
+A String. Data type of the value of the characteristic.
+
+**@baseType**
+A String. When sub-classing, this defines the super-class.
+
+**@schemaLocation**
+A String. A URI to a JSON-Schema file that defines additional attributes and relationships.
+
+**@type**
+A String. When sub-classing, this defines the sub-class Extensible name.
+
+#### NumberArrayCharacteristic sub-resource fields
+
+**characteristicRelationship**
+A CharacteristicRelationship. Another Characteristic that is related to the current Characteristic;.
+
+**id**
+A String. Unique identifier of the characteristic.
+
+**name**
+A String. Name of the characteristic.
+
+**value**
+A Number.
+
+**valueType**
+A String. Data type of the value of the characteristic.
+
+**@baseType**
+A String. When sub-classing, this defines the super-class.
+
+**@schemaLocation**
+A String. A URI to a JSON-Schema file that defines additional attributes and relationships.
+
+**@type**
+A String. When sub-classing, this defines the sub-class Extensible name.
+
+#### NumberCharacteristic sub-resource fields
+
+**characteristicRelationship**
+A CharacteristicRelationship. Another Characteristic that is related to the current Characteristic;.
+
+**id**
+A String. Unique identifier of the characteristic.
+
+**name**
+A String. Name of the characteristic.
+
+**value**
+A Number. Value of the characteristic.
+
+**valueType**
+A String. Data type of the value of the characteristic.
+
+**@baseType**
+A String. When sub-classing, this defines the super-class.
+
+**@schemaLocation**
+A String. A URI to a JSON-Schema file that defines additional attributes and relationships.
+
+**@type**
+A String. When sub-classing, this defines the sub-class Extensible name.
+
+#### ObjectArrayCharacteristic sub-resource fields
+
+**characteristicRelationship**
+A CharacteristicRelationship. Another Characteristic that is related to the current Characteristic;.
+
+**id**
+A String. Unique identifier of the characteristic.
+
+**name**
+A String. Name of the characteristic.
+
+**value**
+An object.
+
+**valueType**
+A String. Data type of the value of the characteristic.
+
+**@baseType**
+A String. When sub-classing, this defines the super-class.
+
+**@schemaLocation**
+A String. A URI to a JSON-Schema file that defines additional attributes and relationships.
+
+**@type**
+A String. When sub-classing, this defines the sub-class Extensible name.
+
+#### ObjectCharacteristic sub-resource fields
+
+**characteristicRelationship**
+A CharacteristicRelationship. Another Characteristic that is related to the current Characteristic;.
+
+**id**
+A String. Unique identifier of the characteristic.
+
+**name**
+A String. Name of the characteristic.
+
+**value**
+An object. Value of the characteristic.
+
+**valueType**
+A String. Data type of the value of the characteristic.
+
+**@baseType**
+A String. When sub-classing, this defines the super-class.
+
+**@schemaLocation**
+A String. A URI to a JSON-Schema file that defines additional attributes and relationships.
+
+**@type**
+A String. When sub-classing, this defines the sub-class Extensible name.
+
+#### OrganizationChildRelationship sub-resource fields
+
+**organization**
+An OrganizationRef.
+
+**relationshipType**
+A String. Type of the relationship. Could be juridical, hierarchical, geographical, functional for example.
+
+**@baseType**
+A String. When sub-classing, this defines the super-class.
+
+**@schemaLocation**
+A String. A URI to a JSON-Schema file that defines additional attributes and relationships.
+
+**@type**
+A String. When sub-classing, this defines the sub-class Extensible name.
+
+#### OrganizationIdentification sub-resource fields
+
+**attachment**
+An AttachmentRefOrValue. The polymorphic attributes @type, @schemaLocation & @referredType are related to the Attachment entity and not the AttachmentRefOrValue class itself.
+
+**identificationId**
+A String. Identifier.
+
+**identificationType**
+A String. Type of identification information used to identify the company in a country or internationally.
+
+**issuingAuthority**
+A String. Authority which has issued the identifier (chamber of commerce…).
+
+**issuingDate**
+A DateTime. Date at which the identifier was issued.
+
+**validFor**
+A TimePeriod. A period of time, either as a deadline (endDateTime only) a startDateTime only, or both.
+
+**@baseType**
+A String. When sub-classing, this defines the super-class.
+
+**@schemaLocation**
+A String. A URI to a JSON-Schema file that defines additional attributes and relationships.
+
+**@type**
+A String. When sub-classing, this defines the sub-class Extensible name.
+
+#### OrganizationParentRelationship sub-resource fields
+
+**organization**
+An OrganizationRef.
+
+**relationshipType**
+A String. Type of the relationship. Could be juridical, hierarchical, geographical, functional for example.
+
+**@baseType**
+A String. When sub-classing, this defines the super-class.
+
+**@schemaLocation**
+A String. A URI to a JSON-Schema file that defines additional attributes and relationships.
+
+**@type**
+A String. When sub-classing, this defines the sub-class Extensible name.
+
+#### OrganizationRef sub-resource fields
+
+**href**
+A String. Hyperlink reference.
+
+**id**
+A String. Unique identifier.
+
+**name**
+A String. Name of the referred entity.
+
+**@baseType**
+A String. When sub-classing, this defines the super-class.
+
+**@referredType**
+A String. The actual type of the target instance when needed for disambiguation.
+
+**@schemaLocation**
+A String. A URI to a JSON-Schema file that defines additional attributes and relationships.
+
+**@type**
+A String. When sub-classing, this defines the sub-class Extensible name.
+
+#### OtherNameOrganization sub-resource fields
+
+**name**
+A String. Organization name (department name for example).
+
+**nameType**
+A String. Co. , Inc. , Ltd. , Pty Ltd. , Plc; , Gmbh.
+
+**tradingName**
+A String. The name that the organization trades under.
+
+**validFor**
+A TimePeriod. A period of time, either as a deadline (endDateTime only) a startDateTime only, or both.
+
+**@baseType**
+A String. When sub-classing, this defines the super-class.
+
+**@schemaLocation**
+A String. A URI to a JSON-Schema file that defines additional attributes and relationships.
+
+**@type**
+A String. When sub-classing, this defines the sub-class Extensible name.
+
+#### Party sub-resource fields
+
+**contactMedium**
+A ContactMedium. List of means for contacting the party, e.g. mobile phone, email address.
+
+**creditRating**
+A PartyCreditProfile. List of credit profiles and scores for the party, typically received from an external credit broker.
+
+**externalReference**
+An ExternalIdentifier. List of identifiers of the Party in an external system, for example when party information is imported from a commerce system.
+
+**href**
+A String. Hyperlink reference.
+
+**id**
+A String. Unique identifier.
+
+**partyCharacteristic**
+A Characteristic. List of additional characteristics that a Party can take on.
+
+**relatedParty**
+A RelatedPartyOrPartyRole. List of parties and/or party roles related to this party.
+
+**taxExemptionCertificate**
+A TaxExemptionCertificate. List of tax exemptions granted to the party. For example, a war veteran might have partial exemption from state tax and a full exemption from federal tax.
+
+**@baseType**
+A String. When sub-classing, this defines the super-class.
+
+**@schemaLocation**
+A String. A URI to a JSON-Schema file that defines additional attributes and relationships.
+
+**@type**
+A String. When sub-classing, this defines the sub-class Extensible name.
+
+#### PartyCreditProfile sub-resource fields
+
+**creditAgencyName**
+A String. Name of the credit agency giving the score.
+
+**creditAgencyType**
+A String. Type of the credit agency giving the score.
+
+**href**
+A String. Hyperlink reference.
+
+**id**
+A String. Unique identifier.
+
+**ratingReference**
+A String. Reference corresponding to the credit rating.
+
+**ratingScore**
+An Integer32. A measure of a party's creditworthiness calculated on the basis of a combination of factors such as their income and credit history.
+
+**validFor**
+A TimePeriod. A period of time, either as a deadline (endDateTime only) a startDateTime only, or both.
+
+**@baseType**
+A String. When sub-classing, this defines the super-class.
+
+**@schemaLocation**
+A String. A URI to a JSON-Schema file that defines additional attributes and relationships.
+
+**@type**
+A String. When sub-classing, this defines the sub-class Extensible name.
+
+#### PhoneContactMedium sub-resource fields
+
+**contactType**
+A String. Type of the contact medium to qualifiy it like pro email / personal email. This is not used to define the contact medium used.
+
+**id**
+A String. Identifier for this contact medium.
+
+**phoneNumber**
+A String. The phone number of the contact.
+
+**preferred**
+A Boolean. If true, indicates that is the preferred contact medium.
+
+**validFor**
+A TimePeriod. A period of time, either as a deadline (endDateTime only) a startDateTime only, or both.
+
+**@baseType**
+A String. When sub-classing, this defines the super-class.
+
+**@schemaLocation**
+A String. A URI to a JSON-Schema file that defines additional attributes and relationships.
+
+**@type**
+A String. When sub-classing, this defines the sub-class Extensible name.
+
+#### RelatedPartyOrPartyRole sub-resource fields
+
+**partyOrPartyRole**
+A PartyOrPartyRole.
+
+**role**
+A String. Role played by the related party or party role in the context of the specific entity it is linked to. Such as 'initiator', 'customer', 'salesAgent', 'user'.
+
+**@baseType**
+A String. When sub-classing, this defines the super-class.
+
+**@schemaLocation**
+A String. A URI to a JSON-Schema file that defines additional attributes and relationships.
+
+**@type**
+A String. When sub-classing, this defines the sub-class Extensible name.
+
+#### SocialContactMedium sub-resource fields
+
+**contactType**
+A String. Type of the contact medium to qualifiy it like pro email / personal email. This is not used to define the contact medium used.
+
+**id**
+A String. Identifier for this contact medium.
+
+**preferred**
+A Boolean. If true, indicates that is the preferred contact medium.
+
+**socialNetworkId**
+A String. Identifier as a member of a social network.
+
+**validFor**
+A TimePeriod. A period of time, either as a deadline (endDateTime only) a startDateTime only, or both.
+
+**@baseType**
+A String. When sub-classing, this defines the super-class.
+
+**@schemaLocation**
+A String. A URI to a JSON-Schema file that defines additional attributes and relationships.
+
+**@type**
+A String. When sub-classing, this defines the sub-class Extensible name.
+
+#### StringArrayCharacteristic sub-resource fields
+
+**characteristicRelationship**
+A CharacteristicRelationship. Another Characteristic that is related to the current Characteristic;.
+
+**id**
+A String. Unique identifier of the characteristic.
+
+**name**
+A String. Name of the characteristic.
+
+**value**
+A String.
+
+**valueType**
+A String. Data type of the value of the characteristic.
+
+**@baseType**
+A String. When sub-classing, this defines the super-class.
+
+**@schemaLocation**
+A String. A URI to a JSON-Schema file that defines additional attributes and relationships.
+
+**@type**
+A String. When sub-classing, this defines the sub-class Extensible name.
+
+#### StringCharacteristic sub-resource fields
+
+**characteristicRelationship**
+A CharacteristicRelationship. Another Characteristic that is related to the current Characteristic;.
+
+**id**
+A String. Unique identifier of the characteristic.
+
+**name**
+A String. Name of the characteristic.
+
+**value**
+A String. Value of the characteristic.
+
+**valueType**
+A String. Data type of the value of the characteristic.
+
+**@baseType**
+A String. When sub-classing, this defines the super-class.
+
+**@schemaLocation**
+A String. A URI to a JSON-Schema file that defines additional attributes and relationships.
+
+**@type**
+A String. When sub-classing, this defines the sub-class Extensible name.
+
+#### TaxDefinition sub-resource fields
+
+**id**
+A String. Unique identifier of the tax.
+
+**jurisdictionLevel**
+A String. Level of the jurisdiction that levies the tax.
+
+**jurisdictionName**
+A String. Name of the jurisdiction that levies the tax.
+
+**name**
+A String. Tax name.
+
+**taxType**
+A String. Type of the tax.
+
+**validFor**
+A TimePeriod. A period of time, either as a deadline (endDateTime only) a startDateTime only, or both.
+
+**@baseType**
+A String. When sub-classing, this defines the super-class.
+
+**@schemaLocation**
+A String. A URI to a JSON-Schema file that defines additional attributes and relationships.
+
+**@type**
+A String. When sub-classing, this defines the sub-class Extensible name.
+
+#### TaxExemptionCertificate sub-resource fields
+
+**attachment**
+An AttachmentRefOrValue. The polymorphic attributes @type, @schemaLocation & @referredType are related to the Attachment entity and not the AttachmentRefOrValue class itself.
+
+**certificateNumber**
+A String. Identifier of a document that shows proof of exemption from taxes for the taxing jurisdiction.
+
+**id**
+A String. Identifier of the tax exemption within list of the exemptions.
+
+**issuingJurisdiction**
+A String. Name of the jurisdiction that issued the exemption.
+
+**reason**
+A String. Reason for the tax exemption.
+
+**taxDefinition**
+A TaxDefinition. A list of taxes that are covered by the exemption, e.g. City Tax, State Tax. The definition would include the exemption (e.g. for a rate exemption 0% would be a full exemption, 5% could be a partial exemption if the actual rate was 10%).
+
+**validFor**
+A TimePeriod. A period of time, either as a deadline (endDateTime only) a startDateTime only, or both.
+
+**@baseType**
+A String. When sub-classing, this defines the super-class.
+
+**@schemaLocation**
+A String. A URI to a JSON-Schema file that defines additional attributes and relationships.
+
+**@type**
+A String. When sub-classing, this defines the sub-class Extensible name.
+
+#### Json representation sample(s)
 
 We provide below a JSON representation as example of the 'Organization' resource object.
 
 ```json
- {
+{
   "id": "128",
   "href": "https://serverRoot/tmf-api/party/v5/organization/128",
   "@type": "Organization",
@@ -2183,185 +2276,185 @@ We provide below a JSON representation as example of the 'Organization' resource
   "isHeadOffice": true,
   "organizationType": "company",
   "existsDuring": {
-   "startDateTime": "2015-10-22T08:31:52.026Z"
+    "startDateTime": "2015-10-22T08:31:52.026Z"
   },
   "name": "Coffee Do Brazil",
   "tradingName": "Coffee Do Brazil Fair Trade",
   "nameType": "inc",
   "status": "validated",
   "externalReference": [
-   {
-    "name": "http://coffeedobrazil.com",
-    "externalIdentifierType": "internetSite",
-    "@type": "ExternalIdentifier"
-   }
+    {
+      "name": "http://coffeedobrazil.com",
+      "externalIdentifierType": "internetSite",
+      "@type": "ExternalIdentifier"
+    }
   ],
   "partyCharacteristic": [
-   {
-    "name": "number of employees",
-    "value": 125,
-    "valueType": "number",
-    "@type": "IntegerCharacteristic"
-   },
-   {
-    "name": "market segment",
-    "value": "Food wholesale",
-    "valueType": "string",
-    "@type": "StringCharacteristic"
-   }
+    {
+      "name": "number of employees",
+      "value": 125,
+      "valueType": "number",
+      "@type": "IntegerCharacteristic"
+    },
+    {
+      "name": "market segment",
+      "value": "Food wholesale",
+      "valueType": "string",
+      "@type": "StringCharacteristic"
+    }
   ],
   "otherName": [
-   {
-    "nameType": "inc",
-    "tradingName": "General Coffee",
-    "validFor": {
-     "startDateTime": "2015-10-22T08:31:52.026Z",
-     "endDateTime": "2017-10-22T08:31:52.026Z"
+    {
+      "nameType": "inc",
+      "tradingName": "General Coffee",
+      "validFor": {
+        "startDateTime": "2015-10-22T08:31:52.026Z",
+        "endDateTime": "2017-10-22T08:31:52.026Z"
+      }
     }
-   }
   ],
   "organizationIdentification": [
-   {
-    "@type": "OrganizationIdentification",
-    "identificationType": "commercialRegistration",
-    "identificationId": "12345678",
-    "issuingAuthority": "US Government",
-    "issuingDate": "2015-10-22T08:31:52.028Z",
-    "validFor": {
-     "startDateTime": "2015-10-22T08:31:52.028Z"
-    },
-    "attachment": {
-     "@type": "Attachment",
-     "attachmentType": "documentCopy",
-     "name": "RegistrationCertificate421.pdf",
-     "description": "Scanned copy of the registration certificate",
-     "mimeType": "application/pdf",
-     "url": "http://DocumentManager/421/RegistrationCertificate421.pdf"
+    {
+      "@type": "OrganizationIdentification",
+      "identificationType": "commercialRegistration",
+      "identificationId": "12345678",
+      "issuingAuthority": "US Government",
+      "issuingDate": "2015-10-22T08:31:52.028Z",
+      "validFor": {
+        "startDateTime": "2015-10-22T08:31:52.028Z"
+      },
+      "attachment": {
+        "@type": "Attachment",
+        "attachmentType": "documentCopy",
+        "name": "RegistrationCertificate421.pdf",
+        "description": "Scanned copy of the registration certificate",
+        "mimeType": "application/pdf",
+        "url": "http://DocumentManager/421/RegistrationCertificate421.pdf"
+      }
     }
-   }
   ],
   "taxExemptionCertificate": [
-   {
-    "@type": "TaxExemptionCertificate",
-    "id": "1",
-    "validFor": {
-     "startDateTime": "2018-10-22T07:49:25.246Z"
-    },
-    "certificateNumber": "9875755432345",
-    "issuingJurisdiction": "USA",
-    "reason": "Voluntary Body",
-    "taxDefinition": [
-     {
-      "@type": "TaxDefinitionRef",
-      "id": "96",
-      "name": "Value Added Tax",
-      "taxType": "federalVat"
-     }
-    ],
-    "attachment": {
-     "@type": "Attachment",
-     "attachmentType": "taxExemptionCertificate",
-     "name": "TaxExemptionCertificate-233322.pdf",
-     "description": "Electronic version of the tax exemption certificate",
-     "mimeType": "application/pdf",
-     "url": "https://mycsp.com:8080/DocumentManager/666/TaxExemptionCertificate-233322.pdf"
+    {
+      "@type": "TaxExemptionCertificate",
+      "id": "1",
+      "validFor": {
+        "startDateTime": "2018-10-22T07:49:25.246Z"
+      },
+      "certificateNumber": "9875755432345", 
+      "issuingJurisdiction": "USA", 
+      "reason": "Voluntary Body", 
+      "taxDefinition": [
+        {
+          "@type": "TaxDefinitionRef",
+          "id": "96",
+          "name": "Value Added Tax",
+          "taxType": "federalVat"
+        }
+      ],
+      "attachment": {
+        "@type": "Attachment",
+        "attachmentType": "taxExemptionCertificate",
+        "name": "TaxExemptionCertificate-233322.pdf",
+        "description": "Electronic version of the tax exemption certificate",
+        "mimeType": "application/pdf",
+        "url": "https://mycsp.com:8080/DocumentManager/666/TaxExemptionCertificate-233322.pdf"
+      }
     }
-   }
   ],
   "creditRating": [
-   {
-    "@type": "CreditRating",
-    "creditAgencyName": "Experian",
-    "creditAgencyType": "externalAgency",
-    "ratingReference": "ref456",
-    "ratingScore": 400,
-    "validFor": {
-     "startDateTime": "2018-10-22T08:31:52.028Z"
+    {
+      "@type": "CreditRating",
+      "creditAgencyName": "Experian",
+      "creditAgencyType": "externalAgency",
+      "ratingReference": "ref456",
+      "ratingScore": 400,
+      "validFor": {
+        "startDateTime": "2018-10-22T08:31:52.028Z"
+      }
     }
-   }
   ],
   "relatedParty": [
-   {
-    "role": "director",
-    "@type": "RelatedPartyRefOrPartyRoleRef",
-    "partyOrPartyRole": {
-     "id": "54",
-     "href": "https://serverRoot/tmf-api/party/v5/individual/54",
-     "name": "Carlos Mafalda",
-     "@type": "PartyRef",
-     "@referredType": "Individual"
+    {
+      "role": "director",
+      "@type": "RelatedPartyRefOrPartyRoleRef",
+      "partyOrPartyRole": {
+        "id": "54",
+        "href": "https://serverRoot/tmf-api/party/v5/individual/54",
+        "name": "Carlos Mafalda",
+        "@type": "PartyRef",
+        "@referredType": "Individual"
+      }
+    },
+    {
+      "role": "employee",
+      "@type": "RelatedPartyRefOrPartyRoleRef",
+      "partyOrPartyRole": {
+        "id": "42",
+        "href": "https://serverRoot/tmf-api/party/v5/individual/42",
+        "name": "Jane Lamborgizzia",
+        "@type": "PartyRef",
+        "@referredType": "Individual"
+      }
     }
-   },
-   {
-    "role": "employee",
-    "@type": "RelatedPartyRefOrPartyRoleRef",
-    "partyOrPartyRole": {
-     "id": "42",
-     "href": "https://serverRoot/tmf-api/party/v5/individual/42",
-     "name": "Jane Lamborgizzia",
-     "@type": "PartyRef",
-     "@referredType": "Individual"
-    }
-   }
   ],
   "contactMedium": [
-   {
-    "preferred": true,
-    "mediumType": "email",
-    "validFor": {
-     "startDateTime": "2018-10-22T08:31:52.028Z"
+    {
+      "preferred": true,
+      "mediumType": "email",
+      "validFor": {
+        "startDateTime": "2018-10-22T08:31:52.028Z"
+      },
+      "@type": "EmailContactMedium",
+      "emailAddress": "jane.lamborgizzia@coffeedobrazil.com"
     },
-    "@type": "EmailContactMedium",
-    "emailAddress": "jane.lamborgizzia@coffeedobrazil.com"
-   },
-   {
-    "preferred": false,
-    "mediumType": "postalAddress",
-    "validFor": {
-     "startDateTime": "2018-10-22T08:31:52.028Z"
-    },
-    "@type": "GeographicAddressContactMedium",
-    "city": "Morristown",
-    "country": "USA",
-    "postCode": "07960",
-    "stateOrProvince": "New Jersey",
-    "street1": "240 Headquarters Plazza",
-    "street2": "East Tower 10th Floor"
-   }
+    {
+      "preferred": false,
+      "mediumType": "postalAddress",
+      "validFor": {
+        "startDateTime": "2018-10-22T08:31:52.028Z"
+      },
+      "@type": "GeographicAddressContactMedium",
+      "city": "Morristown",
+      "country": "USA",
+      "postCode": "07960",
+      "stateOrProvince": "New Jersey",
+      "street1": "240 Headquarters Plazza",
+      "street2": "East Tower 10th Floor"
+    }
   ],
   "organizationParentRelationship": {
-   "@type": "OrganizationParentRelationship",
-   "relationshipType": "juridical",
-   "organization": {
-    "@type": "OrganizationRef",
-    "id": "800",
-    "href": "https://serverRoot/tmf-api/party/v5/organization/800"
-   }
+    "@type": "OrganizationParentRelationship",
+    "relationshipType": "juridical",
+    "organization": {
+      "@type": "OrganizationRef",
+      "id": "800",
+      "href": "https://serverRoot/tmf-api/party/v5/organization/800"
+    }
   },
   "organizationChildRelationship": [
-   {
-    "@type": "OrganizationChildRelationship",
-    "relationshipType": "juridical",
-    "organization": {
-     "@type": "OrganizationRef",
-     "id": "149",
-     "href": "https://serverRoot/tmf-api/party/v5/organization/149"
+    {
+      "@type": "OrganizationChildRelationship",
+      "relationshipType": "juridical",
+      "organization": {
+        "@type": "OrganizationRef",
+        "id": "149",
+        "href": "https://serverRoot/tmf-api/party/v5/organization/149"
+      }
+    },
+    {
+      "@type": "OrganizationChildRelationship",
+      "relationshipType": "juridical",
+      "organization": {
+        "@type": "OrganizationRef",
+        "id": "150",
+        "href": "https://serverRoot/tmf-api/party/v5/organization/150"
+      }
     }
-   },
-   {
-    "@type": "OrganizationChildRelationship",
-    "relationshipType": "juridical",
-    "organization": {
-     "@type": "OrganizationRef",
-     "id": "150",
-     "href": "https://serverRoot/tmf-api/party/v5/organization/150"
-    }
-   }
   ]
- }
+}
 ```
 
-## Notification Resource Models
+### Notification Resource Models
 
 8 notifications are defined for this API.
 
@@ -2381,51 +2474,18 @@ Notifications related to Organization:
 
 The notification structure for all notifications in this API follow the pattern depicted by the figure below. A notification event resource (depicted by "SpecificEvent" placeholder) is a sub class of a generic Event structure containing at least an id of the event occurrence (eventId), an event timestamp (eventTime), and the name of the resource (eventType). This notification structure owns an event payload structure ("SpecificEventPayload" placeholder) linked to the resource concerned by the notification using the resource name as access field ("resourceName" placeholder).
 
-```plantuml
-@startuml
-skinparam classAttributeIconSize 0
+[Figure: Figure 9 Notification Pattern. A simple class diagram showing the notification structure. A base `Event` class has attributes like `correlationId`, `description`, `domain`, `eventId`, `eventTime`, `eventType`, `fieldPath`, `id`, `priority`, `timeOccurred`, `title`. `Event` generalizes `SpecificEvent`. `SpecificEvent` has a composition relationship (1 to 1) to `SpecificEventPayload`, labeled `event`. `SpecificEventPayload` has a composition relationship (1 to 1) to `SpecificResource`, labeled with the `resourceName` (e.g., "individual", "organization").]
 
-class Event {
- correlationId : String
- description : String
- domain : String
- eventId : String
- eventTime : DateTime
- eventType : String
- fieldPath : String
- id : String
- priority : String
- timeOccurred : DateTime
- title : String
-}
+#### Individual Delete Event
 
-abstract class SpecificEvent extends Event {
+##### Message example for IndividualDeleteEvent event
 
-}
-
-class SpecificEventPayload {
-
-}
-
-class SpecificResource {
-
-}
-
-SpecificEvent *--> "1" SpecificEventPayload : event
-SpecificEventPayload *--> "1" SpecificResource : resourceName
-
-hide empty members
-@enduml
 ```
-*Figure 9 Notification Pattern*
-
-### Individual Delete Event
-
-Message example for IndividualDeleteEvent event
+Content-Type: application/json
+```
 
 ```json
- Content-Type: application/json
- {
+{
   "correlationId": "f3a34f89-0046",
   "description": "IndividualDeleteEvent illustration",
   "domain": "Commercial",
@@ -2436,37 +2496,40 @@ Message example for IndividualDeleteEvent event
   "timeOcurred": "2022-08-25T12:17:55.035Z",
   "title": "IndividualDeleteEvent",
   "event": {
-   "individual": {
-    "id": "42",
-    "href": "https://serverRoot/tmf-api/party/v5/individual/42",
-    "@type": "Individual",
-    "@baseType": "Party"
-   }
+    "individual": {
+      "id": "42",
+      "href": "https://serverRoot/tmf-api/party/v5/individual/42",
+      "@type": "Individual",
+      "@baseType": "Party"
+    }
   },
   "reportingSystem": {
-   "id": "868",
-   "name": "APP-394",
-   "@type": "ReportingResource",
-   "@referredType": "LogicalResource"
+    "id": "868",
+    "name": "APP-394",
+    "@type": "ReportingResource",
+    "@referredType": "LogicalResource"
   },
   "source": {
-   "id": "372",
-   "name": "APP-92",
-   "@type": "ReportingResource",
-   "@referredType": "LogicalResource"
+    "id": "372",
+    "name": "APP-92",
+    "@type": "ReportingResource",
+    "@referredType": "LogicalResource"
   },
   "@baseType": "Event",
   "@type": "IndividualDeleteEvent"
- }
+}
 ```
 
-### Individual Create Event
+#### Individual Create Event
 
-Message example for IndividualCreateEvent event
+##### Message example for IndividualCreateEvent event
+
+```
+Content-Type: application/json
+```
 
 ```json
- Content-Type: application/json
- {
+{
   "correlationId": "95003dd3-e325",
   "description": "IndividualCreateEvent illustration",
   "domain": "Commercial",
@@ -2477,247 +2540,247 @@ Message example for IndividualCreateEvent event
   "timeOcurred": "2022-08-25T12:18:06.252Z",
   "title": "IndividualCreateEvent",
   "event": {
-   "individual": {
-    "id": "42",
-    "href": "https://serverRoot/tmf-api/party/v5/individual/42",
-    "@type": "Individual",
-    "@baseType": "Party",
-    "gender": "female",
-    "countryOfBirth": "United States",
-    "nationality": "American",
-    "maritalStatus": "married",
-    "birthDate": "1967-09-26T05:00:00.246Z",
-    "givenName": "Jane",
-    "preferredGivenName": "Lamborgizzia",
-    "familyName": "Lamborgizzia",
-    "legalName": "Smith",
-    "middleName": "JL",
-    "fullName": "Jane Smith ep Lamborgizzia",
-    "formattedName": "Jane Smith ep Lamborgizzia",
-    "status": "validated",
-    "externalReference": [
-     {
-      "name": "http://facebook.com/17263635",
-      "externalIdentifierType": "facebookId",
-      "@type": "ExternalIdentifier"
-     },
-     {
-      "name": "http://google.com/17263635",
-      "externalIdentifierType": "googleId",
-      "@type": "ExternalIdentifier"
-     }
-    ],
-    "partyCharacteristic": [
-     {
-      "name": "hobby",
-      "value": [
-       "Modern Jazz",
-       "Cinema"
-      ],
-      "valueType": "array",
-      "@type": "StringArrayCharacteristic"
-     },
-     {
-      "name": "childrenNumber",
-      "value": 1,
-      "valueType": "number",
-      "@type": "IntegerCharacteristic"
-     }
-    ],
-    "otherName": [
-     {
-      "@type": "OtherNameIndividual",
+    "individual": {
+      "id": "42",
+      "href": "https://serverRoot/tmf-api/party/v5/individual/42",
+      "@type": "Individual",
+      "@baseType": "Party",
+      "gender": "female",
+      "countryOfBirth": "United States",
+      "nationality": "American",
+      "maritalStatus": "married",
+      "birthDate": "1967-09-26T05:00:00.246Z",
       "givenName": "Jane",
-      "familyName": "Smith",
-      "validFor": {
-       "startDateTime": "1967-09-26T00:00:00.246Z",
-       "endDateTime": "2015-06-15T00:00:00.246Z"
-      }
-     }
-    ],
-    "individualIdentification": [
-     {
-      "@type": "IndividualIdentification",
-      "identificationType": "passport",
-      "identificationId": "51DD1234",
-      "issuingAuthority": "US Government",
-      "issuingDate": "2017-10-22T07:49:25.246Z",
-      "validFor": {
-       "startDateTime": "2017-10-22T07:49:25.246Z",
-       "endDateTime": "2027-10-21T07:49:25.246Z"
-      },
-      "attachment": {
-       "@type": "Attachment",
-       "id": "6662326757667",
-       "href": "https://serverRoot/tmf-api/document/v5/attachment/6662326757667",
-       "attachmentType": "passportCopy",
-       "name": "PassportCopy321.pdf",
-       "description": "Scanned copy of the passport",
-       "mimeType": "application/pdf",
-       "url": "http://DocumentManager/321/PassportCopy321.pdf"
-      }
-     }
-    ],
-    "taxExemptionCertificate": [
-     {
-      "@type": "TaxExemptionCertificate",
-      "id": "1",
-      "validFor": {
-       "startDateTime": "2018-10-22T07:49:25.246Z"
-      },
-      "certificateNumber": "98765432345",
-      "issuingJurisdiction": "USA",
-      "taxDefinition": [
-       {
-        "@type": "TaxDefinitionRef",
-        "id": "96",
-        "name": "Value Added Tax",
-        "taxType": "federalVat"
-       }
+      "preferredGivenName": "Lamborgizzia",
+      "familyName": "Lamborgizzia",
+      "legalName": "Smith",
+      "middleName": "JL",
+      "fullName": "Jane Smith ep Lamborgizzia",
+      "formattedName": "Jane Smith ep Lamborgizzia",
+      "status": "validated",
+      "externalReference": [
+        {
+          "name": "http://facebook.com/17263635",
+          "externalIdentifierType": "facebookId",
+          "@type": "ExternalIdentifier"
+        },
+        {
+          "name": "http://google.com/17263635",
+          "externalIdentifierType": "googleId",
+          "@type": "ExternalIdentifier"
+        }
       ],
-      "attachment": {
-       "@type": "Attachment",
-       "id": "5565734535",
-       "href": "https://serverRoot/tmf-api/document/v5/attachment/5565734535",
-       "attachmentType": "taxExemptionCertificate",
-       "name": "TaxExemptionCertificate-566655.pdf",
-       "description": "Electronic version of the tax exemption certificate",
-       "mimeType": "application/pdf",
-       "url": "https://mycsp.com:8080/DocumentManager/666/TaxExemptionCertificate-566655.pdf"
-      }
-     }
-    ],
-    "creditRating": [
-     {
-      "@type": "CreditRating",
-      "creditAgencyName": "Experian",
-      "creditAgencyType": "externalAgency",
-      "ratingReference": "ref123",
-      "ratingScore": 680,
-      "validFor": {
-       "startDateTime": "2018-10-22T07:49:25.246Z"
-      }
-     }
-    ],
-    "relatedParty": [
-     {
-      "role": "employer",
-      "@type": "RelatedPartyRefOrPartyRoleRef",
-      "partyOrPartyRole": {
-       "id": "128",
-       "href": "https://serverRoot/tmf-api/party/v5/organization/128",
-       "name": "Coffee Do Brazil Fair Trade Marketing Department",
-       "@type": "PartyRef",
-       "@referredType": "Organization"
-      }
-     }
-    ],
-    "contactMedium": [
-     {
-      "preferred": true,
-      "mediumType": "email",
-      "validFor": {
-       "startDateTime": "2017-03-15T07:49:25.246Z"
-      },
-      "@type": "EmailContactMedium",
-      "emailAddress": "jane.lamborgizzia@gmail.com"
-     },
-     {
-      "preferred": false,
-      "mediumType": "postalAddress",
-      "validFor": {
-       "startDateTime": "2017-03-15T07:49:25.246Z"
-      },
-      "@type": "GeographicAddressContactMedium",
-      "city": "Morristown",
-      "country": "USA",
-      "postCode": "07960",
-      "stateOrProvince": "New Jersey",
-      "street1": "240 Headquarters Plazza",
-      "street2": "East Tower - 10th Floor"
-     }
-    ],
-    "disability": [
-     {
-      "disabilityCode": "BLD",
-      "disabilityName": "Blind",
-      "validFor": {
-       "startDateTime": "1967-09-26T07:49:25.246Z"
-      }
-     }
-    ],
-    "languageAbility": [
-     {
-      "languageCode": "FR",
-      "languageName": "French",
-      "isFavouriteLanguage": true,
-      "writingProficiency": "advanced",
-      "readingProficiency": "advanced",
-      "speakingProficiency": "intermediate",
-      "listeningProficiency": "intermediate",
-      "validFor": {
-       "startDateTime": "2018-10-22T07:49:25.246Z"
-      }
-     },
-     {
-      "languageCode": "SP",
-      "languageName": "Spanish",
-      "isFavouriteLanguage": false,
-      "writingProficiency": "scholar",
-      "readingProficiency": "scholar",
-      "speakingProficiency": "scholar",
-      "listeningProficiency": "scholar",
-      "validFor": {
-       "startDateTime": "2018-10-22T07:49:25.246Z"
-      }
-     }
-    ],
-    "skill": [
-     {
-      "skillCode": "SK001",
-      "skillName": "marketing",
-      "evaluatedLevel": "Advanced",
-      "comment": "Ten years experience",
-      "validFor": {
-       "startDateTime": "2018-10-22T07:49:25.246Z"
-      }
-     },
-     {
-      "skillCode": "SK002",
-      "skillName": "Project Management",
-      "evaluatedLevel": "newbie",
-      "comment": "First work experience",
-      "validFor": {
-       "startDateTime": "2018-10-22T07:49:25.246Z"
-      }
-     }
-    ]
-   }
+      "partyCharacteristic": [
+        {
+          "name": "hobby",
+          "value": ["Modern Jazz","Cinema"],
+          "valueType": "array",
+          "@type": "StringArrayCharacteristic"
+        },
+        {
+          "name": "childrenNumber",
+          "value": 1,
+          "valueType": "number",
+          "@type": "IntegerCharacteristic"
+        }
+      ],
+      "otherName": [
+        {
+          "@type": "OtherNameIndividual",
+          "givenName": "Jane",
+          "familyName": "Smith",
+          "validFor": {
+            "startDateTime": "1967-09-26T00:00:00.246Z",
+            "endDateTime": "2015-06-15T00:00:00.246Z"
+          }
+        }
+      ],
+      "individualIdentification": [
+        {
+          "@type": "IndividualIdentification",
+          "identificationType": "passport",
+          "identificationId": "51DD1234",
+          "issuingAuthority": "US Government",
+          "issuingDate": "2017-10-22T07:49:25.246Z",
+          "validFor": {
+            "startDateTime": "2017-10-22T07:49:25.246Z",
+            "endDateTime": "2027-10-21T07:49:25.246Z"
+          },
+          "attachment": {
+            "@type": "Attachment",
+            "id": "6662326757667",
+            "href": "https://serverRoot/tmf-api/document/v5/attachment/6662326757667",
+            "attachmentType": "passportCopy",
+            "name": "PassportCopy321.pdf",
+            "description": "Scanned copy of the passport",
+            "mimeType": "application/pdf",
+            "url": "http://DocumentManager/321/PassportCopy321.pdf"
+          }
+        }
+      ],
+      "taxExemptionCertificate": [
+        {
+          "@type": "TaxExemptionCertificate",
+          "id": "1",
+          "validFor": {
+            "startDateTime": "2018-10-22T07:49:25.246Z"
+          },
+          "certificateNumber": "98765432345",
+          "issuingJurisdiction": "USA",
+          "taxDefinition": [
+            {
+              "@type": "TaxDefinitionRef",
+              "id": "96",
+              "name": "Value Added Tax",
+              "taxType": "federalVat"
+            }
+          ],
+          "attachment": {
+            "@type": "Attachment",
+            "id": "5565734535",
+            "href": "https://serverRoot/tmf-api/document/v5/attachment/5565734535",
+            "attachmentType": "taxExemptionCertificate",
+            "name": "TaxExemptionCertificate-566655.pdf",
+            "description": "Electronic version of the tax exemption certificate",
+            "mimeType": "application/pdf",
+            "url": "https://mycsp.com:8080/DocumentManager/666/TaxExemptionCertificate-566655.pdf"
+          }
+        }
+      ],
+      "creditRating": [
+        {
+          "@type": "CreditRating",
+          "creditAgencyName": "Experian",
+          "creditAgencyType": "externalAgency",
+          "ratingReference": "ref123",
+          "ratingScore": 680,
+          "validFor": {
+            "startDateTime": "2018-10-22T07:49:25.246Z"
+          }
+        }
+      ],
+      "relatedParty": [
+        {
+          "role": "employer",
+          "@type": "RelatedPartyRefOrPartyRoleRef",
+          "partyOrPartyRole": {
+            "id": "128",
+            "href": "https://serverRoot/tmf-api/party/v5/organization/128",
+            "name": "Coffee Do Brazil Fair Trade Marketing Department",
+            "@type": "PartyRef",
+            "@referredType": "Organization"
+          }
+        }
+      ],
+      "contactMedium": [
+        {
+          "preferred": true,
+          "mediumType": "email",
+          "validFor": {
+            "startDateTime": "2017-03-15T07:49:25.246Z"
+          },
+          "@type": "EmailContactMedium",
+          "emailAddress": "jane.lamborgizzia@gmail.com"
+        },
+        {
+          "preferred": false,
+          "mediumType": "postalAddress",
+          "validFor": {
+            "startDateTime": "2017-03-15T07:49:25.246Z"
+          },
+          "@type": "GeographicAddressContactMedium",
+          "city": "Morristown",
+          "country": "USA",
+          "postCode": "07960",
+          "stateOrProvince": "New Jersey",
+          "street1": "240 Headquarters Plazza",
+          "street2": "East Tower - 10th Floor"
+        }
+      ],
+      "disability": [
+        {
+          "disabilityCode": "BLD",
+          "disabilityName": "Blind",
+          "validFor": {
+            "startDateTime": "1967-09-26T07:49:25.246Z"
+          }
+        }
+      ],
+      "languageAbility": [
+        {
+          "languageCode": "FR",
+          "languageName": "French",
+          "isFavouriteLanguage": true,
+          "writingProficiency": "advanced",
+          "readingProficiency": "advanced",
+          "speakingProficiency": "intermediate",
+          "listeningProficiency": "intermediate",
+          "validFor": {
+            "startDateTime": "2018-10-22T07:49:25.246Z"
+          }
+        },
+        {
+          "languageCode": "SP",
+          "languageName": "Spanish",
+          "isFavouriteLanguage": false,
+          "writingProficiency": "scholar",
+          "readingProficiency": "scholar",
+          "speakingProficiency": "scholar",
+          "listeningProficiency": "scholar",
+          "validFor": {
+            "startDateTime": "2018-10-22T07:49:25.246Z"
+          }
+        }
+      ],
+      "skill": [
+        {
+          "skillCode": "SK001",
+          "skillName": "marketing",
+          "evaluatedLevel": "Advanced",
+          "comment": "Ten years experience",
+          "validFor": {
+            "startDateTime": "2018-10-22T07:49:25.246Z"
+          }
+        },
+        {
+          "skillCode": "SK002",
+          "skillName": "Project Management",
+          "evaluatedLevel": "newbie",
+          "comment": "First work experience",
+          "validFor": {
+            "startDateTime": "2018-10-22T07:49:25.246Z"
+          }
+        }
+      ]
+    }
   },
   "reportingSystem": {
-   "id": "759",
-   "name": "APP-745",
-   "@type": "ReportingResource",
-   "@referredType": "LogicalResource"
+    "id": "759",
+    "name": "APP-745",
+    "@type": "ReportingResource",
+    "@referredType": "LogicalResource"
   },
   "source": {
-   "id": "705",
-   "name": "APP-317",
-   "@type": "ReportingResource",
-   "@referredType": "LogicalResource"
+    "id": "705",
+    "name": "APP-317",
+    "@type": "ReportingResource",
+    "@referredType": "LogicalResource"
   },
   "@baseType": "Event",
   "@type": "IndividualCreateEvent"
- }
+}
 ```
 
-### Individual State Change Event
+#### Individual State Change Event
 
-Message example for IndividualStateChangeEvent event
+##### Message example for IndividualStateChangeEvent event
+
+```
+Content-Type: application/json
+```
 
 ```json
- Content-Type: application/json
- {
+{
   "correlationId": "f3a34f89-0046",
   "description": "IndividualStateChangeEvent illustration",
   "domain": "Commercial",
@@ -2728,38 +2791,41 @@ Message example for IndividualStateChangeEvent event
   "timeOcurred": "2022-08-25T12:17:55.035Z",
   "title": "IndividualStateChangeEvent",
   "event": {
-   "individual": {
-    "id": "42",
-    "href": "https://serverRoot/tmf-api/party/v5/individual/42",
-    "@type": "Individual",
-    "@baseType": "Party",
-    "status": "validated"
-   }
+    "individual": {
+      "id": "42",
+      "href": "https://serverRoot/tmf-api/party/v5/individual/42",
+      "@type": "Individual",
+      "@baseType": "Party",
+      "status": "validated"
+    }
   },
   "reportingSystem": {
-   "id": "868",
-   "name": "APP-394",
-   "@type": "ReportingResource",
-   "@referredType": "LogicalResource"
+    "id": "868",
+    "name": "APP-394",
+    "@type": "ReportingResource",
+    "@referredType": "LogicalResource"
   },
   "source": {
-   "id": "372",
-   "name": "APP-92",
-   "@type": "ReportingResource",
-   "@referredType": "LogicalResource"
+    "id": "372",
+    "name": "APP-92",
+    "@type": "ReportingResource",
+    "@referredType": "LogicalResource"
   },
   "@baseType": "Event",
   "@type": "IndividualStateChangeEvent"
- }
+}
 ```
 
-### Individual Attribute Value Change Event
+#### Individual Attribute Value Change Event
 
-Message example for IndividualAttributeValueChangeEvent event
+##### Message example for IndividualAttributeValueChangeEvent event
+
+```
+Content-Type: application/json
+```
 
 ```json
- Content-Type: application/json
- {
+{
   "correlationId": "f3a34f89-0046",
   "description": "IndividualAttributeValueChangeEvent illustration",
   "domain": "Commercial",
@@ -2770,38 +2836,41 @@ Message example for IndividualAttributeValueChangeEvent event
   "timeOcurred": "2022-08-25T12:17:55.035Z",
   "title": "IndividualAttributeValueChangeEvent",
   "event": {
-   "individual": {
-    "id": "42",
-    "href": "https://serverRoot/tmf-api/party/v5/individual/42",
-    "@type": "Individual",
-    "@baseType": "Party",
-    "maritalStatus": "divorced"
-   }
+    "individual": {
+      "id": "42",
+      "href": "https://serverRoot/tmf-api/party/v5/individual/42",
+      "@type": "Individual",
+      "@baseType": "Party",
+      "maritalStatus": "divorced"
+    }
   },
   "reportingSystem": {
-   "id": "868",
-   "name": "APP-394",
-   "@type": "ReportingResource",
-   "@referredType": "LogicalResource"
+    "id": "868",
+    "name": "APP-394",
+    "@type": "ReportingResource",
+    "@referredType": "LogicalResource"
   },
   "source": {
-   "id": "372",
-   "name": "APP-92",
-   "@type": "ReportingResource",
-   "@referredType": "LogicalResource"
+    "id": "372",
+    "name": "APP-92",
+    "@type": "ReportingResource",
+    "@referredType": "LogicalResource"
   },
   "@baseType": "Event",
   "@type": "IndividualAttributeValueChangeEvent"
- }
+}
 ```
 
-### Organization Delete Event
+#### Organization Delete Event
 
-Message example for OrganizationDeleteEvent event
+##### Message example for OrganizationDeleteEvent event
+
+```
+Content-Type: application/json
+```
 
 ```json
- Content-Type: application/json
- {
+{
   "correlationId": "f3a34f89-0046",
   "description": "OrganizationDeleteEvent illustration",
   "domain": "Commercial",
@@ -2812,37 +2881,40 @@ Message example for OrganizationDeleteEvent event
   "timeOcurred": "2022-08-25T12:17:55.035Z",
   "title": "OrganizationDeleteEvent",
   "event": {
-   "organization": {
-    "id": "128",
-    "href": "https://serverRoot/tmf-api/party/v5/organization/128",
-    "@type": "Organization",
-    "@baseType": "Party"
-   }
+    "organization": {
+      "id": "128",
+      "href": "https://serverRoot/tmf-api/party/v5/organization/128",
+      "@type": "Organization",
+      "@baseType": "Party"
+    }
   },
   "reportingSystem": {
-   "id": "868",
-   "name": "APP-394",
-   "@type": "ReportingResource",
-   "@referredType": "LogicalResource"
+    "id": "868",
+    "name": "APP-394",
+    "@type": "ReportingResource",
+    "@referredType": "LogicalResource"
   },
   "source": {
-   "id": "372",
-   "name": "APP-92",
-   "@type": "ReportingResource",
-   "@referredType": "LogicalResource"
+    "id": "372",
+    "name": "APP-92",
+    "@type": "ReportingResource",
+    "@referredType": "LogicalResource"
   },
   "@baseType": "Event",
   "@type": "OrganizationDeleteEvent"
- }
+}
 ```
 
-### Organization Attribute Value Change Event
+#### Organization Attribute Value Change Event
 
-Message example for OrganizationAttributeValueChangeEvent event
+##### Message example for OrganizationAttributeValueChangeEvent event
+
+```
+Content-Type: application/json
+```
 
 ```json
- Content-Type: application/json
- {
+{
   "correlationId": "f3a34f89-0046",
   "description": "OrganizationAttributeValueChangeEvent illustration",
   "domain": "Commercial",
@@ -2853,38 +2925,41 @@ Message example for OrganizationAttributeValueChangeEvent event
   "timeOcurred": "2022-08-25T12:17:55.035Z",
   "title": "OrganizationAttributeValueChangeEvent",
   "event": {
-   "organization": {
-    "id": "128",
-    "href": "https://serverRoot/tmf-api/party/v5/organization/128",
-    "@type": "Organization",
-    "@baseType": "Party",
-    "isHeadOffice": false
-   }
+    "organization": {
+      "id": "128",
+      "href": "https://serverRoot/tmf-api/party/v5/organization/128",
+      "@type": "Organization",
+      "@baseType": "Party",
+      "isHeadOffice": false
+    }
   },
   "reportingSystem": {
-   "id": "868",
-   "name": "APP-394",
-   "@type": "ReportingResource",
-   "@referredType": "LogicalResource"
+    "id": "868",
+    "name": "APP-394",
+    "@type": "ReportingResource",
+    "@referredType": "LogicalResource"
   },
   "source": {
-   "id": "372",
-   "name": "APP-92",
-   "@type": "ReportingResource",
-   "@referredType": "LogicalResource"
+    "id": "372",
+    "name": "APP-92",
+    "@type": "ReportingResource",
+    "@referredType": "LogicalResource"
   },
   "@baseType": "Event",
   "@type": "OrganizationAttributeValueChangeEvent"
- }
+}
 ```
 
-### Organization State Change Event
+#### Organization State Change Event
 
-Message example for OrganizationStateChangeEvent event
+##### Message example for OrganizationStateChangeEvent event
+
+```
+Content-Type: application/json
+```
 
 ```json
- Content-Type: application/json
- {
+{
   "correlationId": "f3a34f89-0046",
   "description": "OrganizationStateChangeEvent illustration",
   "domain": "Commercial",
@@ -2895,38 +2970,41 @@ Message example for OrganizationStateChangeEvent event
   "timeOcurred": "2022-08-25T12:17:55.035Z",
   "title": "OrganizationStateChangeEvent",
   "event": {
-   "organization": {
-    "id": "128",
-    "href": "https://serverRoot/tmf-api/party/v5/organization/128",
-    "@type": "Organization",
-    "@baseType": "Party",
-    "status": "validated"
-   }
+    "organization": {
+      "id": "128",
+      "href": "https://serverRoot/tmf-api/party/v5/organization/128",
+      "@type": "Organization",
+      "@baseType": "Party",
+      "status": "validated"
+    }
   },
   "reportingSystem": {
-   "id": "868",
-   "name": "APP-394",
-   "@type": "ReportingResource",
-   "@referredType": "LogicalResource"
+    "id": "868",
+    "name": "APP-394",
+    "@type": "ReportingResource",
+    "@referredType": "LogicalResource"
   },
   "source": {
-   "id": "372",
-   "name": "APP-92",
-   "@type": "ReportingResource",
-   "@referredType": "LogicalResource"
+    "id": "372",
+    "name": "APP-92",
+    "@type": "ReportingResource",
+    "@referredType": "LogicalResource"
   },
   "@baseType": "Event",
   "@type": "OrganizationStateChangeEvent"
- }
+}
 ```
 
-### Organization Create Event
+#### Organization Create Event
 
-Message example for OrganizationCreateEvent event
+##### Message example for OrganizationCreateEvent event
+
+```
+Content-Type: application/json
+```
 
 ```json
- Content-Type: application/json
- {
+{
   "correlationId": "95003dd3-e325",
   "description": "OrganizationCreateEvent illustration",
   "domain": "Commercial",
@@ -2937,258 +3015,258 @@ Message example for OrganizationCreateEvent event
   "timeOcurred": "2022-08-25T12:18:06.252Z",
   "title": "OrganizationCreateEvent",
   "event": {
-   "organization": {
-    "id": "128",
-    "href": "https://serverRoot/tmf-api/party/v5/organization/128",
-    "@type": "Organization",
-    "@baseType": "Party",
-    "isLegalEntity": true,
-    "isHeadOffice": true,
-    "organizationType": "company",
-    "existsDuring": {
-     "startDateTime": "2015-10-22T08:31:52.026Z"
-    },
-    "name": "Coffee Do Brazil",
-    "tradingName": "Coffee Do Brazil Fair Trade",
-    "nameType": "inc",
-    "status": "validated",
-    "externalReference": [
-     {
-      "name": "http://coffeedobrazil.com",
-      "externalIdentifierType": "internetSite",
-      "@type": "ExternalIdentifier"
-     }
-    ],
-    "partyCharacteristic": [
-     {
-      "name": "number of employees",
-      "value": 125,
-      "valueType": "number",
-      "@type": "IntegerCharacteristic"
-     },
-     {
-      "name": "market segment",
-      "value": "Food wholesale",
-      "valueType": "string",
-      "@type": "StringCharacteristic"
-     }
-    ],
-    "otherName": [
-     {
-      "@type": "OtherNameOrganization",
+    "organization": {
+      "id": "128",
+      "href": "https://serverRoot/tmf-api/party/v5/organization/128",
+      "@type": "Organization",
+      "@baseType": "Party",
+      "isLegalEntity": true,
+      "isHeadOffice": true,
+      "organizationType": "company",
+      "existsDuring": {
+        "startDateTime": "2015-10-22T08:31:52.026Z"
+      },
+      "name": "Coffee Do Brazil",
+      "tradingName": "Coffee Do Brazil Fair Trade",
       "nameType": "inc",
-      "tradingName": "General Coffee",
-      "validFor": {
-       "startDateTime": "2015-10-22T08:31:52.026Z",
-       "endDateTime": "2017-10-22T08:31:52.026Z"
-      }
-     }
-    ],
-    "organizationIdentification": [
-     {
-      "@type": "OrganizationIdentification",
-      "identificationType": "commercialRegistration",
-      "identificationId": "12345678",
-      "issuingAuthority": "US Government",
-      "issuingDate": "2015-10-22T08:31:52.028Z",
-      "validFor": {
-       "startDateTime": "2015-10-22T08:31:52.028Z"
-      },
-      "attachment": {
-       "@type": "Attachment",
-       "attachmentType": "documentCopy",
-       "name": "RegistrationCertificate421.pdf",
-       "description": "Scanned copy of the registration certificate",
-       "mimeType": "application/pdf",
-       "url": "http://DocumentManager/421/RegistrationCertificate421.pdf"
-      }
-     }
-    ],
-    "taxExemptionCertificate": [
-     {
-      "@type": "TaxExemptionCertificate",
-      "id": "1",
-      "validFor": {
-       "startDateTime": "2018-10-22T07:49:25.246Z"
-      },
-      "certificateNumber": "9875755432345",
-      "issuingJurisdiction": "USA",
-      "reason": "Voluntary Body",
-      "taxDefinition": [
-       {
-        "@type": "TaxDefinitionRef",
-        "id": "96",
-        "name": "Value Added Tax",
-        "taxType": "federalVat"
-       }
+      "status": "validated",
+      "externalReference": [
+        {
+          "name": "http://coffeedobrazil.com",
+          "externalIdentifierType": "internetSite",
+          "@type": "ExternalIdentifier"
+        }
       ],
-      "attachment": {
-       "@type": "Attachment",
-       "attachmentType": "taxExemptionCertificate",
-       "name": "TaxExemptionCertificate-233322.pdf",
-       "description": "Electronic version of the tax exemption certificate",
-       "mimeType": "application/pdf",
-       "url": "https://mycsp.com:8080/DocumentManager/666/TaxExemptionCertificate-233322.pdf"
-      }
-     }
-    ],
-    "creditRating": [
-     {
-      "@type": "CreditRating",
-      "creditAgencyName": "Experian",
-      "creditAgencyType": "externalAgency",
-      "ratingReference": "ref456",
-      "ratingScore": 400,
-      "validFor": {
-       "startDateTime": "2018-10-22T08:31:52.028Z"
-      }
-     }
-    ],
-    "relatedParty": [
-     {
-      "role": "director",
-      "@type": "RelatedPartyRefOrPartyRoleRef",
-      "partyOrPartyRole": {
-       "id": "54",
-       "href": "https://serverRoot/tmf-api/party/v5/individual/54",
-       "name": "Carlos Mafalda",
-       "@type": "PartyRef",
-       "@referredType": "Individual"
-      }
-     },
-     {
-      "role": "employee",
-      "@type": "RelatedPartyRefOrPartyRoleRef",
-      "partyOrPartyRole": {
-       "id": "42",
-       "href": "https://serverRoot/tmf-api/party/v5/individual/42",
-       "name": "Jane Lamborgizzia",
-       "@type": "PartyRef",
-       "@referredType": "Individual"
-      }
-     }
-    ],
-    "contactMedium": [
-     {
-      "preferred": true,
-      "mediumType": "email",
-      "validFor": {
-       "startDateTime": "2018-10-22T08:31:52.028Z"
+      "partyCharacteristic": [
+        {
+          "name": "number of employees",
+          "value": 125,
+          "valueType": "number",
+          "@type": "IntegerCharacteristic"
+        },
+        {
+          "name": "market segment",
+          "value": "Food wholesale",
+          "valueType": "string",
+          "@type": "StringCharacteristic"
+        }
+      ],
+      "otherName": [
+        {
+          "@type": "OtherNameOrganization",
+          "nameType": "inc",
+          "tradingName": "General Coffee",
+          "validFor": {
+            "startDateTime": "2015-10-22T08:31:52.026Z",
+            "endDateTime": "2017-10-22T08:31:52.026Z"
+          }
+        }
+      ],
+      "organizationIdentification": [
+        {
+          "@type": "OrganizationIdentification",
+          "identificationType": "commercialRegistration",
+          "identificationId": "12345678",
+          "issuingAuthority": "US Government",
+          "issuingDate": "2015-10-22T08:31:52.028Z",
+          "validFor": {
+            "startDateTime": "2015-10-22T08:31:52.028Z"
+          },
+          "attachment": {
+            "@type": "Attachment",
+            "attachmentType": "documentCopy",
+            "name": "RegistrationCertificate421.pdf",
+            "description": "Scanned copy of the registration certificate",
+            "mimeType": "application/pdf",
+            "url": "http://DocumentManager/421/RegistrationCertificate421.pdf"
+          }
+        }
+      ],
+      "taxExemptionCertificate": [
+        {
+          "@type": "TaxExemptionCertificate",
+          "id": "1",
+          "validFor": {
+            "startDateTime": "2018-10-22T07:49:25.246Z"
+          },
+          "certificateNumber": "9875755432345",
+          "issuingJurisdiction": "USA",
+          "reason": "Voluntary Body",
+          "taxDefinition": [
+            {
+              "@type": "TaxDefinitionRef",
+              "id": "96",
+              "name": "Value Added Tax",
+              "taxType": "federalVat"
+            }
+          ],
+          "attachment": {
+            "@type": "Attachment",
+            "attachmentType": "taxExemptionCertificate",
+            "name": "TaxExemptionCertificate-233322.pdf",
+            "description": "Electronic version of the tax exemption certificate",
+            "mimeType": "application/pdf",
+            "url": "https://mycsp.com:8080/DocumentManager/666/TaxExemptionCertificate-233322.pdf"
+          }
+        }
+      ],
+      "creditRating": [
+        {
+          "@type": "CreditRating",
+          "creditAgencyName": "Experian",
+          "creditAgencyType": "externalAgency",
+          "ratingReference": "ref456",
+          "ratingScore": 400,
+          "validFor": {
+            "startDateTime": "2018-10-22T08:31:52.028Z"
+          }
+        }
+      ],
+      "relatedParty": [
+        {
+          "role": "director",
+          "@type": "RelatedPartyRefOrPartyRoleRef",
+          "partyOrPartyRole": {
+            "id": "54",
+            "href": "https://serverRoot/tmf-api/party/v5/individual/54",
+            "name": "Carlos Mafalda",
+            "@type": "PartyRef",
+            "@referredType": "Individual"
+          }
+        },
+        {
+          "role": "employee",
+          "@type": "RelatedPartyRefOrPartyRoleRef",
+          "partyOrPartyRole": {
+            "id": "42",
+            "href": "https://serverRoot/tmf-api/party/v5/individual/42",
+            "name": "Jane Lamborgizzia",
+            "@type": "PartyRef",
+            "@referredType": "Individual"
+          }
+        }
+      ],
+      "contactMedium": [
+        {
+          "preferred": true,
+          "mediumType": "email",
+          "validFor": {
+            "startDateTime": "2018-10-22T08:31:52.028Z"
+          },
+          "@type": "EmailContactMedium",
+          "emailAddress": "jane.lamborgizzia@coffeedobrazil.com"
+        },
+        {
+          "preferred": false,
+          "mediumType": "postalAddress",
+          "validFor": {
+            "startDateTime": "2018-10-22T08:31:52.028Z"
+          },
+          "@type": "GeographicAddressContactMedium",
+          "city": "Morristown",
+          "country": "USA",
+          "postCode": "07960",
+          "stateOrProvince": "New Jersey",
+          "street1": "240 Headquarters Plazza",
+          "street2": "East Tower 10th Floor"
+        }
+      ],
+      "organizationParentRelationship": {
+        "@type": "OrganizationParentRelationship",
+        "relationshipType": "juridical",
+        "organization": {
+          "@type": "OrganizationRef",
+          "id": "800",
+          "href": "https://serverRoot/tmf-api/party/v5/organization/800"
+        }
       },
-      "@type": "EmailContactMedium",
-      "emailAddress": "jane.lamborgizzia@coffeedobrazil.com"
-     },
-     {
-      "preferred": false,
-      "mediumType": "postalAddress",
-      "validFor": {
-       "startDateTime": "2018-10-22T08:31:52.028Z"
-      },
-      "@type": "GeographicAddressContactMedium",
-      "city": "Morristown",
-      "country": "USA",
-      "postCode": "07960",
-      "stateOrProvince": "New Jersey",
-      "street1": "240 Headquarters Plazza",
-      "street2": "East Tower 10th Floor"
-     }
-    ],
-    "organizationParentRelationship": {
-     "@type": "OrganizationParentRelationship",
-     "relationshipType": "juridical",
-     "organization": {
-      "@type": "OrganizationRef",
-      "id": "800",
-      "href": "https://serverRoot/tmf-api/party/v5/organization/800"
-     }
-    },
-    "organizationChildRelationship": [
-     {
-      "@type": "OrganizationChildRelationship",
-      "relationshipType": "juridical",
-      "organization": {
-       "@type": "OrganizationRef",
-       "id": "149",
-       "href": "https://serverRoot/tmf-api/party/v5/organization/149"
-      }
-     },
-     {
-      "@type": "OrganizationChildRelationship",
-      "relationshipType": "juridical",
-      "organization": {
-       "@type": "OrganizationRef",
-       "id": "150",
-       "href": "https://serverRoot/tmf-api/party/v5/organization/150"
-      }
-     }
-    ]
-   }
+      "organizationChildRelationship": [
+        {
+          "@type": "OrganizationChildRelationship",
+          "relationshipType": "juridical",
+          "organization": {
+            "@type": "OrganizationRef",
+            "id": "149",
+            "href": "https://serverRoot/tmf-api/party/v5/organization/149"
+          }
+        },
+        {
+          "@type": "OrganizationChildRelationship",
+          "relationshipType": "juridical",
+          "organization": {
+            "@type": "OrganizationRef",
+            "id": "150",
+            "href": "https://serverRoot/tmf-api/party/v5/organization/150"
+          }
+        }
+      ]
+    }
   },
   "reportingSystem": {
-   "id": "759",
-   "name": "APP-745",
-   "@type": "ReportingResource",
-   "@referredType": "LogicalResource"
+    "id": "759",
+    "name": "APP-745",
+    "@type": "ReportingResource",
+    "@referredType": "LogicalResource"
   },
   "source": {
-   "id": "705",
-   "name": "APP-317",
-   "@type": "ReportingResource",
-   "@referredType": "LogicalResource"
+    "id": "705",
+    "name": "APP-317",
+    "@type": "ReportingResource",
+    "@referredType": "LogicalResource"
   },
   "@baseType": "Event",
   "@type": "OrganizationCreateEvent"
- }
+}
 ```
 
 ---
 
-# API OPERATIONS
+## API OPERATIONS
 
 Remember the following Uniform Contract:
 
-| Operation on Entities         | Uniform API Operation | Description                                                      |
-| :---------------------------- | :-------------------- | :--------------------------------------------------------------- |
-| Query Entities                | GET Resource          | GET must be used to retrieve a representation of a resource.   |
-| Create Entity                 | POST Resource         | POST must be used to create a new resource                     |
-| Partial Update of an Entity   | PATCH Resource        | PATCH must be used to partially update a resource              |
-| Remove an Entity              | DELETE Resource       | DELETE must be used to remove a resource                       |
-| Execute an Action on an Entity| POST on TASK Resource | POST must be used to execute Task Resources                    |
-| Other Request Methods         | POST on TASK Resource | GET and POST must not be used to tunnel other request methods. |
+| Operation on Entities        | Uniform API Operation  | Description                                                   |
+| :--------------------------- | :--------------------- | :------------------------------------------------------------ |
+| Query Entities               | GET Resource           | GET must be used to retrieve a representation of a resource.  |
+| Create Entity                | POST Resource          | POST must be used to create a new resource                    |
+| Partial Update of an Entity  | PATCH Resource         | PATCH must be used to partially update a resource             |
+| Remove an Entity             | DELETE Resource        | DELETE must be used to remove a resource                      |
+| Execute an Action on an Entity | POST on TASK Resource  | POST must be used to execute Task Resources                   |
+| Other Request Methods        | POST on TASK Resource  | GET and POST must not be used to tunnel other request methods. |
 
 Filtering and attribute selection rules are described in the TMF REST Design Guidelines.
 
 Notifications are also described in a subsequent section.
 
-## Operations on Individual
+### Operations on Individual
 
-### Retrieves a Individual by ID
+#### Retrieves a Individual by ID
 
 `GET /individual/{id}?fields=…`
 
-**Description**
+##### Description
 
 This operation retrieves an Individual entity. Attribute selection is enabled for all first level attributes. Filtering may be available depending on the compliance level supported by an implementation.
 
-**Usage samples**
+##### Usage samples
 
 Here's a sample of a request for retrieving an Individual resource based on its ID.
 
-**Request**
+##### Request
 
 ```
 GET /individual/42
 Content-Type: application/json
 ```
 
-**Response**
+##### Response
 
 ```
 200
 ```
 
 ```json
- {
+{
   "id": "42",
   "href": "https://serverRoot/tmf-api/party/v5/individual/42",
   "@type": "Individual",
@@ -3207,254 +3285,251 @@ Content-Type: application/json
   "formattedName": "Jane Smith ep Lamborgizzia",
   "status": "validated",
   "externalReference": [
-   {
-    "name": "http://facebook.com/17263635",
-    "externalIdentifierType": "facebookId",
-    "@type": "ExternalIdentifier"
-   },
-   {
-    "name": "http://google.com/17263635",
-    "externalIdentifierType": "googleId",
-    "@type": "ExternalIdentifier"
-   }
+    {
+      "name": "http://facebook.com/17263635",
+      "externalIdentifierType": "facebookId",
+      "@type": "ExternalIdentifier"
+    },
+    {
+      "name": "http://google.com/17263635",
+      "externalIdentifierType": "googleId",
+      "@type": "ExternalIdentifier"
+    }
   ],
   "partyCharacteristic": [
-   {
-    "name": "hobby",
-    "value": [
-     "Modern Jazz",
-     "Cinema"
-    ],
-    "valueType": "array",
-    "@type": "StringArrayCharacteristic"
-   }
+    {
+      "name": "hobby",
+      "value": ["Modern Jazz","Cinema"],
+      "valueType": "array",
+      "@type": "StringArrayCharacteristic"
+    }
   ],
   "otherName": [
-   {
-    "@type": "OtherNameIndividual",
-    "givenName": "Jane",
-    "familyName": "Smith",
-    "validFor": {
-     "startDateTime": "1967-09-26T00:00:00.246Z",
-     "endDateTime": "2015-06-15T00:00:00.246Z"
+    {
+      "@type": "OtherNameIndividual",
+      "givenName": "Jane",
+      "familyName": "Smith",
+      "validFor": {
+        "startDateTime": "1967-09-26T00:00:00.246Z",
+        "endDateTime": "2015-06-15T00:00:00.246Z"
+      }
     }
-   }
   ],
   "individualIdentification": [
-   {
-    "@type": "IndividualIdentification",
-    "identificationType": "passport",
-    "identificationId": "51DD1234",
-    "issuingAuthority": "US Government",
-    "issuingDate": "2017-10-22T07:49:25.246Z",
-    "validFor": {
-     "startDateTime": "2017-10-22T07:49:25.246Z",
-     "endDateTime": "2027-10-21T07:49:25.246Z"
-    },
-    "attachment": {
-     "@type": "Attachment",
-     "id": "6662326757667",
-     "href": "https://serverRoot/tmf-api/document/v5/attachment/6662326757667",
-     "attachmentType": "passportCopy",
-     "name": "PassportCopy321.pdf",
-     "description": "Scanned copy of the passport",
-     "mimeType": "application/pdf",
-     "url": "http://DocumentManager/321/PassportCopy321.pdf"
+    {
+      "@type": "IndividualIdentification",
+      "identificationType": "passport",
+      "identificationId": "51DD1234",
+      "issuingAuthority": "US Government",
+      "issuingDate": "2017-10-22T07:49:25.246Z",
+      "validFor": {
+        "startDateTime": "2017-10-22T07:49:25.246Z",
+        "endDateTime": "2027-10-21T07:49:25.246Z"
+      },
+      "attachment": {
+        "@type": "Attachment",
+        "id": "6662326757667",
+        "href": "https://serverRoot/tmf-api/document/v5/attachment/6662326757667",
+        "attachmentType": "passportCopy",
+        "name": "PassportCopy321.pdf",
+        "description": "Scanned copy of the passport",
+        "mimeType": "application/pdf",
+        "url": "http://DocumentManager/321/PassportCopy321.pdf"
+      }
     }
-   }
   ],
   "taxExemptionCertificate": [
-   {
-    "@type": "TaxExemptionCertificate",
-    "id": "1",
-    "validFor": {
-     "startDateTime": "2018-10-22T07:49:25.246Z"
-    },
-    "certificateNumber": "98765432345",
-    "issuingJurisdiction": "USA",
-    "taxDefinition": [
-     {
-      "@type": "TaxDefinitionRef",
-      "id": "96",
-      "name": "Value Added Tax",
-      "taxType": "federalVat"
-     }
-    ],
-    "attachment": {
-     "@type": "Attachment",
-     "id": "5565734535",
-     "href": "https://serverRoot/tmf-api/document/v5/attachment/5565734535",
-     "attachmentType": "taxExemptionCertificate",
-     "name": "TaxExemptionCertificate-566655.pdf",
-     "description": "Electronic version of the tax exemption certificate",
-     "mimeType": "application/pdf",
-     "url": "https://mycsp.com:8080/DocumentManager/666/TaxExemptionCertificate-566655.pdf"
+    {
+      "@type": "TaxExemptionCertificate",
+      "id": "1",
+      "validFor": {
+        "startDateTime": "2018-10-22T07:49:25.246Z"
+      },
+      "certificateNumber": "98765432345", 
+      "issuingJurisdiction": "USA", 
+      "taxDefinition": [
+        {
+          "@type": "TaxDefinitionRef",
+          "id": "96",
+          "name": "Value Added Tax",
+          "taxType": "federalVat"
+        }
+      ],
+      "attachment": {
+        "@type": "Attachment",
+        "id": "5565734535",
+        "href": "https://serverRoot/tmf-api/document/v5/attachment/5565734535",
+        "attachmentType": "taxExemptionCertificate",
+        "name": "TaxExemptionCertificate-566655.pdf",
+        "description": "Electronic version of the tax exemption certificate",
+        "mimeType": "application/pdf",
+        "url": "https://mycsp.com:8080/DocumentManager/666/TaxExemptionCertificate-566655.pdf"
+      }
     }
-   }
   ],
   "creditRating": [
-   {
-    "@type": "CreditRating",
-    "creditAgencyName": "Experian",
-    "creditAgencyType": "externalAgency",
-    "ratingReference": "ref123",
-    "ratingScore": 680,
-    "validFor": {
-     "startDateTime": "2018-10-22T07:49:25.246Z"
+    {
+      "@type": "CreditRating",
+      "creditAgencyName": "Experian",
+      "creditAgencyType": "externalAgency",
+      "ratingReference": "ref123",
+      "ratingScore": 680,
+      "validFor": {
+        "startDateTime": "2018-10-22T07:49:25.246Z"
+      }
     }
-   }
   ],
   "relatedParty": [
-   {
-    "role": "employer",
-    "@type": "RelatedPartyRefOrPartyRoleRef",
-    "partyOrPartyRole": {
-     "id": "128",
-     "href": "https://serverRoot/tmf-api/party/v5/organization/128",
-     "name": "Coffee Do Brazil Fair Trade Marketing Department",
-     "@type": "PartyRef",
-     "@referredType": "Organization"
+    {
+      "role": "employer",
+      "@type": "RelatedPartyRefOrPartyRoleRef",
+      "partyOrPartyRole": {
+        "id": "128",
+        "href": "https://serverRoot/tmf-api/party/v5/organization/128",
+        "name": "Coffee Do Brazil Fair Trade Marketing Department",
+        "@type": "PartyRef",
+        "@referredType": "Organization"
+      }
     }
-   }
   ],
   "contactMedium": [
-   {
-    "preferred": true,
-    "mediumType": "email",
-    "validFor": {
-     "startDateTime": "2017-03-15T07:49:25.246Z"
+    {
+      "preferred": true,
+      "mediumType": "email",
+      "validFor": {
+        "startDateTime": "2017-03-15T07:49:25.246Z"
+      },
+      "@type": "EmailContactMedium",
+      "emailAddress": "jane.lamborgizzia@gmail.com"
     },
-    "@type": "EmailContactMedium",
-    "emailAddress": "jane.lamborgizzia@gmail.com"
-   },
-   {
-    "preferred": false,
-    "mediumType": "postalAddress",
-    "validFor": {
-     "startDateTime": "2017-03-15T07:49:25.246Z"
-    },
-    "@type": "GeographicAddressContactMedium",
-    "city": "Morristown",
-    "country": "USA",
-    "postCode": "07960",
-    "stateOrProvince": "New Jersey",
-    "street1": "240 Headquarters Plazza",
-    "street2": "East Tower - 10th Floor"
-   }
+    {
+      "preferred": false,
+      "mediumType": "postalAddress",
+      "validFor": {
+        "startDateTime": "2017-03-15T07:49:25.246Z"
+      },
+      "@type": "GeographicAddressContactMedium",
+      "city": "Morristown",
+      "country": "USA",
+      "postCode": "07960",
+      "stateOrProvince": "New Jersey",
+      "street1": "240 Headquarters Plazza",
+      "street2": "East Tower - 10th Floor"
+    }
   ],
   "disability": [
-   {
-    "disabilityCode": "BLD",
-    "disabilityName": "Blind",
-    "validFor": {
-     "startDateTime": "1967-09-26T07:49:25.246Z"
+    {
+      "disabilityCode": "BLD",
+      "disabilityName": "Blind",
+      "validFor": {
+        "startDateTime": "1967-09-26T07:49:25.246Z"
+      }
     }
-   }
   ],
   "languageAbility": [
-   {
-    "languageCode": "FR",
-    "languageName": "French",
-    "isFavouriteLanguage": true,
-    "writingProficiency": "advanced",
-    "readingProficiency": "advanced",
-    "speakingProficiency": "intermediate",
-    "listeningProficiency": "intermediate",
-    "validFor": {
-     "startDateTime": "2018-10-22T07:49:25.246Z"
+    {
+      "languageCode": "FR",
+      "languageName": "French",
+      "isFavouriteLanguage": true,
+      "writingProficiency": "advanced",
+      "readingProficiency": "advanced",
+      "speakingProficiency": "intermediate",
+      "listeningProficiency": "intermediate",
+      "validFor": {
+        "startDateTime": "2018-10-22T07:49:25.246Z"
+      }
+    },
+    {
+      "languageCode": "SP",
+      "languageName": "Spanish",
+      "isFavouriteLanguage": false,
+      "writingProficiency": "scholar",
+      "readingProficiency": "scholar",
+      "speakingProficiency": "scholar",
+      "listeningProficiency": "scholar",
+      "validFor": {
+        "startDateTime": "2018-10-22T07:49:25.246Z"
+      }
     }
-   },
-   {
-    "languageCode": "SP",
-    "languageName": "Spanish",
-    "isFavouriteLanguage": false,
-    "writingProficiency": "scholar",
-    "readingProficiency": "scholar",
-    "speakingProficiency": "scholar",
-    "listeningProficiency": "scholar",
-    "validFor": {
-     "startDateTime": "2018-10-22T07:49:25.246Z"
-    }
-   }
   ],
   "skill": [
-   {
-    "skillCode": "SK001",
-    "skillName": "marketing",
-    "evaluatedLevel": "Advanced",
-    "comment": "Ten years experience",
-    "validFor": {
-     "startDateTime": "2018-10-22T07:49:25.246Z"
+    {
+      "skillCode": "SK001",
+      "skillName": "marketing",
+      "evaluatedLevel": "Advanced",
+      "comment": "Ten years experience",
+      "validFor": {
+        "startDateTime": "2018-10-22T07:49:25.246Z"
+      }
+    },
+    {
+      "skillCode": "SK002",
+      "skillName": "Project Management",
+      "evaluatedLevel": "newbie",
+      "comment": "First work experience",
+      "validFor": {
+        "startDateTime": "2018-10-22T07:49:25.246Z"
+      }
     }
-   },
-   {
-    "skillCode": "SK002",
-    "skillName": "Project Management",
-    "evaluatedLevel": "newbie",
-    "comment": "First work experience",
-    "validFor": {
-     "startDateTime": "2018-10-22T07:49:25.246Z"
-    }
-   }
   ]
- }
+}
 ```
 
-### List or find Individual objects
+#### List or find Individual objects
 
 `GET /individual?fields=…`
 
-**Description**
+##### Description
 
 This operation list Individual entities. Attribute selection is enabled for all first level attributes. Filtering may be available depending on the compliance level supported by an implementation.
 
-**Usage samples**
+##### Usage samples
 
 Here's an example of a request for retrieving resources of type Individual, Retrieving all Individual with validated status and credit score equal to 700. The result items are field-restricted to show only the id, the family name and the given name.
 
-**Request**
+##### Request
 
 ```
 GET /individual?status=validated&creditRating.ratingScore=700&fields=id,familyName,givenName
 Content-Type: application/json
 ```
 
-**Response**
+##### Response
 
 ```
 200
 ```
 
 ```json
- [
+[
   {
-   "id": "42",
-   "href": "https://serverRoot/tmf-api/party/v5/individual/42",
-   "@type": "Individual",
-   "@baseType": "Party",
-   "givenName": "Jane",
-   "familyName": "Lamborgizzia"
+    "id": "42",
+    "href": "https://serverRoot/tmf-api/party/v5/individual/42",
+    "@type": "Individual",
+    "@baseType": "Party",
+    "givenName": "Jane",
+    "familyName": "Lamborgizzia"
   },
   {
-   "id": "52",
-   "href": "https://serverRoot/tmf-api/party/v5/individual/52",
-   "@type": "Individual",
-   "@baseType": "Party",
-   "givenName": "Paul",
-   "familyName": "Newman"
+    "id": "52",
+    "href": "https://serverRoot/tmf-api/party/v5/individual/52",
+    "@type": "Individual",
+    "@baseType": "Party",
+    "givenName": "Paul",
+    "familyName": "Newman"
   }
- ]
+]
 ```
 
-### Creates a Individual
+#### Creates a Individual
 
 `POST /individual?fields=…`
 
-**Description**
+##### Description
 
 This operation creates an Individual entity.
 
-**Mandatory Attributes**
+##### Mandatory Attributes
 
 | Mandatory Attributes | Rule |
 | :------------------- | :--- |
@@ -3462,31 +3537,34 @@ This operation creates an Individual entity.
 | givenName            |      |
 | @type                |      |
 
-**Usage samples**
+##### Usage samples
 
 Here's a sample of a request for creating an Individual resource. In this example the request only passes mandatory attributes.
 
-**Request**
+##### Request
+
+```
+POST /individual
+Content-Type: application/json
+```
 
 ```json
- POST /individual
- Content-Type: application/json
- {
+{
   "@type": "Individual",
   "@baseType": "Party",
   "givenName": "Jane",
   "familyName": "Lamborgizzia"
- }
+}
 ```
 
-**Response**
+##### Response
 
 ```
 201
 ```
 
 ```json
- {
+{
   "id": "42",
   "href": "https://serverRoot/tmf-api/party/v5/individual/42",
   "@type": "Individual",
@@ -3494,84 +3572,87 @@ Here's a sample of a request for creating an Individual resource. In this exampl
   "givenName": "Jane",
   "familyName": "Lamborgizzia",
   "status": "initialized"
- }
+}
 ```
 
-### Updates partially a Individual
+#### Updates partially a Individual
 
 `PATCH /individual/{id}?fields=…`
 
-**Description**
+##### Description
 
-This operation allows partial updates of an Individual entity. Support of json/merge ([https://tools.ietf.org/html/rfc7386](https://tools.ietf.org/html/rfc7386)) is mandatory, support of json/patch ([http://tools.ietf.org/html/rfc5789](http://tools.ietf.org/html/rfc5789)) is optiona. Note: If the update operation yields to the creation of sub-resources or relationships, the same rules concerning mandatory sub-resource attributes and default value settings in the POST operation applies to the PATCH operation. Hence these tables are not repeated here.
+This operation allows partial updates of an Individual entity. Support of json/merge (https://tools.ietf.org/html/rfc7386) is mandatory, support of json/patch (http://tools.ietf.org/html/rfc5789) is optiona. Note: If the update operation yields to the creation of sub-resources or relationships, the same rules concerning mandatory sub-resource attributes and default value settings in the POST operation applies to the PATCH operation. Hence these tables are not repeated here.
 
-**Patchable and Non Patchable Attributes**
+##### Patchable and Non Patchable Attributes
 
-| Non Patchable Attributes | Rule                       |
-| :----------------------- | :------------------------- |
-| href                     |                            |
-| id                       |                            |
-| @baseType                | @baseType is immutable     |
+| Non Patchable Attributes | Rule                          |
+| :----------------------- | :---------------------------- |
+| href                     |                               |
+| id                       |                               |
+| @baseType                | @baseType is immutable        |
 | @schemaLocation          | @schemaLocation is immutable |
-| @type                    | @type is immutable         |
+| @type                    | @type is immutable            |
 
-| Patchable Attributes    | Rule |
-| :---------------------- | :--- |
-| aristocraticTitle       |      |
-| birthDate               |      |
-| contactMedium           |      |
-| countryOfBirth          |      |
-| creditRating            |      |
-| deathDate               |      |
-| disability              |      |
-| externalReference       |      |
-| familyName              |      |
-| familyNamePrefix        |      |
-| formattedName           |      |
-| gender                  |      |
-| generation              |      |
-| givenName               |      |
-| individualIdentification|      |
-| languageAbility         |      |
-| legalName               |      |
-| location                |      |
-| maritalStatus           |      |
-| middleName              |      |
-| name                    |      |
-| nationality             |      |
-| otherName               |      |
-| partyCharacteristic     |      |
-| placeOfBirth            |      |
-| preferredGivenName      |      |
-| relatedParty            |      |
-| skill                   |      |
-| status                  |      |
-| taxExemptionCertificate |      |
-| title                   |      |
+| Patchable Attributes        | Rule |
+| :-------------------------- | :--- |
+| aristocraticTitle           |      |
+| birthDate                   |      |
+| contactMedium               |      |
+| countryOfBirth              |      |
+| creditRating                |      |
+| deathDate                   |      |
+| disability                  |      |
+| externalReference           |      |
+| familyName                  |      |
+| familyNamePrefix            |      |
+| formattedName               |      |
+| gender                      |      |
+| generation                  |      |
+| givenName                   |      |
+| individualIdentification    |      |
+| languageAbility             |      |
+| legalName                   |      |
+| location                    |      |
+| maritalStatus               |      |
+| middleName                  |      |
+| name                        |      |
+| nationality                 |      |
+| otherName                   |      |
+| partyCharacteristic         |      |
+| placeOfBirth                |      |
+| preferredGivenName          |      |
+| relatedParty                |      |
+| skill                       |      |
+| status                      |      |
+| taxExemptionCertificate     |      |
+| title                       |      |
 
-**Usage samples**
+##### Usage samples
 
 Here's an example of a request for patching an Individual resource with change on maritalStatus attribute using patch merge
 
-**Request**
+##### Request
 
-```json
- PATCH /individual/{id}
- Content-Type: application/merge-patch+json
- {
-  "@type": "Individual",
-  "maritalStatus": "divorced"
- }
+```
+PATCH /individual/{id}
+Content-Type: application/merge-patch+json
 ```
 
-**Response**
+```json
+{
+  "@type": "Individual",
+  "maritalStatus": "divorced"
+}
+```
+
+##### Response
 
 ```
 200
 ```
 
 ```json
- {
+{
   "id": "42",
   "href": "https://serverRoot/tmf-api/party/v5/individual/42",
   "@type": "Individual",
@@ -3590,243 +3671,243 @@ Here's an example of a request for patching an Individual resource with change o
   "formattedName": "Jane Smith ep Lamborgizzia",
   "status": "validated",
   "externalReference": [
-   {
-    "name": "http://facebook.com/17263635",
-    "externalIdentifierType": "facebookId",
-    "@type": "ExternalIdentifier"
-   },
-   {
-    "name": "http://google.com/17263635",
-    "externalIdentifierType": "googleId",
-    "@type": "ExternalIdentifier"
-   }
+    {
+      "name": "http://facebook.com/17263635",
+      "externalIdentifierType": "facebookId",
+      "@type": "ExternalIdentifier"
+    },
+    {
+      "name": "http://google.com/17263635",
+      "externalIdentifierType": "googleId",
+      "@type": "ExternalIdentifier"
+    }
   ],
   "partyCharacteristic": [
-   {
-    "name": "hobby",
-    "value": [
-     "Modern Jazz",
-     "Cinema"
-    ],
-    "valueType": "array",
-    "@type": "StringArrayCharacteristic"
-   },
-   {
-    "name": "childrenNumber",
-    "value": 1,
-    "valueType": "number",
-    "@type": "IntegerCharacteristic"
-   }
+    {
+      "name": "hobby",
+      "value": ["Modern Jazz","Cinema"],
+      "valueType": "array",
+      "@type": "StringArrayCharacteristic"
+    },
+    {
+      "name": "childrenNumber",
+      "value": 1,
+      "valueType": "number",
+      "@type": "IntegerCharacteristic"
+    }
   ],
   "otherName": [
-   {
-    "@type": "OtherNameIndividual",
-    "givenName": "Jane",
-    "familyName": "Smith",
-    "validFor": {
-     "startDateTime": "1967-09-26T00:00:00.246Z",
-     "endDateTime": "2015-06-15T00:00:00.246Z"
+    {
+      "@type": "OtherNameIndividual",
+      "givenName": "Jane",
+      "familyName": "Smith",
+      "validFor": {
+        "startDateTime": "1967-09-26T00:00:00.246Z",
+        "endDateTime": "2015-06-15T00:00:00.246Z"
+      }
     }
-   }
   ],
   "individualIdentification": [
-   {
-    "@type": "IndividualIdentification",
-    "identificationType": "passport",
-    "identificationId": "51DD1234",
-    "issuingAuthority": "US Government",
-    "issuingDate": "2017-10-22T07:49:25.246Z",
-    "validFor": {
-     "startDateTime": "2017-10-22T07:49:25.246Z",
-     "endDateTime": "2027-10-21T07:49:25.246Z"
-    },
-    "attachment": {
-     "@type": "Attachment",
-     "attachmentType": "passportCopy",
-     "name": "PassportCopy321.pdf",
-     "description": "Scanned copy of the passport",
-     "mimeType": "application/pdf",
-     "url": "http://DocumentManager/321/PassportCopy321.pdf"
+    {
+      "@type": "IndividualIdentification",
+      "identificationType": "passport",
+      "identificationId": "51DD1234",
+      "issuingAuthority": "US Government",
+      "issuingDate": "2017-10-22T07:49:25.246Z",
+      "validFor": {
+        "startDateTime": "2017-10-22T07:49:25.246Z",
+        "endDateTime": "2027-10-21T07:49:25.246Z"
+      },
+      "attachment": {
+        "@type": "Attachment",
+        "attachmentType": "passportCopy",
+        "name": "PassportCopy321.pdf",
+        "description": "Scanned copy of the passport",
+        "mimeType": "application/pdf",
+        "url": "http://DocumentManager/321/PassportCopy321.pdf"
+      }
     }
-   }
   ],
   "taxExemptionCertificate": [
-   {
-    "@type": "TaxExemptionCertificate",
-    "id": "1",
-    "validFor": {
-     "startDateTime": "2018-10-22T07:49:25.246Z"
-    },
-    "certificateNumber": "98765432345",
-    "issuingJurisdiction": "USA",
-    "taxDefinition": [
-     {
-      "@type": "TaxDefinitionRef",
-      "id": "96",
-      "name": "Value Added Tax",
-      "taxType": "federalVat"
-     }
-    ],
-    "attachment": {
-     "@type": "Attachment",
-     "attachmentType": "taxExemptionCertificate",
-     "name": "TaxExemptionCertificate-566655.pdf",
-     "description": "Electronic version of the tax exemption certificate",
-     "mimeType": "application/pdf",
-     "url": "https://mycsp.com:8080/DocumentManager/666/TaxExemptionCertificate-566655.pdf"
+    {
+      "@type": "TaxExemptionCertificate",
+      "id": "1",
+      "validFor": {
+        "startDateTime": "2018-10-22T07:49:25.246Z"
+      },
+      "certificateNumber": "98765432345", 
+      "issuingJurisdiction": "USA", 
+      "taxDefinition": [
+        {
+          "@type": "TaxDefinitionRef",
+          "id": "96",
+          "name": "Value Added Tax",
+          "taxType": "federalVat"
+        }
+      ],
+      "attachment": {
+        "@type": "Attachment",
+        "attachmentType": "taxExemptionCertificate",
+        "name": "TaxExemptionCertificate-566655.pdf",
+        "description": "Electronic version of the tax exemption certificate",
+        "mimeType": "application/pdf",
+        "url": "https://mycsp.com:8080/DocumentManager/666/TaxExemptionCertificate-566655.pdf"
+      }
     }
-   }
   ],
   "creditRating": [
-   {
-    "@type": "CreditRating",
-    "creditAgencyName": "Experian",
-    "creditAgencyType": "externalAgency",
-    "ratingReference": "ref123",
-    "ratingScore": 680,
-    "validFor": {
-     "startDateTime": "2018-10-22T07:49:25.246Z"
+    {
+      "@type": "CreditRating",
+      "creditAgencyName": "Experian",
+      "creditAgencyType": "externalAgency",
+      "ratingReference": "ref123",
+      "ratingScore": 680,
+      "validFor": {
+        "startDateTime": "2018-10-22T07:49:25.246Z"
+      }
     }
-   }
   ],
   "relatedParty": [
-   {
-    "role": "employer",
-    "@type": "RelatedPartyRefOrPartyRoleRef",
-    "partyOrPartyRole": {
-     "id": "128",
-     "href": "https://serverRoot/tmf-api/party/v5/organization/128",
-     "name": "Coffee Do Brazil Fair Trade Marketing Department",
-     "@type": "PartyRef",
-     "@referredType": "Organization"
+    {
+      "role": "employer",
+      "@type": "RelatedPartyRefOrPartyRoleRef",
+      "partyOrPartyRole": {
+        "id": "128",
+        "href": "https://serverRoot/tmf-api/party/v5/organization/128",
+        "name": "Coffee Do Brazil Fair Trade Marketing Department",
+        "@type": "PartyRef",
+        "@referredType": "Organization"
+      }
     }
-   }
   ],
   "contactMedium": [
-   {
-    "preferred": true,
-    "mediumType": "email",
-    "validFor": {
-     "startDateTime": "2017-03-15T07:49:25.246Z"
+    {
+      "preferred": true,
+      "mediumType": "email",
+      "validFor": {
+        "startDateTime": "2017-03-15T07:49:25.246Z"
+      },
+      "@type": "EmailContactMedium",
+      "emailAddress": "jane.lamborgizzia@gmail.com"
     },
-    "@type": "EmailContactMedium",
-    "emailAddress": "jane.lamborgizzia@gmail.com"
-   },
-   {
-    "preferred": false,
-    "mediumType": "postalAddress",
-    "validFor": {
-     "startDateTime": "2017-03-15T07:49:25.246Z"
-    },
-    "@type": "GeographicAddressContactMedium",
-    "city": "Morristown",
-    "country": "USA",
-    "postCode": "07960",
-    "stateOrProvince": "New Jersey",
-    "street1": "240 Headquarters Plazza",
-    "street2": "East Tower - 10th Floor"
-   }
+    {
+      "preferred": false,
+      "mediumType": "postalAddress",
+      "validFor": {
+        "startDateTime": "2017-03-15T07:49:25.246Z"
+      },
+      "@type": "GeographicAddressContactMedium",
+      "city": "Morristown",
+      "country": "USA",
+      "postCode": "07960",
+      "stateOrProvince": "New Jersey",
+      "street1": "240 Headquarters Plazza",
+      "street2": "East Tower - 10th Floor"
+    }
   ],
   "disability": [
-   {
-    "disabilityCode": "BLD",
-    "disabilityName": "Blind",
-    "validFor": {
-     "startDateTime": "1967-09-26T07:49:25.246Z"
+    {
+      "disabilityCode": "BLD",
+      "disabilityName": "Blind",
+      "validFor": {
+        "startDateTime": "1967-09-26T07:49:25.246Z"
+      }
     }
-   }
   ],
   "languageAbility": [
-   {
-    "languageCode": "FR",
-    "languageName": "French",
-    "isFavouriteLanguage": true,
-    "writingProficiency": "advanced",
-    "readingProficiency": "advanced",
-    "speakingProficiency": "intermediate",
-    "listeningProficiency": "intermediate",
-    "validFor": {
-     "startDateTime": "2018-10-22T07:49:25.246Z"
+    {
+      "languageCode": "FR",
+      "languageName": "French",
+      "isFavouriteLanguage": true,
+      "writingProficiency": "advanced",
+      "readingProficiency": "advanced",
+      "speakingProficiency": "intermediate",
+      "listeningProficiency": "intermediate",
+      "validFor": {
+        "startDateTime": "2018-10-22T07:49:25.246Z"
+      }
+    },
+    {
+      "languageCode": "SP",
+      "languageName": "Spanish",
+      "isFavouriteLanguage": false,
+      "writingProficiency": "scholar",
+      "readingProficiency": "scholar",
+      "speakingProficiency": "scholar",
+      "listeningProficiency": "scholar",
+      "validFor": {
+        "startDateTime": "2018-10-22T07:49:25.246Z"
+      }
     }
-   },
-   {
-    "languageCode": "SP",
-    "languageName": "Spanish",
-    "isFavouriteLanguage": false,
-    "writingProficiency": "scholar",
-    "readingProficiency": "scholar",
-    "speakingProficiency": "scholar",
-    "listeningProficiency": "scholar",
-    "validFor": {
-     "startDateTime": "2018-10-22T07:49:25.246Z"
-    }
-   }
   ],
   "skill": [
-   {
-    "skillCode": "SK001",
-    "skillName": "marketing",
-    "evaluatedLevel": "Advanced",
-    "comment": "Ten years experience",
-    "validFor": {
-     "startDateTime": "2018-10-22T07:49:25.246Z"
+    {
+      "skillCode": "SK001",
+      "skillName": "marketing",
+      "evaluatedLevel": "Advanced",
+      "comment": "Ten years experience",
+      "validFor": {
+        "startDateTime": "2018-10-22T07:49:25.246Z"
+      }
+    },
+    {
+      "skillCode": "SK002",
+      "skillName": "Project Management",
+      "evaluatedLevel": "newbie",
+      "comment": "First work experience",
+      "validFor": {
+        "startDateTime": "2018-10-22T07:49:25.246Z"
+      }
     }
-   },
-   {
-    "skillCode": "SK002",
-    "skillName": "Project Management",
-    "evaluatedLevel": "newbie",
-    "comment": "First work experience",
-    "validFor": {
-     "startDateTime": "2018-10-22T07:49:25.246Z"
-    }
-   }
   ]
- }
+}
 ```
 
 Here's an example of a request for patching an Individual by adding an IndividualIdentification using json-patch
 
-**Request**
+##### Request
 
-```json
- PATCH /individual/{id}
- Content-Type: application/json-patch+json
- [
-  {
-   "op": "add",
-   "path": "/individualIdentification/-",
-   "value": {
-    "@type": "IndividualIdentification",
-    "identificationType": "passport",
-    "identificationId": "51DD1234",
-    "issuingAuthority": "US Government",
-    "issuingDate": "2017-10-22T07:49:25.246Z",
-    "validFor": {
-     "startDateTime": "2017-10-22T07:49:25.246Z",
-     "endDateTime": "2027-10-21T07:49:25.246Z"
-    },
-    "attachment": {
-     "@type": "Attachment",
-     "attachmentType": "passportCopy",
-     "name": "PassportCopy321.pdf",
-     "description": "Scanned copy of the passport",
-     "mimeType": "application/pdf",
-     "url": "http://DocumentManager/321/PassportCopy321.pdf"
-    }
-   }
-  }
- ]
+```
+PATCH /individual/{id}
+Content-Type: application/json-patch+json
 ```
 
-**Response**
+```json
+[
+  {
+    "op": "add",
+    "path": "/individualIdentification/-",
+    "value": {
+      "@type": "IndividualIdentification",
+      "identificationType": "passport",
+      "identificationId": "51DD1234",
+      "issuingAuthority": "US Government",
+      "issuingDate": "2017-10-22T07:49:25.246Z",
+      "validFor": {
+        "startDateTime": "2017-10-22T07:49:25.246Z",
+        "endDateTime": "2027-10-21T07:49:25.246Z"
+      },
+      "attachment": {
+        "@type": "Attachment",
+        "attachmentType": "passportCopy",
+        "name": "PassportCopy321.pdf",
+        "description": "Scanned copy of the passport",
+        "mimeType": "application/pdf",
+        "url": "http://DocumentManager/321/PassportCopy321.pdf"
+      }
+    }
+  }
+]
+```
+
+##### Response
 
 ```
 200
 ```
 
 ```json
- {
+{
   "id": "42",
   "href": "https://serverRoot/tmf-api/party/v5/individual/42",
   "@type": "Individual",
@@ -3845,225 +3926,226 @@ Here's an example of a request for patching an Individual by adding an Individua
   "formattedName": "Jane Smith ep Lamborgizzia",
   "status": "validated",
   "externalReference": [
-   {
-    "name": "http://facebook.com/17263635",
-    "externalIdentifierType": "facebookId",
-    "@type": "ExternalIdentifier"
-   },
-   {
-    "name": "http://google.com/17263635",
-    "externalIdentifierType": "googleId",
-    "@type": "ExternalIdentifier"
-   }
+    {
+      "name": "http://facebook.com/17263635",
+      "externalIdentifierType": "facebookId",
+      "@type": "ExternalIdentifier"
+    },
+    {
+      "name": "http://google.com/17263635",
+      "externalIdentifierType": "googleId",
+      "@type": "ExternalIdentifier"
+    }
   ],
   "partyCharacteristic": [
-   {
-    "name": "hobby",
-    "value": [
-     "Modern Jazz",
-     "Cinema"
-    ],
-    "valueType": "array",
-    "@type": "StringArrayCharacteristic"
-   },
-   {
-    "name": "childrenNumber",
-    "value": 1,
-    "valueType": "number",
-    "@type": "IntegerCharacteristic"
-   }
+    {
+      "name": "hobby",
+      "value": ["Modern Jazz","Cinema"],
+      "valueType": "array",
+      "@type": "StringArrayCharacteristic"
+    },
+    {
+      "name": "childrenNumber",
+      "value": 1,
+      "valueType": "number",
+      "@type": "IntegerCharacteristic"
+    }
   ],
   "otherName": [
-   {
-    "@type": "OtherNameIndividual",
-    "givenName": "Jane",
-    "familyName": "Smith",
-    "validFor": {
-     "startDateTime": "1967-09-26T00:00:00.246Z",
-     "endDateTime": "2015-06-15T00:00:00.246Z"
+    {
+      "@type": "OtherNameIndividual",
+      "givenName": "Jane",
+      "familyName": "Smith",
+      "validFor": {
+        "startDateTime": "1967-09-26T00:00:00.246Z",
+        "endDateTime": "2015-06-15T00:00:00.246Z"
+      }
     }
-   }
   ],
   "individualIdentification": [
-   {
-    "@type": "IndividualIdentification",
-    "identificationType": "passport",
-    "identificationId": "51DD1234",
-    "issuingAuthority": "US Government",
-    "issuingDate": "2017-10-22T07:49:25.246Z",
-    "validFor": {
-     "startDateTime": "2017-10-22T07:49:25.246Z",
-     "endDateTime": "2027-10-21T07:49:25.246Z"
-    },
-    "attachment": {
-     "@type": "Attachment",
-     "attachmentType": "passportCopy",
-     "name": "PassportCopy321.pdf",
-     "description": "Scanned copy of the passport",
-     "mimeType": "application/pdf",
-     "url": "http://DocumentManager/321/PassportCopy321.pdf"
+    {
+      "@type": "IndividualIdentification",
+      "identificationType": "passport",
+      "identificationId": "51DD1234",
+      "issuingAuthority": "US Government",
+      "issuingDate": "2017-10-22T07:49:25.246Z",
+      "validFor": {
+        "startDateTime": "2017-10-22T07:49:25.246Z",
+        "endDateTime": "2027-10-21T07:49:25.246Z"
+      },
+      "attachment": {
+        "@type": "Attachment",
+        "attachmentType": "passportCopy",
+        "name": "PassportCopy321.pdf",
+        "description": "Scanned copy of the passport",
+        "mimeType": "application/pdf",
+        "url": "http://DocumentManager/321/PassportCopy321.pdf"
+      }
     }
-   }
   ],
   "taxExemptionCertificate": [
-   {
-    "@type": "TaxExemptionCertificate",
-    "id": "1",
-    "validFor": {
-     "startDateTime": "2018-10-22T07:49:25.246Z"
-    },
-    "certificateNumber": "98765432345",
-    "issuingJurisdiction": "USA",
-    "taxDefinition": [
-     {
-      "@type": "TaxDefinitionRef",
-      "id": "96",
-      "name": "Value Added Tax",
-      "taxType": "federalVat"
-     }
-    ],
-    "attachment": {
-     "@type": "Attachment",
-     "attachmentType": "taxExemptionCertificate",
-     "name": "TaxExemptionCertificate-566655.pdf",
-     "description": "Electronic version of the tax exemption certificate",
-     "mimeType": "application/pdf",
-     "url": "https://mycsp.com:8080/DocumentManager/666/TaxExemptionCertificate-566655.pdf"
+    {
+      "@type": "TaxExemptionCertificate",
+      "id": "1",
+      "validFor": {
+        "startDateTime": "2018-10-22T07:49:25.246Z"
+      },
+      "certificateNumber": "98765432345", 
+      "issuingJurisdiction": "USA", 
+      "taxDefinition": [
+        {
+          "@type": "TaxDefinitionRef",
+          "id": "96",
+          "name": "Value Added Tax",
+          "taxType": "federalVat"
+        }
+      ],
+      "attachment": {
+        "@type": "Attachment",
+        "attachmentType": "taxExemptionCertificate",
+        "name": "TaxExemptionCertificate-566655.pdf",
+        "description": "Electronic version of the tax exemption certificate",
+        "mimeType": "application/pdf",
+        "url": "https://mycsp.com:8080/DocumentManager/666/TaxExemptionCertificate-566655.pdf"
+      }
     }
-   }
   ],
   "creditRating": [
-   {
-    "@type": "CreditRating",
-    "creditAgencyName": "Experian",
-    "creditAgencyType": "externalAgency",
-    "ratingReference": "ref123",
-    "ratingScore": 680,
-    "validFor": {
-     "startDateTime": "2018-10-22T07:49:25.246Z"
+    {
+      "@type": "CreditRating",
+      "creditAgencyName": "Experian",
+      "creditAgencyType": "externalAgency",
+      "ratingReference": "ref123",
+      "ratingScore": 680,
+      "validFor": {
+        "startDateTime": "2018-10-22T07:49:25.246Z"
+      }
     }
-   }
   ],
   "relatedParty": [
-   {
-    "role": "employer",
-    "@type": "RelatedPartyRefOrPartyRoleRef",
-    "partyOrPartyRole": {
-     "id": "128",
-     "href": "https://serverRoot/tmf-api/party/v5/organization/128",
-     "name": "Coffee Do Brazil Fair Trade Marketing Department",
-     "@type": "PartyRef",
-     "@referredType": "Organization"
+    {
+      "role": "employer",
+      "@type": "RelatedPartyRefOrPartyRoleRef",
+      "partyOrPartyRole": {
+        "id": "128",
+        "href": "https://serverRoot/tmf-api/party/v5/organization/128",
+        "name": "Coffee Do Brazil Fair Trade Marketing Department",
+        "@type": "PartyRef",
+        "@referredType": "Organization"
+      }
     }
-   }
   ],
   "contactMedium": [
-   {
-    "preferred": true,
-    "mediumType": "email",
-    "validFor": {
-     "startDateTime": "2017-03-15T07:49:25.246Z"
+    {
+      "preferred": true,
+      "mediumType": "email",
+      "validFor": {
+        "startDateTime": "2017-03-15T07:49:25.246Z"
+      },
+      "@type": "EmailContactMedium",
+      "emailAddress": "jane.lamborgizzia@gmail.com"
     },
-    "@type": "EmailContactMedium",
-    "emailAddress": "jane.lamborgizzia@gmail.com"
-   },
-   {
-    "preferred": false,
-    "mediumType": "postalAddress",
-    "validFor": {
-     "startDateTime": "2017-03-15T07:49:25.246Z"
-    },
-    "@type": "GeographicAddressContactMedium",
-    "city": "Morristown",
-    "country": "USA",
-    "postCode": "07960",
-    "stateOrProvince": "New Jersey",
-    "street1": "240 Headquarters Plazza",
-    "street2": "East Tower - 10th Floor"
-   }
+    {
+      "preferred": false,
+      "mediumType": "postalAddress",
+      "validFor": {
+        "startDateTime": "2017-03-15T07:49:25.246Z"
+      },
+      "@type": "GeographicAddressContactMedium",
+      "city": "Morristown",
+      "country": "USA",
+      "postCode": "07960",
+      "stateOrProvince": "New Jersey",
+      "street1": "240 Headquarters Plazza",
+      "street2": "East Tower - 10th Floor"
+    }
   ],
   "disability": [
-   {
-    "disabilityCode": "BLD",
-    "disabilityName": "Blind",
-    "validFor": {
-     "startDateTime": "1967-09-26T07:49:25.246Z"
+    {
+      "disabilityCode": "BLD",
+      "disabilityName": "Blind",
+      "validFor": {
+        "startDateTime": "1967-09-26T07:49:25.246Z"
+      }
     }
-   }
   ],
   "languageAbility": [
-   {
-    "languageCode": "FR",
-    "languageName": "French",
-    "isFavouriteLanguage": true,
-    "writingProficiency": "advanced",
-    "readingProficiency": "advanced",
-    "speakingProficiency": "intermediate",
-    "listeningProficiency": "intermediate",
-    "validFor": {
-     "startDateTime": "2018-10-22T07:49:25.246Z"
+    {
+      "languageCode": "FR",
+      "languageName": "French",
+      "isFavouriteLanguage": true,
+      "writingProficiency": "advanced",
+      "readingProficiency": "advanced",
+      "speakingProficiency": "intermediate",
+      "listeningProficiency": "intermediate",
+      "validFor": {
+        "startDateTime": "2018-10-22T07:49:25.246Z"
+      }
+    },
+    {
+      "languageCode": "SP",
+      "languageName": "Spanish",
+      "isFavouriteLanguage": false,
+      "writingProficiency": "scholar",
+      "readingProficiency": "scholar",
+      "speakingProficiency": "scholar",
+      "listeningProficiency": "scholar",
+      "validFor": {
+        "startDateTime": "2018-10-22T07:49:25.246Z"
+      }
     }
-   },
-   {
-    "languageCode": "SP",
-    "languageName": "Spanish",
-    "isFavouriteLanguage": false,
-    "writingProficiency": "scholar",
-    "readingProficiency": "scholar",
-    "speakingProficiency": "scholar",
-    "listeningProficiency": "scholar",
-    "validFor": {
-     "startDateTime": "2018-10-22T07:49:25.246Z"
-    }
-   }
   ],
   "skill": [
-   {
-    "skillCode": "SK001",
-    "skillName": "marketing",
-    "evaluatedLevel": "Advanced",
-    "comment": "Ten years experience",
-    "validFor": {
-     "startDateTime": "2018-10-22T07:49:25.246Z"
+    {
+      "skillCode": "SK001",
+      "skillName": "marketing",
+      "evaluatedLevel": "Advanced",
+      "comment": "Ten years experience",
+      "validFor": {
+        "startDateTime": "2018-10-22T07:49:25.246Z"
+      }
+    },
+    {
+      "skillCode": "SK002",
+      "skillName": "Project Management",
+      "evaluatedLevel": "newbie",
+      "comment": "First work experience",
+      "validFor": {
+        "startDateTime": "2018-10-22T07:49:25.246Z"
+      }
     }
-   },
-   {
-    "skillCode": "SK002",
-    "skillName": "Project Management",
-    "evaluatedLevel": "newbie",
-    "comment": "First work experience",
-    "validFor": {
-     "startDateTime": "2018-10-22T07:49:25.246Z"
-    }
-   }
   ]
- }
+}
+
 ```
 
 Here's an example of a request for patching an Individual by updating a characteristic value using json-patch query
 
-**Request**
+##### Request
 
-```json
- PATCH /individual/{id}
- Content-Type: application/json-patch-query+json
- [
-  {
-   "op": "replace",
-   "path": "/partyCharacteristic/value?/partyCharacteristic/name=childrenNumber",
-   "value": 2
-  }
- ]
+```
+PATCH /individual/{id}
+Content-Type: application/json-patch-query+json
 ```
 
-**Response**
+```json
+[
+  {
+    "op": "replace",
+    "path": "/partyCharacteristic/value?/partyCharacteristic/name=childrenNumber",
+    "value": 2
+  }
+]
+```
+
+##### Response
 
 ```
 200
 ```
 
 ```json
- {
+{
   "id": "42",
   "href": "https://serverRoot/tmf-api/party/v5/individual/42",
   "@type": "Individual",
@@ -4082,282 +4164,279 @@ Here's an example of a request for patching an Individual by updating a characte
   "formattedName": "Jane Smith ep Lamborgizzia",
   "status": "validated",
   "externalReference": [
-   {
-    "name": "http://facebook.com/17263635",
-    "externalIdentifierType": "facebookId",
-    "@type": "ExternalIdentifier"
-   },
-   {
-    "name": "http://google.com/17263635",
-    "externalIdentifierType": "googleId",
-    "@type": "ExternalIdentifier"
-   }
+    {
+      "name": "http://facebook.com/17263635",
+      "externalIdentifierType": "facebookId",
+      "@type": "ExternalIdentifier"
+    },
+    {
+      "name": "http://google.com/17263635",
+      "externalIdentifierType": "googleId",
+      "@type": "ExternalIdentifier"
+    }
   ],
   "partyCharacteristic": [
-   {
-    "name": "hobby",
-    "value": [
-     "Modern Jazz",
-     "Cinema"
-    ],
-    "valueType": "array",
-    "@type": "StringArrayCharacteristic"
-   },
-   {
-    "name": "childrenNumber",
-    "value": 2,
-    "valueType": "number",
-    "@type": "IntegerCharacteristic"
-   }
+    {
+      "name": "hobby",
+      "value": ["Modern Jazz","Cinema"],
+      "valueType": "array",
+      "@type": "StringArrayCharacteristic"
+    },
+    {
+      "name": "childrenNumber",
+      "value": 2,
+      "valueType": "number",
+      "@type": "IntegerCharacteristic"
+    }
   ],
   "otherName": [
-   {
-    "@type": "OtherNameIndividual",
-    "givenName": "Jane",
-    "familyName": "Smith",
-    "validFor": {
-     "startDateTime": "1967-09-26T00:00:00.246Z",
-     "endDateTime": "2015-06-15T00:00:00.246Z"
+    {
+      "@type": "OtherNameIndividual",
+      "givenName": "Jane",
+      "familyName": "Smith",
+      "validFor": {
+        "startDateTime": "1967-09-26T00:00:00.246Z",
+        "endDateTime": "2015-06-15T00:00:00.246Z"
+      }
     }
-   }
   ],
   "individualIdentification": [
-   {
-    "@type": "IndividualIdentification",
-    "identificationType": "passport",
-    "identificationId": "51DD1234",
-    "issuingAuthority": "US Government",
-    "issuingDate": "2017-10-22T07:49:25.246Z",
-    "validFor": {
-     "startDateTime": "2017-10-22T07:49:25.246Z",
-     "endDateTime": "2027-10-21T07:49:25.246Z"
-    },
-    "attachment": {
-     "@type": "Attachment",
-     "attachmentType": "passportCopy",
-     "name": "PassportCopy321.pdf",
-     "description": "Scanned copy of the passport",
-     "mimeType": "application/pdf",
-     "url": "http://DocumentManager/321/PassportCopy321.pdf"
+    {
+      "@type": "IndividualIdentification",
+      "identificationType": "passport",
+      "identificationId": "51DD1234",
+      "issuingAuthority": "US Government",
+      "issuingDate": "2017-10-22T07:49:25.246Z",
+      "validFor": {
+        "startDateTime": "2017-10-22T07:49:25.246Z",
+        "endDateTime": "2027-10-21T07:49:25.246Z"
+      },
+      "attachment": {
+        "@type": "Attachment",
+        "attachmentType": "passportCopy",
+        "name": "PassportCopy321.pdf",
+        "description": "Scanned copy of the passport",
+        "mimeType": "application/pdf",
+        "url": "http://DocumentManager/321/PassportCopy321.pdf"
+      }
     }
-   }
   ],
   "taxExemptionCertificate": [
-   {
-    "@type": "TaxExemptionCertificate",
-    "id": "1",
-    "validFor": {
-     "startDateTime": "2018-10-22T07:49:25.246Z"
-    },
-    "certificateNumber": "98765432345",
-    "issuingJurisdiction": "USA",
-    "taxDefinition": [
-     {
-      "@type": "TaxDefinitionRef",
-      "id": "96",
-      "name": "Value Added Tax",
-      "taxType": "federalVat"
-     }
-    ],
-    "attachment": {
-     "@type": "Attachment",
-     "attachmentType": "taxExemptionCertificate",
-     "name": "TaxExemptionCertificate-566655.pdf",
-     "description": "Electronic version of the tax exemption certificate",
-     "mimeType": "application/pdf",
-     "url": "https://mycsp.com:8080/DocumentManager/666/TaxExemptionCertificate-566655.pdf"
+    {
+      "@type": "TaxExemptionCertificate",
+      "id": "1",
+      "validFor": {
+        "startDateTime": "2018-10-22T07:49:25.246Z"
+      },
+      "certificateNumber": "98765432345", 
+      "issuingJurisdiction": "USA", 
+      "taxDefinition": [
+        {
+          "@type": "TaxDefinitionRef",
+          "id": "96",
+          "name": "Value Added Tax",
+          "taxType": "federalVat"
+        }
+      ],
+      "attachment": {
+        "@type": "Attachment",
+        "attachmentType": "taxExemptionCertificate",
+        "name": "TaxExemptionCertificate-566655.pdf",
+        "description": "Electronic version of the tax exemption certificate",
+        "mimeType": "application/pdf",
+        "url": "https://mycsp.com:8080/DocumentManager/666/TaxExemptionCertificate-566655.pdf"
+      }
     }
-   }
   ],
   "creditRating": [
-   {
-    "@type": "CreditRating",
-    "creditAgencyName": "Experian",
-    "creditAgencyType": "externalAgency",
-    "ratingReference": "ref123",
-    "ratingScore": 680,
-    "validFor": {
-     "startDateTime": "2018-10-22T07:49:25.246Z"
+    {
+      "@type": "CreditRating",
+      "creditAgencyName": "Experian",
+      "creditAgencyType": "externalAgency",
+      "ratingReference": "ref123",
+      "ratingScore": 680,
+      "validFor": {
+        "startDateTime": "2018-10-22T07:49:25.246Z"
+      }
     }
-   }
   ],
   "relatedParty": [
-   {
-    "role": "employer",
-    "@type": "RelatedPartyRefOrPartyRoleRef",
-    "partyOrPartyRole": {
-     "id": "128",
-     "href": "https://serverRoot/tmf-api/party/v5/organization/128",
-     "name": "Coffee Do Brazil Fair Trade Marketing Department",
-     "@type": "PartyRef",
-     "@referredType": "Organization"
+    {
+      "role": "employer",
+      "@type": "RelatedPartyRefOrPartyRoleRef",
+      "partyOrPartyRole": {
+        "id": "128",
+        "href": "https://serverRoot/tmf-api/party/v5/organization/128",
+        "name": "Coffee Do Brazil Fair Trade Marketing Department",
+        "@type": "PartyRef",
+        "@referredType": "Organization"
+      }
     }
-   }
   ],
   "contactMedium": [
-   {
-    "preferred": true,
-    "mediumType": "email",
-    "validFor": {
-     "startDateTime": "2017-03-15T07:49:25.246Z"
+    {
+      "preferred": true,
+      "mediumType": "email",
+      "validFor": {
+        "startDateTime": "2017-03-15T07:49:25.246Z"
+      },
+      "@type": "EmailContactMedium",
+      "emailAddress": "jane.lamborgizzia@gmail.com"
     },
-    "@type": "EmailContactMedium",
-    "emailAddress": "jane.lamborgizzia@gmail.com"
-   },
-   {
-    "preferred": false,
-    "mediumType": "postalAddress",
-    "validFor": {
-     "startDateTime": "2017-03-15T07:49:25.246Z"
-    },
-    "@type": "GeographicAddressContactMedium",
-    "city": "Morristown",
-    "country": "USA",
-    "postCode": "07960",
-    "stateOrProvince": "New Jersey",
-    "street1": "240 Headquarters Plazza",
-    "street2": "East Tower - 10th Floor"
-   }
+    {
+      "preferred": false,
+      "mediumType": "postalAddress",
+      "validFor": {
+        "startDateTime": "2017-03-15T07:49:25.246Z"
+      },
+      "@type": "GeographicAddressContactMedium",
+      "city": "Morristown",
+      "country": "USA",
+      "postCode": "07960",
+      "stateOrProvince": "New Jersey",
+      "street1": "240 Headquarters Plazza",
+      "street2": "East Tower - 10th Floor"
+    }
   ],
   "disability": [
-   {
-    "disabilityCode": "BLD",
-    "disabilityName": "Blind",
-    "validFor": {
-     "startDateTime": "1967-09-26T07:49:25.246Z"
+    {
+      "disabilityCode": "BLD",
+      "disabilityName": "Blind",
+      "validFor": {
+        "startDateTime": "1967-09-26T07:49:25.246Z"
+      }
     }
-   }
   ],
   "languageAbility": [
-   {
-    "languageCode": "FR",
-    "languageName": "French",
-    "isFavouriteLanguage": true,
-    "writingProficiency": "advanced",
-    "readingProficiency": "advanced",
-    "speakingProficiency": "intermediate",
-    "listeningProficiency": "intermediate",
-    "validFor": {
-     "startDateTime": "2018-10-22T07:49:25.246Z"
+    {
+      "languageCode": "FR",
+      "languageName": "French",
+      "isFavouriteLanguage": true,
+      "writingProficiency": "advanced",
+      "readingProficiency": "advanced",
+      "speakingProficiency": "intermediate",
+      "listeningProficiency": "intermediate",
+      "validFor": {
+        "startDateTime": "2018-10-22T07:49:25.246Z"
+      }
+    },
+    {
+      "languageCode": "SP",
+      "languageName": "Spanish",
+      "isFavouriteLanguage": false,
+      "writingProficiency": "scholar",
+      "readingProficiency": "scholar",
+      "speakingProficiency": "scholar",
+      "listeningProficiency": "scholar",
+      "validFor": {
+        "startDateTime": "2018-10-22T07:49:25.246Z"
+      }
     }
-   },
-   {
-    "languageCode": "SP",
-    "languageName": "Spanish",
-    "isFavouriteLanguage": false,
-    "writingProficiency": "scholar",
-    "readingProficiency": "scholar",
-    "speakingProficiency": "scholar",
-    "listeningProficiency": "scholar",
-    "validFor": {
-     "startDateTime": "2018-10-22T07:49:25.246Z"
-    }
-   }
   ],
   "skill": [
-   {
-    "skillCode": "SK001",
-    "skillName": "marketing",
-    "evaluatedLevel": "Advanced",
-    "comment": "Ten years experience",
-    "validFor": {
-     "startDateTime": "2018-10-22T07:49:25.246Z"
+    {
+      "skillCode": "SK001",
+      "skillName": "marketing",
+      "evaluatedLevel": "Advanced",
+      "comment": "Ten years experience",
+      "validFor": {
+        "startDateTime": "2018-10-22T07:49:25.246Z"
+      }
+    },
+    {
+      "skillCode": "SK002",
+      "skillName": "Project Management",
+      "evaluatedLevel": "newbie",
+      "comment": "First work experience",
+      "validFor": {
+        "startDateTime": "2018-10-22T07:49:25.246Z"
+      }
     }
-   },
-   {
-    "skillCode": "SK002",
-    "skillName": "Project Management",
-    "evaluatedLevel": "newbie",
-    "comment": "First work experience",
-    "validFor": {
-     "startDateTime": "2018-10-22T07:49:25.246Z"
-    }
-   }
   ]
- }
+}
 ```
 
-### Deletes a Individual
+#### Deletes a Individual
 
 `DELETE /individual/{id}`
 
-**Description**
+##### Description
 
 This operation deletes an Individual entity.
 
-## Operations on Organization
+### Operations on Organization
 
-### List or find Organization objects
+#### List or find Organization objects
 
 `GET /organization?fields=…`
 
-**Description**
+##### Description
 
 This operation list Organization entities. Attribute selection is enabled for all first level attributes. Filtering may be available depending on the compliance level supported by an implementation.
 
-**Usage samples**
+##### Usage samples
 
 Here's an example of a request for retrieving Organization resources, retrieving all Organization with validated status and credit score equal to 700. The result items are field-restricted to show only the id and the name.
 
-**Request**
+##### Request
 
 ```
 GET /organization?status=validated&creditRating.ratingScore=700&&fields=id,name
 Content-Type: application/json
 ```
 
-**Response**
+##### Response
 
 ```
 200
 ```
 
 ```json
- [
+[
   {
-   "id": "128",
-   "href": "https://serverRoot/tmf-api/party/v5/organization/128",
-   "@type": "Organization",
-   "@baseType": "Party",
-   "name": "Coffee Do Brazil Fair Trade"
+    "id": "128",
+    "href": "https://serverRoot/tmf-api/party/v5/organization/128",
+    "@type": "Organization",
+    "@baseType": "Party",
+    "name": "Coffee Do Brazil Fair Trade"
   },
   {
-   "id": "1882",
-   "href": "https://serverRoot/tmf-api/party/v5/organization/1882",
-   "@type": "Organization",
-   "@baseType": "Party",
-   "name": "Joe's Pizza"
+    "id": "1882",
+    "href": "https://serverRoot/tmf-api/party/v5/organization/1882",
+    "@type": "Organization",
+    "@baseType": "Party",
+    "name": "Joe's Pizza"
   }
- ]
+]
 ```
 
-### Retrieves a Organization by ID
+#### Retrieves a Organization by ID
 
 `GET /organization/{id}?fields=…`
 
-**Description**
+##### Description
 
 This operation retrieves an Organization entity. Attribute selection is enabled for all first level attributes. Filtering may be available depending on the compliance level supported by an implementation.
 
-**Usage samples**
+##### Usage samples
 
 Here's a sample of a request for retrieving an Organization resource based on its ID.
 
-**Request**
+##### Request
 
 ```
 GET /organization/128
 Content-Type: application/json
 ```
 
-**Response**
+##### Response
 
 ```
 200
 ```
 
 ```json
- {
+{
   "id": "128",
   "href": "https://serverRoot/tmf-api/party/v5/organization/128",
   "@type": "Organization",
@@ -4366,295 +4445,301 @@ Content-Type: application/json
   "isHeadOffice": true,
   "organizationType": "company",
   "existsDuring": {
-   "startDateTime": "2015-10-22T08:31:52.026Z"
+    "startDateTime": "2015-10-22T08:31:52.026Z"
   },
   "name": "Coffee Do Brazil",
   "tradingName": "Coffee Do Brazil Fair Trade",
   "nameType": "inc",
   "status": "validated",
   "externalReference": [
-   {
-    "name": "http://coffeedobrazil.com",
-    "externalIdentifierType": "internetSite",
-    "@type": "ExternalIdentifier"
-   }
+    {
+      "name": "http://coffeedobrazil.com",
+      "externalIdentifierType": "internetSite",
+      "@type": "ExternalIdentifier"
+    }
   ],
   "partyCharacteristic": [
-   {
-    "name": "number of employees",
-    "value": 125,
-    "valueType": "number",
-    "@type": "IntegerCharacteristic"
-   },
-   {
-    "name": "market segment",
-    "value": "Food wholesale",
-    "valueType": "string",
-    "@type": "StringCharacteristic"
-   }
+    {
+      "name": "number of employees",
+      "value": 125,
+      "valueType": "number",
+      "@type": "IntegerCharacteristic"
+    },
+    {
+      "name": "market segment",
+      "value": "Food wholesale",
+      "valueType": "string",
+      "@type": "StringCharacteristic"
+    }
   ],
   "otherName": [
-   {
-    "@type": "OtherNameOrganization",
-    "nameType": "inc",
-    "tradingName": "General Coffee",
-    "validFor": {
-     "startDateTime": "2015-10-22T08:31:52.026Z",
-     "endDateTime": "2017-10-22T08:31:52.026Z"
+    {
+      "@type": "OtherNameOrganization",
+      "nameType": "inc",
+      "tradingName": "General Coffee",
+      "validFor": {
+        "startDateTime": "2015-10-22T08:31:52.026Z",
+        "endDateTime": "2017-10-22T08:31:52.026Z"
+      }
     }
-   }
   ],
   "organizationIdentification": [
-   {
-    "@type": "OrganizationIdentification",
-    "identificationType": "commercialRegistration",
-    "identificationId": "12345678",
-    "issuingAuthority": "US Government",
-    "issuingDate": "2015-10-22T08:31:52.028Z",
-    "validFor": {
-     "startDateTime": "2015-10-22T08:31:52.028Z"
-    },
-    "attachment": {
-     "@type": "Attachment",
-     "attachmentType": "documentCopy",
-     "name": "RegistrationCertificate421.pdf",
-     "description": "Scanned copy of the registration certificate",
-     "mimeType": "application/pdf",
-     "url": "http://DocumentManager/421/RegistrationCertificate421.pdf"
+    {
+      "@type": "OrganizationIdentification",
+      "identificationType": "commercialRegistration",
+      "identificationId": "12345678",
+      "issuingAuthority": "US Government",
+      "issuingDate": "2015-10-22T08:31:52.028Z",
+      "validFor": {
+        "startDateTime": "2015-10-22T08:31:52.028Z"
+      },
+      "attachment": {
+        "@type": "Attachment",
+        "attachmentType": "documentCopy",
+        "name": "RegistrationCertificate421.pdf",
+        "description": "Scanned copy of the registration certificate",
+        "mimeType": "application/pdf",
+        "url": "http://DocumentManager/421/RegistrationCertificate421.pdf"
+      }
     }
-   }
   ],
   "taxExemptionCertificate": [
-   {
-    "@type": "TaxExemptionCertificate",
-    "id": "1",
-    "validFor": {
-     "startDateTime": "2018-10-22T07:49:25.246Z"
-    },
-    "certificateNumber": "9875755432345",
-    "issuingJurisdiction": "USA",
-    "reason": "Voluntary Body",
-    "taxDefinition": [
-     {
-      "@type": "TaxDefinitionRef",
-      "id": "96",
-      "name": "Value Added Tax",
-      "taxType": "federalVat"
-     }
-    ],
-    "attachment": {
-     "@type": "Attachment",
-     "attachmentType": "taxExemptionCertificate",
-     "name": "TaxExemptionCertificate-233322.pdf",
-     "description": "Electronic version of the tax exemption certificate",
-     "mimeType": "application/pdf",
-     "url": "https://mycsp.com:8080/DocumentManager/666/TaxExemptionCertificate-233322.pdf"
+    {
+      "@type": "TaxExemptionCertificate",
+      "id": "1",
+      "validFor": {
+        "startDateTime": "2018-10-22T07:49:25.246Z"
+      },
+      "certificateNumber": "9875755432345", 
+      "issuingJurisdiction": "USA", 
+      "reason": "Voluntary Body", 
+      "taxDefinition": [
+        {
+          "@type": "TaxDefinitionRef",
+          "id": "96",
+          "name": "Value Added Tax",
+          "taxType": "federalVat"
+        }
+      ],
+      "attachment": {
+        "@type": "Attachment",
+        "attachmentType": "taxExemptionCertificate",
+        "name": "TaxExemptionCertificate-233322.pdf",
+        "description": "Electronic version of the tax exemption certificate",
+        "mimeType": "application/pdf",
+        "url": "https://mycsp.com:8080/DocumentManager/666/TaxExemptionCertificate-233322.pdf"
+      }
     }
-   }
   ],
   "creditRating": [
-   {
-    "@type": "CreditRating",
-    "creditAgencyName": "Experian",
-    "creditAgencyType": "externalAgency",
-    "ratingReference": "ref456",
-    "ratingScore": 400,
-    "validFor": {
-     "startDateTime": "2018-10-22T08:31:52.028Z"
+    {
+      "@type": "CreditRating",
+      "creditAgencyName": "Experian",
+      "creditAgencyType": "externalAgency",
+      "ratingReference": "ref456",
+      "ratingScore": 400,
+      "validFor": {
+        "startDateTime": "2018-10-22T08:31:52.028Z"
+      }
     }
-   }
   ],
   "relatedParty": [
-   {
-    "role": "director",
-    "@type": "RelatedPartyRefOrPartyRoleRef",
-    "partyOrPartyRole": {
-     "id": "54",
-     "href": "https://serverRoot/tmf-api/party/v5/individual/54",
-     "name": "Carlos Mafalda",
-     "@type": "PartyRef",
-     "@referredType": "Individual"
+    {
+      "role": "director",
+      "@type": "RelatedPartyRefOrPartyRoleRef",
+      "partyOrPartyRole": {
+        "id": "54",
+        "href": "https://serverRoot/tmf-api/party/v5/individual/54",
+        "name": "Carlos Mafalda",
+        "@type": "PartyRef",
+        "@referredType": "Individual"
+      }
+    },
+    {
+      "role": "employee",
+      "@type": "RelatedPartyRefOrPartyRoleRef",
+      "partyOrPartyRole": {
+        "id": "42",
+        "href": "https://serverRoot/tmf-api/party/v5/individual/42",
+        "name": "Jane Lamborgizzia",
+        "@type": "PartyRef",
+        "@referredType": "Individual"
+      }
     }
-   },
-   {
-    "role": "employee",
-    "@type": "RelatedPartyRefOrPartyRoleRef",
-    "partyOrPartyRole": {
-     "id": "42",
-     "href": "https://serverRoot/tmf-api/party/v5/individual/42",
-     "name": "Jane Lamborgizzia",
-     "@type": "PartyRef",
-     "@referredType": "Individual"
-    }
-   }
   ],
   "contactMedium": [
-   {
-    "preferred": true,
-    "mediumType": "email",
-    "validFor": {
-     "startDateTime": "2018-10-22T08:31:52.028Z"
+    {
+      "preferred": true,
+      "mediumType": "email",
+      "validFor": {
+        "startDateTime": "2018-10-22T08:31:52.028Z"
+      },
+      "@type": "EmailContactMedium",
+      "emailAddress": "jane.lamborgizzia@coffeedobrazil.com"
     },
-    "@type": "EmailContactMedium",
-    "emailAddress": "jane.lamborgizzia@coffeedobrazil.com"
-   },
-   {
-    "preferred": false,
-    "mediumType": "postalAddress",
-    "validFor": {
-     "startDateTime": "2018-10-22T08:31:52.028Z"
-    },
-    "@type": "GeographicAddressContactMedium",
-    "city": "Morristown",
-    "country": "USA",
-    "postCode": "07960",
-    "stateOrProvince": "New Jersey",
-    "street1": "240 Headquarters Plazza",
-    "street2": "East Tower 10th Floor"
-   }
+    {
+      "preferred": false,
+      "mediumType": "postalAddress",
+      "validFor": {
+        "startDateTime": "2018-10-22T08:31:52.028Z"
+      },
+      "@type": "GeographicAddressContactMedium",
+      "city": "Morristown",
+      "country": "USA",
+      "postCode": "07960",
+      "stateOrProvince": "New Jersey",
+      "street1": "240 Headquarters Plazza",
+      "street2": "East Tower 10th Floor"
+    }
   ],
   "organizationParentRelationship": {
-   "@type": "OrganizationParentRelationship",
-   "relationshipType": "juridical",
-   "organization": {
-    "@type": "OrganizationRef",
-    "id": "800",
-    "href": "https://serverRoot/tmf-api/party/v5/organization/800"
-   }
+    "@type": "OrganizationParentRelationship",
+    "relationshipType": "juridical",
+    "organization": {
+      "@type": "OrganizationRef",
+      "id": "800",
+      "href": "https://serverRoot/tmf-api/party/v5/organization/800"
+    }
   },
   "organizationChildRelationship": [
-   {
-    "@type": "OrganizationChildRelationship",
-    "relationshipType": "juridical",
-    "organization": {
-     "@type": "OrganizationRef",
-     "id": "149",
-     "href": "https://serverRoot/tmf-api/party/v5/organization/149"
+    {
+      "@type": "OrganizationChildRelationship",
+      "relationshipType": "juridical",
+      "organization": {
+        "@type": "OrganizationRef",
+        "id": "149",
+        "href": "https://serverRoot/tmf-api/party/v5/organization/149"
+      }
+    },
+    {
+      "@type": "OrganizationChildRelationship",
+      "relationshipType": "juridical",
+      "organization": {
+        "@type": "OrganizationRef",
+        "id": "150",
+        "href": "https://serverRoot/tmf-api/party/v5/organization/150"
+      }
     }
-   },
-   {
-    "@type": "OrganizationChildRelationship",
-    "relationshipType": "juridical",
-    "organization": {
-     "@type": "OrganizationRef",
-     "id": "150",
-     "href": "https://serverRoot/tmf-api/party/v5/organization/150"
-    }
-   }
   ]
- }
+}
 ```
 
-### Creates a Organization
+#### Creates a Organization
 
 `POST /organization?fields=…`
 
-**Description**
+##### Description
 
 This operation creates an Organization entity.
 
-**Mandatory Attributes**
+##### Mandatory Attributes
 
 | Mandatory Attributes | Rule |
 | :------------------- | :--- |
 | name                 |      |
 | @type                |      |
 
-**Usage samples**
+##### Usage samples
 
 Here's a sample of a request for creating an Organization resource. In this example the request only passes mandatory attributes.
 
-**Request**
+##### Request
+
+```
+POST /organization
+Content-Type: application/json
+```
 
 ```json
- POST /organization
- Content-Type: application/json
- {
+{
   "@type": "Organization",
   "@baseType": "Party",
   "name": "Coffee Do Brazil"
- }
+}
 ```
 
-**Response**
+##### Response
 
 ```
 201
 ```
 
 ```json
- {
+{
   "id": "128",
   "href": "https://serverRoot/tmf-api/party/v5/organization/128",
   "@type": "Organization",
   "@baseType": "Party",
   "name": "Coffee Do Brazil",
   "status": "initialized"
- }
+}
 ```
 
-### Updates partially a Organization
+#### Updates partially a Organization
 
 `PATCH /organization/{id}?fields=…`
 
-**Description**
+##### Description
 
-This operation allows partial updates of an Organization entity. Support of json/merge ([https://tools.ietf.org/html/rfc7386](https://tools.ietf.org/html/rfc7386)) is mandatory, support of json/patch ([http://tools.ietf.org/html/rfc5789](http://tools.ietf.org/html/rfc5789)) is optiona. Note: If the update operation yields to the creation of sub-resources or relationships, the same rules concerning mandatory sub-resource attributes and default value settings in the POST operation applies to the PATCH operation. Hence these tables are not repeated here.
+This operation allows partial updates of an Organization entity. Support of json/merge (https://tools.ietf.org/html/rfc7386) is mandatory, support of json/patch (http://tools.ietf.org/html/rfc5789) is optiona. Note: If the update operation yields to the creation of sub-resources or relationships, the same rules concerning mandatory sub-resource attributes and default value settings in the POST operation applies to the PATCH operation. Hence these tables are not repeated here.
 
-**Patchable and Non Patchable Attributes**
+##### Patchable and Non Patchable Attributes
 
-| Non Patchable Attributes | Rule                       |
-| :----------------------- | :------------------------- |
-| href                     |                            |
-| id                       |                            |
-| @baseType                | @baseType is immutable     |
+| Non Patchable Attributes | Rule                          |
+| :----------------------- | :---------------------------- |
+| href                     |                               |
+| id                       |                               |
+| @baseType                | @baseType is immutable        |
 | @schemaLocation          | @schemaLocation is immutable |
-| @type                    | @type is immutable         |
+| @type                    | @type is immutable            |
 
-| Patchable Attributes         | Rule |
-| :--------------------------- | :--- |
-| contactMedium                |      |
-| creditRating                 |      |
-| existsDuring                 |      |
-| externalReference            |      |
-| isHeadOffice                 |      |
-| isLegalEntity                |      |
-| name                         |      |
-| nameType                     |      |
-| organizationChildRelationship|      |
-| organizationIdentification   |      |
-| organizationParentRelationship|      |
-| organizationType             |      |
-| otherName                    |      |
-| partyCharacteristic          |      |
-| relatedParty                 |      |
-| status                       |      |
-| taxExemptionCertificate      |      |
-| tradingName                  |      |
+| Patchable Attributes             | Rule |
+| :------------------------------- | :--- |
+| contactMedium                    |      |
+| creditRating                     |      |
+| existsDuring                     |      |
+| externalReference                |      |
+| isHeadOffice                     |      |
+| isLegalEntity                    |      |
+| name                             |      |
+| nameType                         |      |
+| organizationChildRelationship    |      |
+| organizationIdentification       |      |
+| organizationParentRelationship   |      |
+| organizationType                 |      |
+| otherName                        |      |
+| partyCharacteristic              |      |
+| relatedParty                     |      |
+| status                           |      |
+| taxExemptionCertificate          |      |
+| tradingName                      |      |
 
-**Usage samples**
+##### Usage samples
 
 Here's an example of a request for patching an Organization resource with change on isHeadOffice attribute using patch merge
 
-**Request**
+##### Request
 
-```json
- PATCH /organization/{id}
- Content-Type: application/merge-patch+json
- {
-  "@type": "Organization",
-  "isHeadOffice": false
- }
+```
+PATCH /organization/{id}
+Content-Type: application/merge-patch+json
 ```
 
-**Response**
+```json
+{
+  "@type": "Organization",
+  "isHeadOffice": false
+}
+```
+
+##### Response
 
 ```
 200
 ```
 
 ```json
- {
+{
   "id": "128",
   "href": "https://serverRoot/tmf-api/party/v5/organization/128",
   "@type": "Organization",
@@ -4663,226 +4748,230 @@ Here's an example of a request for patching an Organization resource with change
   "isHeadOffice": false,
   "organizationType": "company",
   "existsDuring": {
-   "startDateTime": "2015-10-22T08:31:52.026Z"
+    "startDateTime": "2015-10-22T08:31:52.026Z"
   },
   "name": "Coffee Do Brazil",
   "tradingName": "Coffee Do Brazil Fair Trade",
   "nameType": "inc",
   "status": "validated",
   "externalReference": [
-   {
-    "name": "http://coffeedobrazil.com",
-    "externalIdentifierType": "internetSite",
-    "@type": "ExternalIdentifier"
-   }
+    {
+      "name": "http://coffeedobrazil.com",
+      "externalIdentifierType": "internetSite",
+      "@type": "ExternalIdentifier"
+    }
   ],
   "partyCharacteristic": [
-   {
-    "name": "number of employees",
-    "value": 125,
-    "valueType": "number",
-    "@type": "IntegerCharacteristic"
-   },
-   {
-    "name": "market segment",
-    "value": "Food wholesale",
-    "valueType": "string",
-    "@type": "StringCharacteristic"
-   }
+    {
+      "name": "number of employees",
+      "value": 125,
+      "valueType": "number",
+      "@type": "IntegerCharacteristic"
+    },
+    {
+      "name": "market segment",
+      "value": "Food wholesale",
+      "valueType": "string",
+      "@type": "StringCharacteristic"
+    }
   ],
   "otherName": [
-   {
-    "@type": "OtherNameOrganization",
-    "nameType": "inc",
-    "tradingName": "General Coffee",
-    "validFor": {
-     "startDateTime": "2015-10-22T08:31:52.026Z",
-     "endDateTime": "2017-10-22T08:31:52.026Z"
+    {
+      "@type": "OtherNameOrganization",
+      "nameType": "inc",
+      "tradingName": "General Coffee",
+      "validFor": {
+        "startDateTime": "2015-10-22T08:31:52.026Z",
+        "endDateTime": "2017-10-22T08:31:52.026Z"
+      }
     }
-   }
   ],
   "organizationIdentification": [
-   {
-    "@type": "OrganizationIdentification",
-    "identificationType": "commercialRegistration",
-    "identificationId": "12345678",
-    "issuingAuthority": "US Government",
-    "issuingDate": "2015-10-22T08:31:52.028Z",
-    "validFor": {
-     "startDateTime": "2015-10-22T08:31:52.028Z"
-    },
-    "attachment": {
-     "@type": "Attachment",
-     "attachmentType": "documentCopy",
-     "name": "RegistrationCertificate421.pdf",
-     "description": "Scanned copy of the registration certificate",
-     "mimeType": "application/pdf",
-     "url": "http://DocumentManager/421/RegistrationCertificate421.pdf"
+    {
+      "@type": "OrganizationIdentification",
+      "identificationType": "commercialRegistration",
+      "identificationId": "12345678",
+      "issuingAuthority": "US Government",
+      "issuingDate": "2015-10-22T08:31:52.028Z",
+      "validFor": {
+        "startDateTime": "2015-10-22T08:31:52.028Z"
+      },
+      "attachment": {
+        "@type": "Attachment",
+        "attachmentType": "documentCopy",
+        "name": "RegistrationCertificate421.pdf",
+        "description": "Scanned copy of the registration certificate",
+        "mimeType": "application/pdf",
+        "url": "http://DocumentManager/421/RegistrationCertificate421.pdf"
+      }
     }
-   }
   ],
   "taxExemptionCertificate": [
-   {
-    "@type": "TaxExemptionCertificate",
-    "id": "1",
-    "validFor": {
-     "startDateTime": "2018-10-22T07:49:25.246Z"
-    },
-    "certificateNumber": "9875755432345",
-    "issuingJurisdiction": "USA",
-    "reason": "Voluntary Body",
-    "taxDefinition": [
-     {
-      "@type": "TaxDefinitionRef",
-      "id": "96",
-      "name": "Value Added Tax",
-      "taxType": "federalVat"
-     }
-    ],
-    "attachment": {
-     "@type": "Attachment",
-     "attachmentType": "taxExemptionCertificate",
-     "name": "TaxExemptionCertificate-233322.pdf",
-     "description": "Electronic version of the tax exemption certificate",
-     "mimeType": "application/pdf",
-     "url": "https://mycsp.com:8080/DocumentManager/666/TaxExemptionCertificate-233322.pdf"
+    {
+      "@type": "TaxExemptionCertificate",
+      "id": "1",
+      "validFor": {
+        "startDateTime": "2018-10-22T07:49:25.246Z"
+      },
+      "certificateNumber": "9875755432345", 
+      "issuingJurisdiction": "USA", 
+      "reason": "Voluntary Body", 
+      "taxDefinition": [
+        {
+          "@type": "TaxDefinitionRef",
+          "id": "96",
+          "name": "Value Added Tax",
+          "taxType": "federalVat"
+        }
+      ],
+      "attachment": {
+        "@type": "Attachment",
+        "attachmentType": "taxExemptionCertificate",
+        "name": "TaxExemptionCertificate-233322.pdf",
+        "description": "Electronic version of the tax exemption certificate",
+        "mimeType": "application/pdf",
+        "url": "https://mycsp.com:8080/DocumentManager/666/TaxExemptionCertificate-233322.pdf"
+      }
     }
-   }
   ],
   "creditRating": [
-   {
-    "@type": "CreditRating",
-    "creditAgencyName": "Experian",
-    "creditAgencyType": "externalAgency",
-    "ratingReference": "ref456",
-    "ratingScore": 400,
-    "validFor": {
-     "startDateTime": "2018-10-22T08:31:52.028Z"
+    {
+      "@type": "CreditRating",
+      "creditAgencyName": "Experian",
+      "creditAgencyType": "externalAgency",
+      "ratingReference": "ref456",
+      "ratingScore": 400,
+      "validFor": {
+        "startDateTime": "2018-10-22T08:31:52.028Z"
+      }
     }
-   }
   ],
   "relatedParty": [
-   {
-    "role": "director",
-    "@type": "RelatedPartyRefOrPartyRoleRef",
-    "partyOrPartyRole": {
-     "id": "54",
-     "href": "https://serverRoot/tmf-api/party/v5/individual/54",
-     "name": "Carlos Mafalda",
-     "@type": "PartyRef",
-     "@referredType": "Individual"
+    {
+      "role": "director",
+      "@type": "RelatedPartyRefOrPartyRoleRef",
+      "partyOrPartyRole": {
+        "id": "54",
+        "href": "https://serverRoot/tmf-api/party/v5/individual/54",
+        "name": "Carlos Mafalda",
+        "@type": "PartyRef",
+        "@referredType": "Individual"
+      }
+    },
+    {
+      "role": "employee",
+      "@type": "RelatedPartyRefOrPartyRoleRef",
+      "partyOrPartyRole": {
+        "id": "42",
+        "href": "https://serverRoot/tmf-api/party/v5/individual/42",
+        "name": "Jane Lamborgizzia",
+        "@type": "PartyRef",
+        "@referredType": "Individual"
+      }
     }
-   },
-   {
-    "role": "employee",
-    "@type": "RelatedPartyRefOrPartyRoleRef",
-    "partyOrPartyRole": {
-     "id": "42",
-     "href": "https://serverRoot/tmf-api/party/v5/individual/42",
-     "name": "Jane Lamborgizzia",
-     "@type": "PartyRef",
-     "@referredType": "Individual"
-    }
-   }
   ],
   "contactMedium": [
-   {
-    "preferred": true,
-    "mediumType": "email",
-    "validFor": {
-     "startDateTime": "2018-10-22T08:31:52.028Z"
+    {
+      "preferred": true,
+      "mediumType": "email",
+      "validFor": {
+        "startDateTime": "2018-10-22T08:31:52.028Z"
+      },
+      "@type": "EmailContactMedium",
+      "emailAddress": "jane.lamborgizzia@coffeedobrazil.com"
     },
-    "@type": "EmailContactMedium",
-    "emailAddress": "jane.lamborgizzia@coffeedobrazil.com"
-   },
-   {
-    "preferred": false,
-    "mediumType": "postalAddress",
-    "validFor": {
-     "startDateTime": "2018-10-22T08:31:52.028Z"
-    },
-    "@type": "GeographicAddressContactMedium",
-    "city": "Morristown",
-    "country": "USA",
-    "postCode": "07960",
-    "stateOrProvince": "New Jersey",
-    "street1": "240 Headquarters Plazza",
-    "street2": "East Tower 10th Floor"
-   }
+    {
+      "preferred": false,
+      "mediumType": "postalAddress",
+      "validFor": {
+        "startDateTime": "2018-10-22T08:31:52.028Z"
+      },
+      "@type": "GeographicAddressContactMedium",
+      "city": "Morristown",
+      "country": "USA",
+      "postCode": "07960",
+      "stateOrProvince": "New Jersey",
+      "street1": "240 Headquarters Plazza",
+      "street2": "East Tower 10th Floor"
+    }
   ],
   "organizationParentRelationship": {
-   "@type": "OrganizationParentRelationship",
-   "relationshipType": "juridical",
-   "organization": {
-    "@type": "OrganizationRef",
-    "id": "800",
-    "href": "https://serverRoot/tmf-api/party/v5/organization/800"
-   }
+    "@type": "OrganizationParentRelationship",
+    "relationshipType": "juridical",
+    "organization": {
+      "@type": "OrganizationRef",
+      "id": "800",
+      "href": "https://serverRoot/tmf-api/party/v5/organization/800"
+    }
   },
   "organizationChildRelationship": [
-   {
-    "@type": "OrganizationChildRelationship",
-    "relationshipType": "juridical",
-    "organization": {
-     "@type": "OrganizationRef",
-     "id": "149",
-     "href": "https://serverRoot/tmf-api/party/v5/organization/149"
+    {
+      "@type": "OrganizationChildRelationship",
+      "relationshipType": "juridical",
+      "organization": {
+        "@type": "OrganizationRef",
+        "id": "149",
+        "href": "https://serverRoot/tmf-api/party/v5/organization/149"
+      }
+    },
+    {
+      "@type": "OrganizationChildRelationship",
+      "relationshipType": "juridical",
+      "organization": {
+        "@type": "OrganizationRef",
+        "id": "150",
+        "href": "https://serverRoot/tmf-api/party/v5/organization/150"
+      }
     }
-   },
-   {
-    "@type": "OrganizationChildRelationship",
-    "relationshipType": "juridical",
-    "organization": {
-     "@type": "OrganizationRef",
-     "id": "150",
-     "href": "https://serverRoot/tmf-api/party/v5/organization/150"
-    }
-   }
   ]
- }
+}
+
 ```
 
 Here's an example of a request for patching an Organization by adding an OrganizationIdentification using json-patch
 
-**Request**
+##### Request
 
-```json
- PATCH /organization/{id}
- Content-Type: application/json-patch+json
- [
-  {
-   "op": "add",
-   "path": "/organizationIdentification/-",
-   "value": {
-    "@type": "OrganizationIdentification",
-    "identificationType": "Business Permit",
-    "identificationId": "966935345345",
-    "issuingAuthority": "State of New Jersey",
-    "issuingDate": "2016-01-22T09:31:52.028Z",
-    "validFor": {
-     "startDateTime": "2016-01-22T09:31:52.028Z"
-    },
-    "attachment": {
-     "@type": "Attachment",
-     "attachmentType": "documentCopy",
-     "name": "BusinessPermitCertificate888441.pdf",
-     "description": "Scanned copy of the business permit",
-     "mimeType": "application/pdf",
-     "url": "http://DocumentManager/888441/BusinessPermitCertificate888441.pdf"
-    }
-   }
-  }
- ]
+```
+PATCH /organization/{id}
+Content-Type: application/json-patch+json
 ```
 
-**Response**
+```json
+[
+  {
+    "op": "add",
+    "path": "/organizationIdentification/-",
+    "value": {
+      "@type": "OrganizationIdentification",
+      "identificationType": "Business Permit",
+      "identificationId": "966935345345",
+      "issuingAuthority": "State of New Jersey",
+      "issuingDate": "2016-01-22T09:31:52.028Z",
+      "validFor": {
+        "startDateTime": "2016-01-22T09:31:52.028Z"
+      },
+      "attachment": {
+        "@type": "Attachment",
+        "attachmentType": "documentCopy",
+        "name": "BusinessPermitCertificate888441.pdf",
+        "description": "Scanned copy of the business permit",
+        "mimeType": "application/pdf",
+        "url": "http://DocumentManager/888441/BusinessPermitCertificate888441.pdf"
+      }
+    }
+  }
+]
+```
+
+##### Response
 
 ```
 200
 ```
 
 ```json
- {
+{
   "id": "128",
   "href": "https://serverRoot/tmf-api/party/v5/organization/128",
   "@type": "Organization",
@@ -4891,226 +4980,229 @@ Here's an example of a request for patching an Organization by adding an Organiz
   "isHeadOffice": true,
   "organizationType": "company",
   "existsDuring": {
-   "startDateTime": "2015-10-22T08:31:52.026Z"
+    "startDateTime": "2015-10-22T08:31:52.026Z"
   },
   "name": "Coffee Do Brazil",
   "tradingName": "Coffee Do Brazil Fair Trade",
   "nameType": "inc",
   "status": "validated",
   "externalReference": [
-   {
-    "name": "http://coffeedobrazil.com",
-    "externalIdentifierType": "internetSite",
-    "@type": "ExternalIdentifier"
-   }
+    {
+      "name": "http://coffeedobrazil.com",
+      "externalIdentifierType": "internetSite",
+      "@type": "ExternalIdentifier"
+    }
   ],
   "partyCharacteristic": [
-   {
-    "name": "number of employees",
-    "value": 125,
-    "valueType": "number",
-    "@type": "IntegerCharacteristic"
-   },
-   {
-    "name": "market segment",
-    "value": "Food wholesale",
-    "valueType": "string",
-    "@type": "StringCharacteristic"
-   }
+    {
+      "name": "number of employees",
+      "value": 125,
+      "valueType": "number",
+      "@type": "IntegerCharacteristic"
+    },
+    {
+      "name": "market segment",
+      "value": "Food wholesale",
+      "valueType": "string",
+      "@type": "StringCharacteristic"
+    }
   ],
   "otherName": [
-   {
-    "@type": "OtherNameOrganization",
-    "nameType": "inc",
-    "tradingName": "General Coffee",
-    "validFor": {
-     "startDateTime": "2015-10-22T08:31:52.026Z",
-     "endDateTime": "2017-10-22T08:31:52.026Z"
+    {
+      "@type": "OtherNameOrganization",
+      "nameType": "inc",
+      "tradingName": "General Coffee",
+      "validFor": {
+        "startDateTime": "2015-10-22T08:31:52.026Z",
+        "endDateTime": "2017-10-22T08:31:52.026Z"
+      }
     }
-   }
   ],
   "organizationIdentification": [
-   {
-    "@type": "OrganizationIdentification",
-    "identificationType": "commercialRegistration",
-    "identificationId": "12345678",
-    "issuingAuthority": "US Government",
-    "issuingDate": "2015-10-22T08:31:52.028Z",
-    "validFor": {
-     "startDateTime": "2015-10-22T08:31:52.028Z"
+    {
+      "@type": "OrganizationIdentification",
+      "identificationType": "commercialRegistration",
+      "identificationId": "12345678",
+      "issuingAuthority": "US Government",
+      "issuingDate": "2015-10-22T08:31:52.028Z",
+      "validFor": {
+        "startDateTime": "2015-10-22T08:31:52.028Z"
+      },
+      "attachment": {
+        "@type": "Attachment",
+        "attachmentType": "documentCopy",
+        "name": "RegistrationCertificate421.pdf",
+        "description": "Scanned copy of the registration certificate",
+        "mimeType": "application/pdf",
+        "url": "http://DocumentManager/421/RegistrationCertificate421.pdf"
+      }
     },
-    "attachment": {
-     "@type": "Attachment",
-     "attachmentType": "documentCopy",
-     "name": "RegistrationCertificate421.pdf",
-     "description": "Scanned copy of the registration certificate",
-     "mimeType": "application/pdf",
-     "url": "http://DocumentManager/421/RegistrationCertificate421.pdf"
+    {
+      "identificationType": "Business Permit",
+      "identificationId": "966935345345",
+      "issuingAuthority": "State of New Jersey",
+      "issuingDate": "2016-01-22T09:31:52.028Z",
+      "validFor": {
+        "startDateTime": "2016-01-22T09:31:52.028Z"
+      },
+      "attachment": {
+        "@type": "Attachment",
+        "attachmentType": "documentCopy",
+        "name": "BusinessPermitCertificate888441.pdf",
+        "description": "Scanned copy of the business permit",
+        "mimeType": "application/pdf",
+        "url": "http://DocumentManager/888441/BusinessPermitCertificate888441.pdf"
+      }
     }
-   },
-   {
-    "identificationType": "Business Permit",
-    "identificationId": "966935345345",
-    "issuingAuthority": "State of New Jersey",
-    "issuingDate": "2016-01-22T09:31:52.028Z",
-    "validFor": {
-     "startDateTime": "2016-01-22T09:31:52.028Z"
-    },
-    "attachment": {
-     "@type": "Attachment",
-     "attachmentType": "documentCopy",
-     "name": "BusinessPermitCertificate888441.pdf",
-     "description": "Scanned copy of the business permit",
-     "mimeType": "application/pdf",
-     "url": "http://DocumentManager/888441/BusinessPermitCertificate888441.pdf"
-    }
-   }
   ],
   "taxExemptionCertificate": [
-   {
-    "@type": "TaxExemptionCertificate",
-    "id": "1",
-    "validFor": {
-     "startDateTime": "2018-10-22T07:49:25.246Z"
-    },
-    "certificateNumber": "9875755432345",
-    "issuingJurisdiction": "USA",
-    "reason": "Voluntary Body",
-    "taxDefinition": [
-     {
-      "@type": "TaxDefinitionRef",
-      "id": "96",
-      "name": "Value Added Tax",
-      "taxType": "federalVat"
-     }
-    ],
-    "attachment": {
-     "@type": "Attachment",
-     "attachmentType": "taxExemptionCertificate",
-     "name": "TaxExemptionCertificate-233322.pdf",
-     "description": "Electronic version of the tax exemption certificate",
-     "mimeType": "application/pdf",
-     "url": "https://mycsp.com:8080/DocumentManager/666/TaxExemptionCertificate-233322.pdf"
+    {
+      "@type": "TaxExemptionCertificate",
+      "id": "1",
+      "validFor": {
+        "startDateTime": "2018-10-22T07:49:25.246Z"
+      },
+      "certificateNumber": "9875755432345", 
+      "issuingJurisdiction": "USA", 
+      "reason": "Voluntary Body", 
+      "taxDefinition": [
+        {
+          "@type": "TaxDefinitionRef",
+          "id": "96",
+          "name": "Value Added Tax",
+          "taxType": "federalVat"
+        }
+      ],
+      "attachment": {
+        "@type": "Attachment",
+        "attachmentType": "taxExemptionCertificate",
+        "name": "TaxExemptionCertificate-233322.pdf",
+        "description": "Electronic version of the tax exemption certificate",
+        "mimeType": "application/pdf",
+        "url": "https://mycsp.com:8080/DocumentManager/666/TaxExemptionCertificate-233322.pdf"
+      }
     }
-   }
   ],
   "creditRating": [
-   {
-    "@type": "CreditRating",
-    "creditAgencyName": "Experian",
-    "creditAgencyType": "externalAgency",
-    "ratingReference": "ref456",
-    "ratingScore": 400,
-    "validFor": {
-     "startDateTime": "2018-10-22T08:31:52.028Z"
+    {
+      "@type": "CreditRating",
+      "creditAgencyName": "Experian",
+      "creditAgencyType": "externalAgency",
+      "ratingReference": "ref456",
+      "ratingScore": 400,
+      "validFor": {
+        "startDateTime": "2018-10-22T08:31:52.028Z"
+      }
     }
-   }
   ],
   "relatedParty": [
-   {
-    "role": "director",
-    "@type": "RelatedPartyRefOrPartyRoleRef",
-    "partyOrPartyRole": {
-     "id": "54",
-     "href": "https://serverRoot/tmf-api/party/v5/individual/54",
-     "name": "Carlos Mafalda",
-     "@type": "PartyRef",
-     "@referredType": "Individual"
+    {
+      "role": "director",
+      "@type": "RelatedPartyRefOrPartyRoleRef",
+      "partyOrPartyRole": {
+        "id": "54",
+        "href": "https://serverRoot/tmf-api/party/v5/individual/54",
+        "name": "Carlos Mafalda",
+        "@type": "PartyRef",
+        "@referredType": "Individual"
+      }
+    },
+    {
+      "role": "employee",
+      "@type": "RelatedPartyRefOrPartyRoleRef",
+      "partyOrPartyRole": {
+        "id": "42",
+        "href": "https://serverRoot/tmf-api/party/v5/individual/42",
+        "name": "Jane Lamborgizzia",
+        "@type": "PartyRef",
+        "@referredType": "Individual"
+      }
     }
-   },
-   {
-    "role": "employee",
-    "@type": "RelatedPartyRefOrPartyRoleRef",
-    "partyOrPartyRole": {
-     "id": "42",
-     "href": "https://serverRoot/tmf-api/party/v5/individual/42",
-     "name": "Jane Lamborgizzia",
-     "@type": "PartyRef",
-     "@referredType": "Individual"
-    }
-   }
   ],
   "contactMedium": [
-   {
-    "preferred": true,
-    "mediumType": "email",
-    "validFor": {
-     "startDateTime": "2018-10-22T08:31:52.028Z"
+    {
+      "preferred": true,
+      "mediumType": "email",
+      "validFor": {
+        "startDateTime": "2018-10-22T08:31:52.028Z"
+      },
+      "@type": "EmailContactMedium",
+      "emailAddress": "jane.lamborgizzia@coffeedobrazil.com"
     },
-    "@type": "EmailContactMedium",
-    "emailAddress": "jane.lamborgizzia@coffeedobrazil.com"
-   },
-   {
-    "preferred": false,
-    "mediumType": "postalAddress",
-    "validFor": {
-     "startDateTime": "2018-10-22T08:31:52.028Z"
-    },
-    "@type": "GeographicAddressContactMedium",
-    "city": "Morristown",
-    "country": "USA",
-    "postCode": "07960",
-    "stateOrProvince": "New Jersey",
-    "street1": "240 Headquarters Plazza",
-    "street2": "East Tower 10th Floor"
-   }
+    {
+      "preferred": false,
+      "mediumType": "postalAddress",
+      "validFor": {
+        "startDateTime": "2018-10-22T08:31:52.028Z"
+      },
+      "@type": "GeographicAddressContactMedium",
+      "city": "Morristown",
+      "country": "USA",
+      "postCode": "07960",
+      "stateOrProvince": "New Jersey",
+      "street1": "240 Headquarters Plazza",
+      "street2": "East Tower 10th Floor"
+    }
   ],
   "organizationParentRelationship": {
-   "@type": "OrganizationParentRelationship",
-   "relationshipType": "juridical",
-   "organization": {
-    "@type": "OrganizationRef",
-    "id": "800",
-    "href": "https://serverRoot/tmf-api/party/v5/organization/800"
-   }
+    "@type": "OrganizationParentRelationship",
+    "relationshipType": "juridical",
+    "organization": {
+      "@type": "OrganizationRef",
+      "id": "800",
+      "href": "https://serverRoot/tmf-api/party/v5/organization/800"
+    }
   },
   "organizationChildRelationship": [
-   {
-    "@type": "OrganizationChildRelationship",
-    "relationshipType": "juridical",
-    "organization": {
-     "@type": "OrganizationRef",
-     "id": "149",
-     "href": "https://serverRoot/tmf-api/party/v5/organization/149"
+    {
+      "@type": "OrganizationChildRelationship",
+      "relationshipType": "juridical",
+      "organization": {
+        "@type": "OrganizationRef",
+        "id": "149",
+        "href": "https://serverRoot/tmf-api/party/v5/organization/149"
+      }
+    },
+    {
+      "@type": "OrganizationChildRelationship",
+      "relationshipType": "juridical",
+      "organization": {
+        "@type": "OrganizationRef",
+        "id": "150",
+        "href": "https://serverRoot/tmf-api/party/v5/organization/150"
+      }
     }
-   },
-   {
-    "@type": "OrganizationChildRelationship",
-    "relationshipType": "juridical",
-    "organization": {
-     "@type": "OrganizationRef",
-     "id": "150",
-     "href": "https://serverRoot/tmf-api/party/v5/organization/150"
-    }
-   }
   ]
- }
+}
 ```
 
 Here's an example of a request for patching an Organization by updating a characteristic value using json-patch query
 
-**Request**
+##### Request
 
-```json
- PATCH /organization/{id}
- Content-Type: application/json-patch-query+json
- [
-  {
-   "op": "replace",
-   "path": "/partyCharacteristic/value?/partyCharacteristic/name=market segment",
-   "value": "Food retail"
-  }
- ]
+```
+PATCH /organization/{id}
+Content-Type: application/json-patch-query+json
 ```
 
-**Response**
+```json
+[
+  {
+    "op": "replace",
+    "path": "/partyCharacteristic/value?/partyCharacteristic/name=market segment",
+    "value": "Food retail"
+  }
+]
+```
+
+##### Response
 
 ```
 200
 ```
 
 ```json
- {
+{
   "id": "128",
   "href": "https://serverRoot/tmf-api/party/v5/organization/128",
   "@type": "Organization",
@@ -5119,247 +5211,250 @@ Here's an example of a request for patching an Organization by updating a charac
   "isHeadOffice": true,
   "organizationType": "company",
   "existsDuring": {
-   "startDateTime": "2015-10-22T08:31:52.026Z"
+    "startDateTime": "2015-10-22T08:31:52.026Z"
   },
   "name": "Coffee Do Brazil",
   "tradingName": "Coffee Do Brazil Fair Trade",
   "nameType": "inc",
   "status": "validated",
   "externalReference": [
-   {
-    "name": "http://coffeedobrazil.com",
-    "externalIdentifierType": "internetSite",
-    "@type": "ExternalIdentifier"
-   }
+    {
+      "name": "http://coffeedobrazil.com",
+      "externalIdentifierType": "internetSite",
+      "@type": "ExternalIdentifier"
+    }
   ],
   "partyCharacteristic": [
-   {
-    "name": "number of employees",
-    "value": 125,
-    "valueType": "number",
-    "@type": "IntegerCharacteristic"
-   },
-   {
-    "name": "market segment",
-    "value": "Food retail",
-    "valueType": "string",
-    "@type": "StringCharacteristic"
-   }
+    {
+      "name": "number of employees",
+      "value": 125,
+      "valueType": "number",
+      "@type": "IntegerCharacteristic"
+    },
+    {
+      "name": "market segment",
+      "value": "Food retail",
+      "valueType": "string",
+      "@type": "StringCharacteristic"
+    }
   ],
   "otherName": [
-   {
-    "@type": "OtherNameOrganization",
-    "nameType": "inc",
-    "tradingName": "General Coffee",
-    "validFor": {
-     "startDateTime": "2015-10-22T08:31:52.026Z",
-     "endDateTime": "2017-10-22T08:31:52.026Z"
+    {
+      "@type": "OtherNameOrganization",
+      "nameType": "inc",
+      "tradingName": "General Coffee",
+      "validFor": {
+        "startDateTime": "2015-10-22T08:31:52.026Z",
+        "endDateTime": "2017-10-22T08:31:52.026Z"
+      }
     }
-   }
   ],
   "organizationIdentification": [
-   {
-    "@type": "OrganizationIdentification",
-    "identificationType": "commercialRegistration",
-    "identificationId": "12345678",
-    "issuingAuthority": "US Government",
-    "issuingDate": "2015-10-22T08:31:52.028Z",
-    "validFor": {
-     "startDateTime": "2015-10-22T08:31:52.028Z"
+    {
+      "@type": "OrganizationIdentification",
+      "identificationType": "commercialRegistration",
+      "identificationId": "12345678",
+      "issuingAuthority": "US Government",
+      "issuingDate": "2015-10-22T08:31:52.028Z",
+      "validFor": {
+        "startDateTime": "2015-10-22T08:31:52.028Z"
+      },
+      "attachment": {
+        "@type": "Attachment",
+        "attachmentType": "documentCopy",
+        "name": "RegistrationCertificate421.pdf",
+        "description": "Scanned copy of the registration certificate",
+        "mimeType": "application/pdf",
+        "url": "http://DocumentManager/421/RegistrationCertificate421.pdf"
+      }
     },
-    "attachment": {
-     "@type": "Attachment",
-     "attachmentType": "documentCopy",
-     "name": "RegistrationCertificate421.pdf",
-     "description": "Scanned copy of the registration certificate",
-     "mimeType": "application/pdf",
-     "url": "http://DocumentManager/421/RegistrationCertificate421.pdf"
+    {
+      "identificationType": "Business Permit",
+      "identificationId": "966935345345",
+      "issuingAuthority": "State of New Jersey",
+      "issuingDate": "2016-01-22T09:31:52.028Z",
+      "validFor": {
+        "startDateTime": "2016-01-22T09:31:52.028Z"
+      },
+      "attachment": {
+        "@type": "Attachment",
+        "attachmentType": "documentCopy",
+        "name": "BusinessPermitCertificate888441.pdf",
+        "description": "Scanned copy of the business permit",
+        "mimeType": "application/pdf",
+        "url": "http://DocumentManager/888441/BusinessPermitCertificate888441.pdf"
+      }
     }
-   },
-   {
-    "identificationType": "Business Permit",
-    "identificationId": "966935345345",
-    "issuingAuthority": "State of New Jersey",
-    "issuingDate": "2016-01-22T09:31:52.028Z",
-    "validFor": {
-     "startDateTime": "2016-01-22T09:31:52.028Z"
-    },
-    "attachment": {
-     "@type": "Attachment",
-     "attachmentType": "documentCopy",
-     "name": "BusinessPermitCertificate888441.pdf",
-     "description": "Scanned copy of the business permit",
-     "mimeType": "application/pdf",
-     "url": "http://DocumentManager/888441/BusinessPermitCertificate888441.pdf"
-    }
-   }
   ],
   "taxExemptionCertificate": [
-   {
-    "@type": "TaxExemptionCertificate",
-    "id": "1",
-    "validFor": {
-     "startDateTime": "2018-10-22T07:49:25.246Z"
-    },
-    "certificateNumber": "9875755432345",
-    "issuingJurisdiction": "USA",
-    "reason": "Voluntary Body",
-    "taxDefinition": [
-     {
-      "@type": "TaxDefinitionRef",
-      "id": "96",
-      "name": "Value Added Tax",
-      "taxType": "federalVat"
-     }
-    ],
-    "attachment": {
-     "@type": "Attachment",
-     "attachmentType": "taxExemptionCertificate",
-     "name": "TaxExemptionCertificate-233322.pdf",
-     "description": "Electronic version of the tax exemption certificate",
-     "mimeType": "application/pdf",
-     "url": "https://mycsp.com:8080/DocumentManager/666/TaxExemptionCertificate-233322.pdf"
+    {
+      "@type": "TaxExemptionCertificate",
+      "id": "1",
+      "validFor": {
+        "startDateTime": "2018-10-22T07:49:25.246Z"
+      },
+      "certificateNumber": "9875755432345", 
+      "issuingJurisdiction": "USA", 
+      "reason": "Voluntary Body", 
+      "taxDefinition": [
+        {
+          "@type": "TaxDefinitionRef",
+          "id": "96",
+          "name": "Value Added Tax",
+          "taxType": "federalVat"
+        }
+      ],
+      "attachment": {
+        "@type": "Attachment",
+        "attachmentType": "taxExemptionCertificate",
+        "name": "TaxExemptionCertificate-233322.pdf",
+        "description": "Electronic version of the tax exemption certificate",
+        "mimeType": "application/pdf",
+        "url": "https://mycsp.com:8080/DocumentManager/666/TaxExemptionCertificate-233322.pdf"
+      }
     }
-   }
   ],
   "creditRating": [
-   {
-    "@type": "CreditRating",
-    "creditAgencyName": "Experian",
-    "creditAgencyType": "externalAgency",
-    "ratingReference": "ref456",
-    "ratingScore": 400,
-    "validFor": {
-     "startDateTime": "2018-10-22T08:31:52.028Z"
+    {
+      "@type": "CreditRating",
+      "creditAgencyName": "Experian",
+      "creditAgencyType": "externalAgency",
+      "ratingReference": "ref456",
+      "ratingScore": 400,
+      "validFor": {
+        "startDateTime": "2018-10-22T08:31:52.028Z"
+      }
     }
-   }
   ],
   "relatedParty": [
-   {
-    "role": "director",
-    "@type": "RelatedPartyRefOrPartyRoleRef",
-    "partyOrPartyRole": {
-     "id": "54",
-     "href": "https://serverRoot/tmf-api/party/v5/individual/54",
-     "name": "Carlos Mafalda",
-     "@type": "PartyRef",
-     "@referredType": "Individual"
+    {
+      "role": "director",
+      "@type": "RelatedPartyRefOrPartyRoleRef",
+      "partyOrPartyRole": {
+        "id": "54",
+        "href": "https://serverRoot/tmf-api/party/v5/individual/54",
+        "name": "Carlos Mafalda",
+        "@type": "PartyRef",
+        "@referredType": "Individual"
+      }
+    },
+    {
+      "role": "employee",
+      "@type": "RelatedPartyRefOrPartyRoleRef",
+      "partyOrPartyRole": {
+        "id": "42",
+        "href": "https://serverRoot/tmf-api/party/v5/individual/42",
+        "name": "Jane Lamborgizzia",
+        "@type": "PartyRef",
+        "@referredType": "Individual"
+      }
     }
-   },
-   {
-    "role": "employee",
-    "@type": "RelatedPartyRefOrPartyRoleRef",
-    "partyOrPartyRole": {
-     "id": "42",
-     "href": "https://serverRoot/tmf-api/party/v5/individual/42",
-     "name": "Jane Lamborgizzia",
-     "@type": "PartyRef",
-     "@referredType": "Individual"
-    }
-   }
   ],
   "contactMedium": [
-   {
-    "preferred": true,
-    "mediumType": "email",
-    "validFor": {
-     "startDateTime": "2018-10-22T08:31:52.028Z"
+    {
+      "preferred": true,
+      "mediumType": "email",
+      "validFor": {
+        "startDateTime": "2018-10-22T08:31:52.028Z"
+      },
+      "@type": "EmailContactMedium",
+      "emailAddress": "jane.lamborgizzia@coffeedobrazil.com"
     },
-    "@type": "EmailContactMedium",
-    "emailAddress": "jane.lamborgizzia@coffeedobrazil.com"
-   },
-   {
-    "preferred": false,
-    "mediumType": "postalAddress",
-    "validFor": {
-     "startDateTime": "2018-10-22T08:31:52.028Z"
-    },
-    "@type": "GeographicAddressContactMedium",
-    "city": "Morristown",
-    "country": "USA",
-    "postCode": "07960",
-    "stateOrProvince": "New Jersey",
-    "street1": "240 Headquarters Plazza",
-    "street2": "East Tower 10th Floor"
-   }
+    {
+      "preferred": false,
+      "mediumType": "postalAddress",
+      "validFor": {
+        "startDateTime": "2018-10-22T08:31:52.028Z"
+      },
+      "@type": "GeographicAddressContactMedium",
+      "city": "Morristown",
+      "country": "USA",
+      "postCode": "07960",
+      "stateOrProvince": "New Jersey",
+      "street1": "240 Headquarters Plazza",
+      "street2": "East Tower 10th Floor"
+    }
   ],
   "organizationParentRelationship": {
-   "@type": "OrganizationParentRelationship",
-   "relationshipType": "juridical",
-   "organization": {
-    "@type": "OrganizationRef",
-    "id": "800",
-    "href": "https://serverRoot/tmf-api/party/v5/organization/800"
-   }
+    "@type": "OrganizationParentRelationship",
+    "relationshipType": "juridical",
+    "organization": {
+      "@type": "OrganizationRef",
+      "id": "800",
+      "href": "https://serverRoot/tmf-api/party/v5/organization/800"
+    }
   },
   "organizationChildRelationship": [
-   {
-    "@type": "OrganizationChildRelationship",
-    "relationshipType": "juridical",
-    "organization": {
-     "@type": "OrganizationRef",
-     "id": "149",
-     "href": "https://serverRoot/tmf-api/party/v5/organization/149"
+    {
+      "@type": "OrganizationChildRelationship",
+      "relationshipType": "juridical",
+      "organization": {
+        "@type": "OrganizationRef",
+        "id": "149",
+        "href": "https://serverRoot/tmf-api/party/v5/organization/149"
+      }
+    },
+    {
+      "@type": "OrganizationChildRelationship",
+      "relationshipType": "juridical",
+      "organization": {
+        "@type": "OrganizationRef",
+        "id": "150",
+        "href": "https://serverRoot/tmf-api/party/v5/organization/150"
+      }
     }
-   },
-   {
-    "@type": "OrganizationChildRelationship",
-    "relationshipType": "juridical",
-    "organization": {
-     "@type": "OrganizationRef",
-     "id": "150",
-     "href": "https://serverRoot/tmf-api/party/v5/organization/150"
-    }
-   }
   ]
- }
+}
 ```
 
-### Deletes a Organization
+#### Deletes a Organization
 
 `DELETE /organization/{id}`
 
-**Description**
+##### Description
 
 This operation deletes an Organization entity.
 
 ---
 
-# API NOTIFICATIONS
+## API NOTIFICATIONS
 
 For every single of operation on the entities use the following templates and provide sample REST notification POST calls.
 
 It is assumed that the Pub/Sub uses the Register and UnRegister mechanisms described in the REST Guidelines reproduced below.
 
-## Register listener
+### Register listener
 
 `POST /hub`
 
-**Description**
+#### Description
 
 Sets the communication endpoint address the service instance must use to deliver information about its health state, execution state, failures and metrics. Subsequent POST calls will be rejected by the service if it does not support multiple listeners. In this case DELETE /api/hub/{id} must be called before an endpoint can be created again.
 
-**Behavior**
+#### Behavior
 
 Returns HTTP/1.1 status code 204 if the request was successful.
 
 Returns HTTP/1.1 status code 409 if request is not successful.
 
-**Usage Samples**
+#### Usage Samples
 
 Here’s an example of a request for registering a listener.
 
-**Request**
+##### Request
 
-```json
- POST /api/hub
- Accept: application/json
- {
-  "callback": "http://in.listener.com"
- }
+```
+POST /api/hub
+Accept: application/json
 ```
 
-**Response**
+```json
+{
+  "callback": "http://in.listener.com"
+}
+```
+
+##### Response
 
 ```
 201
@@ -5368,76 +5463,79 @@ Location: /api/hub/42
 ```
 
 ```json
- {
-  "id": "42",
+{
+  "id":"42",
   "callback": "http://in.listener.com",
-  "query": ""
- }
+  "query":""
+}
 ```
 
-## Unregister listener
+### Unregister listener
 
 `DELETE /hub/{id}`
 
-**Description**
+#### Description
 
 Clears the communication endpoint address that was set by creating the Hub..
 
-**Behavior**
+#### Behavior
 
 Returns HTTP/1.1 status code 204 if the request was successful.
 
 Returns HTTP/1.1 status code 404 if the resource is not found.
 
-**Usage Samples**
+#### Usage Samples
 
 Here’s an example of a request for un-registering a listener.
 
-**Request**
+##### Request
 
 ```
 DELETE /api/hub/42
 Accept: application/json
 ```
 
-**Response**
+##### Response
 
 ```
 204
 ```
 
-## Publish Event to listener
+### Publish Event to listener
 
 `POST /client/listener`
 
-**Description**
+#### Description
 
 Clears the communication endpoint address that was set by creating the Hub.
 
 Provides to a registered listener the description of the event that was raised. The /client/listener url is the callback url passed when registering the listener.
 
-**Behavior**
+#### Behavior
 
 Returns HTTP/1.1 status code 201 if the service is able to set the configuration.
 
-**Usage Samples**
+#### Usage Samples
 
 Here’s an example of a notification received by the listener. In this example “EVENT TYPE” should be replaced by one of the notification types supported by this API (see Notification resources Models section) and EVENT BODY refers to the data structure of the given notification type.
 
-**Request**
+##### Request
 
-```json
- POST /client/listener
- Accept: application/json
- {
-  "event": {
-   // EVENT BODY
-  },
-  "eventType": "EVENT_TYPE"
- }
+```
+POST /client/listener
+Accept: application/json
 ```
 
-**Response**
+```json
+{
+  "event": {
+     // EVENT BODY
+  },
+  "eventType": "EVENT_TYPE"
+}
+```
+
+##### Response
 
 ```
 201
@@ -5447,19 +5545,18 @@ For detailed examples on the general TM Forum notification mechanism, see the TM
 
 ---
 
-# Acknowledgements
+## Acknowledgements
 
-# VERSION History
+## VERSION History
 
-| Release Number | Date       | Release led by:                         | Description                      |
-| :------------- | :--------- | :-------------------------------------- | :------------------------------- |
-| Release 1.0.0  | 09/06/2017 | Sophie Bouleau Orange sophie.bouleau@orange.com | First Release of the Document.   |
-| Release 4.0.0  | 06/05/2019 | Sophie Bouleau Orange sophie.bouleau@orange.com | Schema-driven API with polymorphism pattern <br> Following Jira have been integrated: <br> • AP-1016 <br> • AP-1017 <br> • AP-1195 <br> • AP-1282 <br> *Note: the version 4.0 is assigned to all the APIs delivered in the release 19.0* |
+| Release Number | Date       | Release led by:                      | Description                                                  |
+| :------------- | :--------- | :----------------------------------- | :----------------------------------------------------------- |
+| Release 1.0.0  | 09/06/2017 | Sophie Bouleau Orange sophie.bouleau@orange.com | First Release of the Document.                               |
+| Release 4.0.0  | 06/05/2019 | Sophie Bouleau Orange sophie.bouleau@orange.com | Schema-driven API with polymorphism pattern Following Jira have been integrated: • AP-1016 • AP-1017 • AP-1195 • AP-1282 Note: the version 4.0 is assigned to all the APIs delivered in the release 19.0 |
 
-# Release History
+## Release History
 
-| Release Number | Date       | Release led by:                         | Description                      |
-| :------------- | :--------- | :-------------------------------------- | :------------------------------- |
-| Release 14.5   | 09/06/2017 | Sophie Bouleau Orange sophie.bouleau@orange.com | Version 1.0 of the API REST    |
-| Release 19.0   | 06/05/2019 | Sophie Bouleau Orange sophie.bouleau@orange.com | Version 4.0 of the API REST <br> *Nota: the version 4.0 is assigned to all the APIs delivered in the release 19.0* |
-```
+| Release Number | Date       | Release led by:                      | Description                                                  |
+| :------------- | :--------- | :----------------------------------- | :----------------------------------------------------------- |
+| Release 14.5   | 09/06/2017 | Sophie Bouleau Orange sophie.bouleau@orange.com | Version 1.0 of the API REST                                  |
+| Release 19.0   | 06/05/2019 | Sophie Bouleau Orange sophie.bouleau@orange.com | Version 4.0 of the API REST Nota: the version 4.0 is assigned to all the APIs delivered in the release 19.0 |
