@@ -1,0 +1,144 @@
+
+# 2025-04-20 15:23:57.504967
++/read-only docs/*md
+
+# 2025-04-20 15:24:18.856416
++/ask Give me an overview of all the TMF specs that you're seeing.
+
+# 2025-04-20 16:14:43.836297
++/reset
+
+# 2025-04-20 16:17:56.290300
++/read-only docs/*md
+
+# 2025-04-20 16:17:59.225639
++/read-only docs/*yaml
+
+# 2025-04-20 16:18:27.469742
++{
+
+# 2025-04-20 16:19:19.138418
++/read-only docs/*md
+
+# 2025-04-20 16:19:22.305181
++/read-only docs/*yaml
+
+# 2025-04-20 16:19:51.347378
++{
+
+# 2025-04-20 16:20:12.745247
++/ask
+
+# 2025-04-20 16:20:20.114262
++We want to create an e-commerce platform based on TMF.  We will want to implement three layers: 1) a web client, 2) our core TMF platform, 3) underlying maybe legacy systems. The core TMF platform will provide a single abstraction over some number of legacy systems, that implement the existing BSS (business support systems) and OSS (operating support systems) for existing products.
++For the purpose of this exercise, the underlying systems (3) will be imagined or mocked.  These will be used to drive how we think of abstraction and generalization across those systems, in our core platform (2).
++We will want to consider a narrow use case around the product catalog.  In exploring and developing for this narrow case, we will expect to build a foundation for the entire platform.
++Ask me one question at a time so we can develop a thorough, step-by-step spec for this idea. Each question should build on my previous answers, and our end goal is to have a detailed specification I can hand off to a developer. Let’s do this iteratively and dig into every relevant detail. Remember, only one question at a time.
+
+# 2025-04-20 16:20:21.555290
++}
+
+# 2025-04-20 16:25:12.086267
++/drop
+
+# 2025-04-20 16:26:53.578862
++/read-only docs/*md
+
+# 2025-04-20 16:26:58.858983
++/tokens
+
+# 2025-04-20 16:29:19.711260
++/reset
+
+# 2025-04-20 16:30:27.897794
++/read-only docs/*yaml
+
+# 2025-04-20 16:30:31.132704
++/tokens
+
+# 2025-04-20 16:31:49.762643
++/reset
+
+# 2025-04-20 16:34:38.211738
++/ask What can you tell me about the TMF 620 Product Catalog specification?
+
+# 2025-04-20 16:35:15.545292
++/repo-map
+
+# 2025-04-20 16:35:30.584905
++/map
+
+# 2025-04-20 16:37:09.961472
++/reset
+
+# 2025-04-20 16:37:27.057919
++/read-only docs/TMF620-Product_Catalog_Management-v5.0.0.oas.yaml
+
+# 2025-04-20 16:37:40.849699
++/read-only docs/TMF620_Product_Catalog_userguide.md
+
+# 2025-04-20 16:37:53.361713
++We want to create an e-commerce platform based on TMF.  We will want to implement three layers: 1) a web client, 2) our core TMF platform, 3) underlying maybe legacy systems. The core TMF platform will provide a single abstraction over some number of legacy systems, that implement the existing BSS (business support systems) and OSS (operating support systems) for existing products.
++For the purpose of this exercise, the underlying systems (3) will be imagined or mocked.  These will be used to drive how we think of abstraction and generalization across those systems, in our core platform (2).
++We will want to consider a narrow use case around the product catalog.  In exploring and developing for this narrow case, we will expect to build a foundation for the entire platform.
++Ask me one question at a time so we can develop a thorough, step-by-step spec for this idea. Each question should build on my previous answers, and our end goal is to have a detailed specification I can hand off to a developer. Let’s do this iteratively and dig into every relevant detail. Remember, only one question at a time.
+
+# 2025-04-20 16:38:33.881794
++We want to create an e-commerce platform based on TMF.  We will want to implement three layers: 1) a web client, 2) our core TMF platform, 3) underlying maybe legacy systems. The core TMF platform will provide a single abstraction over some number of legacy systems, that implement the existing BSS (business support systems) and OSS (operating support systems) for existing products.
++For the purpose of this exercise, the underlying systems (3) will be imagined or mocked.  These will be used to drive how we think of abstraction and generalization across those systems, in our core platform (2).
++We will want to consider a narrow use case around the product catalog.  In exploring and developing for this narrow case, we will expect to build a foundation for the entire platform.
++Ask me one question at a time so we can develop a thorough, step-by-step spec for this idea. Each question should build on my previous answers, and our end goal is to have a detailed specification I can hand off to a developer. Let’s do this iteratively and dig into every relevant detail. Remember, only one question at a time. If you need access to any of the specifications or user guides, you will let me know, and I'll add the file to your context.
+
+# 2025-04-20 16:40:07.186451
++/ask For the initial version, we'll support listing all product offerings, and retrieving details of a specific offering. Go ahead and ask the next question.
+
+# 2025-04-20 16:41:15.451435
++/ask For now, we'll just proxy, so we'll do requests in real-time, without storage or caching.
+
+# 2025-04-20 16:44:45.621374
++/ask Initially, we'll start with a single legacy system as a source of truth for this the catalog data. In this example, we'll work with a small set of broadband services. Go on with the next question.
+
+# 2025-04-20 16:45:43.066361
++/ask Our legacy system will actually also implement a TMF API that we delegate to.
+
+# 2025-04-20 16:47:51.168292
++/ask For now we'll start simple. We'll start with number 1. But we may peform some schema validation of the data that's retrieved from layer 3.
+
+# 2025-04-20 16:48:56.310327
++/ask 1. Yes 2. We should fail.
+
+# 2025-04-20 16:49:37.573941
++/ask Yes, for now we simply pass through
+
+# 2025-04-20 16:51:12.511103
++/ask Bad Gateway seems good. But we don't expose any such information to the client.
+
+# 2025-04-20 16:52:11.694627
++/ask For this kind of error we don't say anything to the client.
+
+# 2025-04-20 16:53:30.119591
++/ask For this type of error, we won't send back a TMF error schema thing.
+
+# 2025-04-20 16:54:17.279664
++/ask In this case we'll also return a 502 error without leaking any details.
+
+# 2025-04-20 16:58:24.969479
++/ask Here's a point to clarify: In the future we might have to support an entirely different set of systems that is e.g. the source of truth for mobile products or other services. There may be multiple such systems that we proxy here, and we don't assume that all of the will implement TMF; they might be have SOAP/XML interface or other legacy interface. -- Regarding your question: Yes, other issues should also result in a 502. Go ahead with the next question.
+
+# 2025-04-20 17:00:36.593832
++/ask Yes we want to use the exact TMF API for layer 2.
+
+# 2025-04-20 17:01:51.451095
++/ask You're right. We might have to inject authentication tokens or the like.
+
+# 2025-04-20 17:06:39.508425
++/ask Let's use Basic Authentication for now.
+
+# 2025-04-20 17:07:11.659853
++/ask We can retrieve through them a mock function.
+
+# 2025-04-20 17:07:44.412345
++/ask You're being overly specific. No it's just a stand-in so it'll be fine to have no arguments.
+
+# 2025-04-20 17:13:46.990492
++Can you expand in the spec a little bit on the fact that we want to support multiple legacy systems going forward, as mentioned earlier. -- Now that we’ve wrapped up the brainstorming process, can you compile our findings into a comprehensive, developer-ready specification? Include all relevant requirements, architecture choices, data handling details, error handling strategies, and a testing plan so a developer can immediately begin implementation. Add references to the relevant specs and TMF APIs as well. Write the spec to `spec.md`.
