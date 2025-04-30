@@ -18,7 +18,6 @@ While the initial implementation targets a single, TMF-compliant underlying syst
 *   **Layer 2 (Core TMF Platform):**
     *   Exposes a subset of the TMF620 Product Catalog Management API northbound.
     *   Acts as a proxy, forwarding requests to the appropriate underlying system(s).
-    *   Handles authentication towards underlying systems.
     *   Performs schema validation on responses from underlying TMF systems.
     *   Implements standardized error handling towards the web client.
     *   **Initial Scope:** Proxies requests to a single underlying TMF620-compliant system for broadband products.
@@ -33,7 +32,7 @@ The core platform shall expose the following TMF620 v5.0.0 compliant API endpoin
 
 *   **`GET /productOffering`**
     *   **Description:** Lists product offerings based on filter criteria.
-    *   **Compliance:** Adheres strictly to the TMF620 v5.0.0 specification (`docs/TMF620-Product_Catalog_Management-v5.0.0.oas.yaml`) regarding path, method, query parameters (including filtering, pagination (`offset`, `limit`), and field selection (`fields`)), and successful (HTTP 200 OK) response structures.
+    *   **Compliance:** Adheres strictly to the TMF620 v5.0.0 specification (`docs/TMF620-Product_Catalog_Management-v5.0.0.oas.yaml`) regarding path, method, query parameters (including pagination (`offset`, `limit`), and field selection (`fields`)), and successful (HTTP 200 OK) response structures.
     *   **Behavior:** Proxies the request, including all query parameters, to the underlying legacy system.
 *   **`GET /productOffering/{id}`**
     *   **Description:** Retrieves the details of a specific product offering by its ID.
@@ -53,11 +52,10 @@ The core platform shall expose the following TMF620 v5.0.0 compliant API endpoin
     *   `GET /productOffering/{id}` (northbound) maps to `GET /productOffering/{id}` (southbound).
 *   **Parameter Passing:** All query parameters received on the northbound API are passed directly to the southbound API request.
 
-## 6. Authentication (Southbound)
+## 6. Authentication
 
-*   **Mechanism:** HTTP Basic Authentication shall be used for requests from the core platform to the legacy system.
-*   **Credential Retrieval:** The username and password for Basic Authentication shall be obtained by calling a mock function within the core platform. This function requires no input arguments for the initial implementation.
-*   **Header Injection:** The core platform must construct the `Authorization` header with the retrieved credentials (e.g., `Authorization: Basic <base64(username:password)>`) and include it in every southbound request to the legacy system.
+*   **Mechanism:** HTTP Basic Authentication shall be used for requests from the web client to the core platform.
+*   **Credential Retrieval:** The core platform will authenticate requests from the web client by checking against a hard-coded list of authorized credentials.
 
 ## 7. Schema Validation
 
@@ -93,12 +91,10 @@ The core platform MUST implement the following error handling strategy when resp
     *   Potential data transformation logic to map legacy data models to the TMF620 model.
 *   **Caching:** Introduce caching mechanisms to improve performance and reduce load on legacy systems.
 *   **Enhanced Filtering/Modification:** Implement business logic within the core platform to filter or modify data (e.g., hide internal products, enrich data).
-*   **More Sophisticated Authentication:** Support different authentication mechanisms for various legacy systems.
 
 ## 10. Testing Plan
 
 *   **Unit Testing:**
-    *   Test the Basic Authentication credential retrieval (mocking the function) and header construction logic.
     *   Test the schema validation logic using sample valid and invalid TMF620 response payloads.
     *   Test the request forwarding logic (ensuring parameters are passed correctly).
     *   Test the error handling logic for each defined scenario (validation failure, legacy error, network error).
@@ -106,7 +102,6 @@ The core platform MUST implement the following error handling strategy when resp
     *   Set up a mock TMF620 service simulating the legacy system.
     *   **Happy Path:**
         *   Send `GET /productOffering` and `GET /productOffering/{id}` requests to the core platform.
-        *   Verify the mock legacy system receives the correct request (path, parameters, Basic Auth header).
         *   Configure the mock to return a valid TMF620 response.
         *   Verify the core platform returns HTTP 200 OK and the correct, validated response body.
     *   **Error Paths:**

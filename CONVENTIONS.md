@@ -16,7 +16,7 @@ This is the **mandatory** workflow for implementing features or fixes:
 
 1.  **Clarify Task:** Ensure you fully understand the goal for the current iteration. Ask clarifying questions if needed.
 2.  **Write Test(s) First (TDD):** Before writing implementation code, write one or more `pytest` tests that define the expected behavior and *currently fail*.
-3.  **Implement:** Write clear, straightforward code in the application (`src/tmf_vibes/`) focused on fulfilling the current requirements (as defined by the tests) to make the new test(s) pass.
+3.  **Implement:** Write clear, straightforward code in the application focused on fulfilling the current requirements (as defined by the tests) to make the new test(s) pass.
 4.  **Validate & Observe:**
     *   Run the standard checks using the Makefile: `make check`. This command will format the code, run the linter, type checker, and the test suite.
     *   All checks **must** pass. Address any failures reported by `make check`.
