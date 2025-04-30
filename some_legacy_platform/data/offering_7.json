@@ -1,0 +1,12 @@
+{
+  "id": "offer007",
+  "href": "/productOffering/offer007",
+  "name": "Fibre 100 & TV Essentials",
+  "description": "Fibre 100 broadband bundled with a basic TV package.",
+  "version": "1.2",
+  "isBundle": true,
+  "isSellable": true,
+  "lifecycleStatus": "Active",
+  "@type": "ProductOffering",
+  "@baseType": "ProductOffering"
+}

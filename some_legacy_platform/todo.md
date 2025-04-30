@@ -19,22 +19,23 @@ This document outlines the steps to build a mock legacy system simulating a TMF6
 
 Goal: Set up the basic project structure and a running FastAPI application.
 
-*   [ ] Create `some_legacy_platform` directory (if not already present).
-*   [ ] Initialize a standard Python project structure within `some_legacy_platform` (e.g., `src/`, `tests/`, `data/`).
-*   [ ] Set up a virtual environment (using `uv venv`).
-*   [ ] Install necessary dependencies (via `pyproject.yaml`): `fastapi`, `uvicorn[standard]`, `pytest`, `pydantic`.
-*   [ ] Create a basic FastAPI app instance in `src/main.py`.
-*   [ ] Add a simple health check endpoint (e.g., `GET /health`) that returns HTTP 200 OK.
-*   [ ] Update the root `Makefile` with convenience commands (e.g., `run-some-legacy-platform` to start the server with `uvicorn`, `test` to run all `pytest` tests within all projects like `some_legacy_platform`, `core_platform`).
+*   [x] Create `some_legacy_platform` directory (if not already present).
+*   [x] Initialize a standard Python project structure within `some_legacy_platform` (e.g., `src/`, `tests/`, `data/`).
+*   [x] Set up a virtual environment (using `uv venv`).
+*   [x] Install necessary dependencies (via `pyproject.yaml`): `fastapi`, `uvicorn[standard]`, `pytest`, `pydantic`.
+*   [x] Create a basic FastAPI app instance in `src/main.py`.
+*   [x] Add a simple health check endpoint (e.g., `GET /health`) that returns HTTP 200 OK.
+*   [x] Update the root `Makefile` with convenience commands (e.g., `run-some-legacy-platform` to start the server with `uvicorn`, `test` to run all `pytest` tests within all projects like `some_legacy_platform`, `core_platform`).
 
 ## Milestone 2: Static Data Preparation & Loading
 
 Goal: Prepare the sample `ProductOffering` data and load it into the application.
 
-*   [ ] Define the structure for 10 sample `ProductOffering` objects, adhering to the TMF620 v5.0.0 schema (`docs/TMF620-Product_Catalog_Management-v5.0.0.oas.yaml`). Ensure each has a unique `id`.
-*   [ ] Create 10 separate JSON files (e.g., `offering_1.json`, `offering_2.json`, ...) in the `data/` directory, each containing one `ProductOffering` object.
-*   [ ] Implement a utility function or class in `src/` to load these JSON files into an in-memory data structure (e.g., a dictionary keyed by `id`) when the FastAPI app starts up.
-*   [ ] Write unit tests (`tests/`) for the data loading mechanism to ensure all 10 offerings are loaded correctly.
+*   [x] Define the structure for 10 sample `ProductOffering` objects, adhering to the TMF620 v5.0.0 schema (`docs/TMF620-Product_Catalog_Management-v5.0.0.oas.yaml`). Ensure each has a unique `id`. (Simplified structure used)
+*   [x] Create 10 separate JSON files (e.g., `offering_1.json`, `offering_2.json`, ...) in the `data/` directory, each containing one `ProductOffering` object.
+*   [x] Implement a utility function or class in `src/data_loader.py` to load these JSON files into an in-memory data structure (dictionary keyed by `id`) when the module is imported.
+*   [x] Integrate loading into FastAPI app startup using `lifespan` in `src/main.py`.
+*   [x] Write unit tests (`tests/test_data_loader.py`) for the data loading mechanism to ensure all 10 offerings are loaded correctly.
 
 ## Milestone 3: Implement `GET /productOffering/{id}` Endpoint
 

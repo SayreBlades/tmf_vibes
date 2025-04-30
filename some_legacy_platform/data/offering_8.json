@@ -1,0 +1,12 @@
+{
+  "id": "offer008",
+  "href": "/productOffering/offer008",
+  "name": "Student Broadband 80",
+  "description": "Special 9-month contract broadband deal for students, 80 Mbps.",
+  "version": "1.0",
+  "isBundle": false,
+  "isSellable": true,
+  "lifecycleStatus": "Active",
+  "@type": "ProductOffering",
+  "@baseType": "ProductOffering"
+}

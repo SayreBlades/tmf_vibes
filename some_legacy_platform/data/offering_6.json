@@ -1,0 +1,12 @@
+{
+  "id": "offer006",
+  "href": "/productOffering/offer006",
+  "name": "Broadband & Phone Bundle",
+  "description": "Basic Broadband 50 combined with a landline phone service.",
+  "version": "1.0",
+  "isBundle": true,
+  "isSellable": true,
+  "lifecycleStatus": "Active",
+  "@type": "ProductOffering",
+  "@baseType": "ProductOffering"
+}

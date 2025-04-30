@@ -1,0 +1,12 @@
+{
+  "id": "offer001",
+  "href": "/productOffering/offer001",
+  "name": "Basic Broadband 50",
+  "description": "Standard home broadband package with 50 Mbps download speed.",
+  "version": "1.0",
+  "isBundle": false,
+  "isSellable": true,
+  "lifecycleStatus": "Active",
+  "@type": "ProductOffering",
+  "@baseType": "ProductOffering"
+}

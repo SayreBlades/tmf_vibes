@@ -1,0 +1,12 @@
+{
+  "id": "offer010",
+  "href": "/productOffering/offer010",
+  "name": "Gamer Pro Fibre 500",
+  "description": "High-speed 500 Mbps fibre with low latency optimisation for gaming.",
+  "version": "1.0",
+  "isBundle": false,
+  "isSellable": true,
+  "lifecycleStatus": "Launched",
+  "@type": "ProductOffering",
+  "@baseType": "ProductOffering"
+}

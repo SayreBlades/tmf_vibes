@@ -1,0 +1,12 @@
+{
+  "id": "offer003",
+  "href": "/productOffering/offer003",
+  "name": "Fibre Broadband 300",
+  "description": "High-speed fibre optic broadband with 300 Mbps download speed.",
+  "version": "1.1",
+  "isBundle": false,
+  "isSellable": true,
+  "lifecycleStatus": "Active",
+  "@type": "ProductOffering",
+  "@baseType": "ProductOffering"
+}

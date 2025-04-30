@@ -1,0 +1,12 @@
+{
+  "id": "offer005",
+  "href": "/productOffering/offer005",
+  "name": "Business Broadband 200",
+  "description": "Business-grade fibre broadband with 200 Mbps symmetric speeds and enhanced SLA.",
+  "version": "1.5",
+  "isBundle": false,
+  "isSellable": true,
+  "lifecycleStatus": "Active",
+  "@type": "ProductOffering",
+  "@baseType": "ProductOffering"
+}

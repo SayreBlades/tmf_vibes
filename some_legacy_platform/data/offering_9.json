@@ -1,0 +1,12 @@
+{
+  "id": "offer009",
+  "href": "/productOffering/offer009",
+  "name": "Low Income Social Tariff",
+  "description": "Affordable basic broadband for eligible low-income households.",
+  "version": "1.0",
+  "isBundle": false,
+  "isSellable": true,
+  "lifecycleStatus": "Active",
+  "@type": "ProductOffering",
+  "@baseType": "ProductOffering"
+}

@@ -1,0 +1,12 @@
+{
+  "id": "offer004",
+  "href": "/productOffering/offer004",
+  "name": "Gigabit Fibre Broadband",
+  "description": "Ultra-fast fibre optic broadband with 1 Gbps download speed.",
+  "version": "2.0",
+  "isBundle": false,
+  "isSellable": true,
+  "lifecycleStatus": "Active",
+  "@type": "ProductOffering",
+  "@baseType": "ProductOffering"
+}
