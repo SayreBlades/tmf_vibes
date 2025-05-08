@@ -18,9 +18,11 @@ typecheck:
 	@echo "Running type checker..."
 	@$(UV_RUN) mypy some_legacy_platform/src
 
-test:
-	@echo "Running tests..."
-	@$(UV_RUN) pytest . --tb=short # Run tests in all discovered locations
+test-some-legacy-platform:
+	@echo "Running some-legacy-platform tests..."
+	@cd some_legacy_platform && $(UV_RUN) pytest . --tb=short
+
+test: test-some-legacy-platform
 
 run-some-legacy-platform:
 	@echo "Starting Some Legacy Platform mock server on http://127.0.0.1:8081 ..."

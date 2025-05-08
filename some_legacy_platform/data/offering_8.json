@@ -7,6 +7,7 @@
   "isBundle": false,
   "isSellable": true,
   "lifecycleStatus": "Active",
+  "lastUpdate": "2023-09-15T08:00:00Z",
   "@type": "ProductOffering",
   "@baseType": "ProductOffering"
 }

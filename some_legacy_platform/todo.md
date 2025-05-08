@@ -41,21 +41,21 @@ Goal: Prepare the sample `ProductOffering` data and load it into the application
 
 Goal: Implement the endpoint to retrieve a single `ProductOffering` by its ID.
 
-*   [ ] Define a Pydantic model representing the `ProductOffering` structure based on the TMF620 schema (consider placing this in `src/models.py`).
-*   [ ] Create the FastAPI route for `GET /productOffering/{offering_id}` in `src/main.py` (or a dedicated router file).
-*   [ ] Implement the logic within the route function to:
-    *   Look up the `offering_id` in the loaded static data.
-    *   Return the corresponding `ProductOffering` object if found.
-    *   Return an HTTP 404 `NotFound` response if the `id` is not found.
-*   [ ] Implement field selection logic:
-    *   Accept the `fields` query parameter (comma-separated string).
-    *   If `fields` is provided, parse it and return only the requested top-level fields from the `ProductOffering` object.
-    *   If `fields` is not provided, return the full object.
-*   [ ] Write integration tests (`tests/`) for this endpoint using `pytest` and FastAPI's `TestClient`:
-    *   Test retrieving each of the 5 existing offerings by their correct IDs.
-    *   Test requesting a non-existent ID and verify the 404 response.
-    *   Test retrieving an existing offering with a specific `fields` parameter (e.g., `?fields=id,name`) and verify only those fields are returned.
-    *   Test retrieving an existing offering without the `fields` parameter and verify the full object is returned.
+*   [x] Define a Pydantic model representing the `ProductOffering` structure based on the TMF620 schema (consider placing this in `src/models.py`).
+*   [x] Create the FastAPI route for `GET /productOffering/{offering_id}` in `src/main.py` (or a dedicated router file).
+*   [x] Implement the logic within the route function to:
+    *   [x] Look up the `offering_id` in the loaded static data.
+    *   [x] Return the corresponding `ProductOffering` object if found.
+    *   [x] Return an HTTP 404 `NotFound` response if the `id` is not found.
+*   [x] Implement field selection logic:
+    *   [x] Accept the `fields` query parameter (comma-separated string).
+    *   [x] If `fields` is provided, parse it and return only the requested top-level fields from the `ProductOffering` object.
+    *   [x] If `fields` is not provided, return the full object.
+*   [x] Write integration tests (`tests/`) for this endpoint using `pytest` and FastAPI's `TestClient`:
+    *   [x] Test retrieving each of the 10 existing offerings by their correct IDs.
+    *   [x] Test requesting a non-existent ID and verify the 404 response.
+    *   [x] Test retrieving an existing offering with a specific `fields` parameter (e.g., `?fields=id,name`) and verify only those fields are returned.
+    *   [x] Test retrieving an existing offering without the `fields` parameter and verify the full object is returned.
 
 ## Milestone 4: Implement `GET /productOffering` Endpoint
 
