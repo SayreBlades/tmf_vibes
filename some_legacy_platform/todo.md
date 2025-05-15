@@ -61,22 +61,22 @@ Goal: Implement the endpoint to retrieve a single `ProductOffering` by its ID.
 
 Goal: Implement the endpoint to list `ProductOffering`s with pagination and field selection.
 
-*   [ ] Create the FastAPI route for `GET /productOffering` in `src/main.py` (or a dedicated router file).
-*   [ ] Implement pagination logic:
+*   [x] Create the FastAPI route for `GET /productOffering` in `src/main.py` (or a dedicated router file).
+*   [x] Implement pagination logic:
     *   Accept `offset` (default 0) and `limit` (default e.g., 10) query parameters.
     *   Apply slicing to the list of loaded static offerings based on `offset` and `limit`.
-*   [ ] Implement field selection logic:
+*   [x] Implement field selection logic:
     *   Accept the `fields` query parameter.
     *   Apply field selection to *each* `ProductOffering` object in the paginated list before returning.
-*   [ ] Ensure the response body is a JSON array containing the (potentially field-selected) `ProductOffering` objects for the requested page.
-*   [ ] Write integration tests (`tests/`) for this endpoint:
-    *   Test listing without parameters (should return the first `limit` items).
-    *   Test listing with `limit=2`.
-    *   Test listing with `offset=2`.
-    *   Test listing with `offset=1`, `limit=2`.
-    *   Test listing with `offset` greater than the number of items (should return an empty list).
-    *   Test listing with the `fields` parameter (e.g., `?fields=id,name`) and verify the structure of items in the list.
-    *   Test listing combining pagination and `fields`.
+*   [x] Ensure the response body is a JSON array containing the (potentially field-selected) `ProductOffering` objects for the requested page.
+*   [x] Write integration tests (`tests/`) for this endpoint:
+    *   [x] Test listing without parameters (should return the first `limit` items).
+    *   [x] Test listing with `limit=2`.
+    *   [x] Test listing with `offset=2`.
+    *   [x] Test listing with `offset=1`, `limit=2`.
+    *   [x] Test listing with `offset` greater than the number of items (should return an empty list).
+    *   [x] Test listing with the `fields` parameter (e.g., `?fields=id,name`) and verify the structure of items in the list.
+    *   [x] Test listing combining pagination and `fields`.
 
 ## Before completing each Milestone:
 

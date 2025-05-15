@@ -226,3 +226,178 @@ async def get_product_offering(
     # Return the filtered dictionary explicitly wrapped in a JSONResponse
     # This bypasses FastAPI's response_model processing for this path
     return JSONResponse(content=filtered_dict)
+
+
+@app.get(
+    "/productOffering",
+    response_model=list[ProductOfferingPartial],
+    summary="List Product Offerings",
+    description="Retrieves a list of product offerings with support for pagination and field selection. Does not support filtering.",
+    tags=["Product Offering"],
+    responses={
+        status.HTTP_200_OK: {
+            "description": "Successful retrieval of a list of product offerings (potentially partial based on 'fields' query parameter).",
+            "model": list[ProductOfferingPartial],
+            "content": {
+                "application/json": {
+                    "examples": {
+                        "paginated_full_offerings": {
+                            "summary": "Paginated Full Offerings Example (limit=2, offset=0)",
+                            "value": [
+                                {
+                                    "id": "offer001",
+                                    "href": "/productOffering/offer001",
+                                    "name": "Basic Broadband 50",
+                                    "description": "Standard home broadband package with 50 Mbps download speed.",
+                                    "version": "1.0",
+                                    "isBundle": False,
+                                    "isSellable": True,
+                                    "lifecycleStatus": "Active",
+                                    "lastUpdate": "2023-10-26T10:00:00Z",
+                                    "@type": "ProductOffering",
+                                    "@baseType": "ProductOffering",
+                                },
+                                {
+                                    "id": "offer002",
+                                    "href": "/productOffering/offer002",
+                                    "name": "Premium Broadband 100",
+                                    "description": "Premium home broadband package with 100 Mbps download speed and TV bundle option.",
+                                    "version": "1.2",
+                                    "isBundle": True,
+                                    "isSellable": True,
+                                    "lifecycleStatus": "Active",
+                                    "lastUpdate": "2023-11-15T14:30:00Z",
+                                    "@type": "ProductOffering",
+                                    "@baseType": "ProductOffering",
+                                },
+                            ],
+                        },
+                        "paginated_partial_offerings": {
+                            "summary": "Paginated Partial Offerings Example (limit=1, offset=1, fields=id,name)",
+                            "value": [
+                                {"id": "offer002", "name": "Premium Broadband 100"}
+                            ],
+                        },
+                    }
+                }
+            },
+        },
+        status.HTTP_400_BAD_REQUEST: {
+            "description": "Bad Request - Invalid field(s) requested or invalid pagination parameters",
+            "content": {
+                "application/json": {
+                    "example": {"detail": "Invalid fields requested: ['invalidField']"}
+                }
+            },
+        },
+        status.HTTP_500_INTERNAL_SERVER_ERROR: {
+            "description": "Internal Server Error - Data inconsistency",
+            "content": {
+                "application/json": {
+                    "example": {"detail": "Data inconsistency found during processing."}
+                }
+            },
+        },
+    },
+)
+async def list_product_offerings(
+    offset: int = Query(
+        0, ge=0, description="Offset for pagination (0-indexed)."
+    ),
+    limit: int = Query(
+        10, ge=1, le=100, description="Limit for pagination (max 100)."
+    ), # Max limit 100 is a sensible default
+    fields: Optional[str] = Query(
+        default=None,
+        description="Comma-separated list of top-level fields to return for each offering.",
+        examples=["id,name,@type"],
+    ),
+) -> Any:  # Return Any because it could be a list of models or a JSONResponse
+    """
+    List Product Offerings with pagination and field selection.
+    """
+    logger.info(
+        f"Received request for product offerings list with offset: {offset}, limit: {limit}, fields: {fields}"
+    )
+
+    # Get all offering data and sort by ID for consistent pagination
+    # Sorting by ID is good practice for pagination, though not strictly required by TMF.
+    # Using .get("id", "") ensures robustness if an item somehow lacks an ID.
+    sorted_offering_data = sorted(
+        product_offerings_store.values(), key=lambda x: x.get("id", "")
+    )
+
+    # Validate all data into ProductOffering models
+    all_offering_models: list[ProductOffering] = []
+    for i, data in enumerate(sorted_offering_data):
+        try:
+            all_offering_models.append(ProductOffering(**data))
+        except ValidationError as e:
+            offering_id_for_error = data.get('id', f"unknown_at_index_{i}")
+            logger.error(
+                f"Data validation error for offering ID '{offering_id_for_error}' during list construction: {e}",
+                exc_info=True,
+            )
+            # This indicates an internal data problem, hence 500
+            raise HTTPException(
+                status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+                detail=f"Data inconsistency for offering ID '{offering_id_for_error}'.",
+            ) from e
+
+    # Apply pagination
+    paginated_models = all_offering_models[offset : offset + limit]
+
+    if not fields:
+        # No field selection, return the paginated list of full (validated) models
+        # FastAPI will serialize these using ProductOfferingPartial as per response_model
+        logger.debug(
+            f"Returning {len(paginated_models)} full models (offset={offset}, limit={limit})"
+        )
+        return paginated_models
+
+    # --- Field Selection Logic for the list ---
+    requested_fields_set = {
+        f.strip() for f in fields.split(",") if f.strip()
+    }
+    if not requested_fields_set:
+        # Fields parameter was present but empty, return full models
+        logger.debug(
+            f"Empty 'fields' parameter, returning {len(paginated_models)} full models (offset={offset}, limit={limit})"
+        )
+        return paginated_models
+
+    # Get valid field names/aliases as they appear in JSON schema
+    # Use the PARTIAL model here to get the list of valid keys for filtering
+    valid_json_keys = set(
+        ProductOfferingPartial.model_json_schema(by_alias=True)[
+            'properties'
+        ].keys()
+    )
+
+    # Check for invalid requested fields
+    invalid_fields = requested_fields_set - valid_json_keys
+    if invalid_fields:
+        logger.warning(
+            f"Invalid fields requested for offerings list: {invalid_fields}"
+        )
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail=f"Invalid fields requested: {sorted(list(invalid_fields))}",
+        )
+
+    # Process each model in the paginated list for field selection
+    results_list = []
+    for offering_model in paginated_models:
+        full_dict = offering_model.model_dump(by_alias=True)
+        filtered_dict = {
+            key: value
+            for key, value in full_dict.items()
+            if key in requested_fields_set
+        }
+        results_list.append(filtered_dict)
+
+    logger.debug(
+        f"Returning {len(results_list)} filtered offerings (offset={offset}, limit={limit}, fields={requested_fields_set})"
+    )
+    # Return the list of filtered dictionaries explicitly wrapped in a JSONResponse
+    return JSONResponse(content=results_list)

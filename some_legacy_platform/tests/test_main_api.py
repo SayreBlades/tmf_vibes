@@ -138,3 +138,178 @@ def test_health_check() -> None:
     assert response.text == "OK"
     assert response.headers["content-type"] == "text/plain; charset=utf-8"
 
+
+# --- Tests for GET /productOffering (List) ---
+
+TOTAL_OFFERINGS = len(VALID_OFFERING_IDS) # Should be 10
+
+
+def test_list_product_offerings_default_pagination() -> None:
+    """Test listing with default offset (0) and limit (10)."""
+    response = client.get("/productOffering")
+    assert response.status_code == status.HTTP_200_OK
+    data = response.json()
+    assert isinstance(data, list)
+    assert len(data) == min(TOTAL_OFFERINGS, 10)  # Default limit is 10
+    if data:
+        # Check structure of the first item (should be full, as per ProductOfferingPartial)
+        assert "id" in data[0]
+        assert "name" in data[0]
+        assert "@type" in data[0]
+        assert "lastUpdate" in data[0]
+
+
+def test_list_product_offerings_custom_limit() -> None:
+    """Test listing with a custom limit."""
+    limit = 2
+    response = client.get(f"/productOffering?limit={limit}")
+    assert response.status_code == status.HTTP_200_OK
+    data = response.json()
+    assert isinstance(data, list)
+    assert len(data) == limit
+    if data:
+        assert data[0]["id"] == VALID_OFFERING_IDS[0] # Assuming sorted by ID
+        assert data[1]["id"] == VALID_OFFERING_IDS[1]
+
+
+def test_list_product_offerings_custom_offset() -> None:
+    """Test listing with a custom offset."""
+    offset = 2
+    response = client.get(f"/productOffering?offset={offset}")
+    assert response.status_code == status.HTTP_200_OK
+    data = response.json()
+    assert isinstance(data, list)
+    # Default limit is 10, so TOTAL_OFFERINGS - offset items, or 0 if offset is too large
+    expected_len = max(0, min(TOTAL_OFFERINGS - offset, 10))
+    assert len(data) == expected_len
+    if data:
+        assert data[0]["id"] == VALID_OFFERING_IDS[offset] # Assuming sorted by ID
+
+
+def test_list_product_offerings_offset_and_limit() -> None:
+    """Test listing with both offset and limit."""
+    offset = 1
+    limit = 3
+    response = client.get(f"/productOffering?offset={offset}&limit={limit}")
+    assert response.status_code == status.HTTP_200_OK
+    data = response.json()
+    assert isinstance(data, list)
+    assert len(data) == limit
+    if data:
+        assert data[0]["id"] == VALID_OFFERING_IDS[offset]
+        assert data[1]["id"] == VALID_OFFERING_IDS[offset + 1]
+        assert data[2]["id"] == VALID_OFFERING_IDS[offset + 2]
+
+
+def test_list_product_offerings_offset_out_of_bounds() -> None:
+    """Test listing with an offset greater than the number of items."""
+    offset = TOTAL_OFFERINGS + 5
+    response = client.get(f"/productOffering?offset={offset}")
+    assert response.status_code == status.HTTP_200_OK
+    data = response.json()
+    assert isinstance(data, list)
+    assert len(data) == 0
+
+
+def test_list_product_offerings_limit_exceeds_available() -> None:
+    """Test listing with a limit that exceeds available items after offset."""
+    offset = TOTAL_OFFERINGS - 2 # e.g., offset 8 for 10 items
+    limit = 5 # Request 5, but only 2 are available
+    response = client.get(f"/productOffering?offset={offset}&limit={limit}")
+    assert response.status_code == status.HTTP_200_OK
+    data = response.json()
+    assert isinstance(data, list)
+    assert len(data) == TOTAL_OFFERINGS - offset # Should be 2
+    if data:
+        assert data[0]["id"] == VALID_OFFERING_IDS[offset]
+
+
+def test_list_product_offerings_with_fields_selection() -> None:
+    """Test listing with field selection."""
+    fields_to_request = "id,name,@type"
+    response = client.get(f"/productOffering?fields={fields_to_request}")
+    assert response.status_code == status.HTTP_200_OK
+    data = response.json()
+    assert isinstance(data, list)
+    assert len(data) == min(TOTAL_OFFERINGS, 10) # Default limit
+    if data:
+        item = data[0]
+        expected_keys = sorted(fields_to_request.split(","))
+        assert sorted(list(item.keys())) == expected_keys
+        assert "id" in item
+        assert "name" in item
+        assert "@type" in item
+        assert "description" not in item
+
+
+def test_list_product_offerings_pagination_and_fields() -> None:
+    """Test listing combining pagination and field selection."""
+    offset = 1
+    limit = 2
+    fields_to_request = "href,version"
+    response = client.get(
+        f"/productOffering?offset={offset}&limit={limit}&fields={fields_to_request}"
+    )
+    assert response.status_code == status.HTTP_200_OK
+    data = response.json()
+    assert isinstance(data, list)
+    assert len(data) == limit
+    if data:
+        for item in data:
+            expected_keys = sorted(fields_to_request.split(","))
+            assert sorted(list(item.keys())) == expected_keys
+            assert "href" in item
+            assert "version" in item
+            assert "id" not in item
+        assert data[0]["href"] == f"/productOffering/{VALID_OFFERING_IDS[offset]}"
+        assert data[1]["href"] == f"/productOffering/{VALID_OFFERING_IDS[offset+1]}"
+
+
+def test_list_product_offerings_with_invalid_fields() -> None:
+    """Test listing with an invalid field name."""
+    fields_to_request = "id,name,nonExistentField"
+    response = client.get(f"/productOffering?fields={fields_to_request}")
+    assert response.status_code == status.HTTP_400_BAD_REQUEST
+    error_data = response.json()
+    assert "detail" in error_data
+    assert "nonExistentField" in error_data["detail"]
+
+
+def test_list_product_offerings_empty_fields_parameter() -> None:
+    """Test listing with an empty fields parameter (should return all fields)."""
+    response = client.get("/productOffering?fields=")
+    assert response.status_code == status.HTTP_200_OK
+    data = response.json()
+    assert isinstance(data, list)
+    assert len(data) == min(TOTAL_OFFERINGS, 10)
+    if data:
+        # Check if it returns more than just one or two fields (heuristic for 'all')
+        assert len(data[0].keys()) > 2
+        assert "id" in data[0]
+        assert "name" in data[0]
+        assert "description" in data[0] # Example of a field that might be excluded by specific selection
+
+
+def test_list_product_offerings_invalid_offset_negative() -> None:
+    """Test listing with negative offset."""
+    response = client.get("/productOffering?offset=-1")
+    assert response.status_code == status.HTTP_422_UNPROCESSABLE_ENTITY
+
+
+def test_list_product_offerings_invalid_limit_zero() -> None:
+    """Test listing with limit=0."""
+    response = client.get("/productOffering?limit=0")
+    assert response.status_code == status.HTTP_422_UNPROCESSABLE_ENTITY
+
+
+def test_list_product_offerings_invalid_limit_negative() -> None:
+    """Test listing with negative limit."""
+    response = client.get("/productOffering?limit=-1")
+    assert response.status_code == status.HTTP_422_UNPROCESSABLE_ENTITY
+
+
+def test_list_product_offerings_limit_too_large() -> None:
+    """Test listing with limit greater than max allowed (100)."""
+    response = client.get("/productOffering?limit=101")
+    assert response.status_code == status.HTTP_422_UNPROCESSABLE_ENTITY
+
