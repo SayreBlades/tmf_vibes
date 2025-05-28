@@ -1,0 +1,35 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environments
+.venv/
+venv/
+env/
+
+# Environment files
+.env
+.env.dev
+.env.prod
+
+# Build artifacts
+/build/
+/dist/
+*.egg-info/
+*.egg
+*.whl
+
+# Logs and databases
+*.log
+*.sqlite
+*.sqlite3
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# Project-specific ignores
+uv.lock
+core_platform/uv.lock
+some_legacy_platform/uv.lock
