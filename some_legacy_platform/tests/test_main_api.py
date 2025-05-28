@@ -152,7 +152,8 @@ def test_list_product_offerings_default_pagination() -> None:
     assert isinstance(data, list)
     assert len(data) == min(TOTAL_OFFERINGS, 10)  # Default limit is 10
     if data:
-        # Check structure of the first item (should be full, as per ProductOfferingPartial)
+        # Check structure of the first item
+        # (should be full, as per ProductOfferingPartial)
         assert "id" in data[0]
         assert "name" in data[0]
         assert "@type" in data[0]
@@ -179,7 +180,8 @@ def test_list_product_offerings_custom_offset() -> None:
     assert response.status_code == status.HTTP_200_OK
     data = response.json()
     assert isinstance(data, list)
-    # Default limit is 10, so TOTAL_OFFERINGS - offset items, or 0 if offset is too large
+    # Default limit is 10, so TOTAL_OFFERINGS - offset items, or 0
+    # if offset is too large
     expected_len = max(0, min(TOTAL_OFFERINGS - offset, 10))
     assert len(data) == expected_len
     if data:

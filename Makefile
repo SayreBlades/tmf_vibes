@@ -58,6 +58,7 @@ run-core:
 	@echo "Starting Core Platform on http://127.0.0.1:8000 ..."
 	@cd $(CORE_DIR) && $(UV_RUN) uvicorn src.core_platform.main:app --reload --port 8000
 
-init-core:
-	@echo "Installing core platform dependencies..."
+init:
+	@echo "Installing dependencies..."
 	@cd $(CORE_DIR) && $(UV_RUN) pip install -e .[dev]
+	@cd $(LEGACY_DIR) && $(UV_RUN) pip install -e .[dev]

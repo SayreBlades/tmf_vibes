@@ -82,11 +82,18 @@ async def health_check() -> Response:
     # Use the Partial model for the response_model
     response_model=ProductOfferingPartial,
     summary="Retrieve a single Product Offering by ID",
-    description="Retrieves the details of a specific product offering, optionally allowing field selection.",
+    description=(
+        "Retrieves the details of a specific product offering, "
+        "optionally allowing field selection."
+    ),
     tags=["Product Offering"],
     responses={
         status.HTTP_200_OK: {
-            "description": "Successful retrieval of product offering (potentially partial based on 'fields' query parameter)",
+            "description": (
+                "Successful retrieval of product offering "
+                "(potentially partial based on 'fields' query "
+                "parameter)"
+            ),
             # Explicitly document the partial model here
             "model": ProductOfferingPartial,
             "content": {
@@ -98,7 +105,11 @@ async def health_check() -> Response:
                                 "id": "offer001",
                                 "href": "/productOffering/offer001",
                                 "name": "Basic Broadband 50",
-                                "description": "Standard home broadband package with 50 Mbps download speed.",
+                                "description": (
+                                    "Standard home broadband "
+                                    "package with 50 Mbps download "
+                                    "speed."
+                                ),
                                 "version": "1.0",
                                 "isBundle": False,
                                 "isSellable": True,
@@ -187,7 +198,8 @@ async def get_product_offering(
     if not requested_fields_set:
         # Fields parameter was present but empty, return full model instance
         logger.debug(
-            f"Empty 'fields' parameter, returning full model for offering ID: {offering_id}"
+            f"Empty 'fields' parameter - returning full model for "
+            f"offering ID: {offering_id}"
         )
         return offering_model
 
@@ -201,7 +213,8 @@ async def get_product_offering(
     invalid_fields = requested_fields_set - valid_json_keys
     if invalid_fields:
         logger.warning(
-            f"Invalid fields requested for offering ID '{offering_id}': {invalid_fields}"
+            f"Invalid fields requested for offering ID '{offering_id}': "
+            f"{invalid_fields}"
         )
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
@@ -215,7 +228,8 @@ async def get_product_offering(
     }
 
     logger.debug(
-        f"Returning filtered fields {requested_fields_set} for offering ID: {offering_id}"
+        f"Returning filtered fields {requested_fields_set} for "
+        f"offering ID: {offering_id}"
     )
     # Return the filtered dictionary explicitly wrapped in a JSONResponse
     # This bypasses FastAPI's response_model processing for this path
@@ -226,23 +240,36 @@ async def get_product_offering(
     "/productOffering",
     response_model=list[ProductOfferingPartial],
     summary="List Product Offerings",
-    description="Retrieves a list of product offerings with support for pagination and field selection. Does not support filtering.",
+    description=(
+        "Retrieves a list of product offerings with support for "
+        "pagination and field selection. Does not support filtering."
+    ),
     tags=["Product Offering"],
     responses={
         status.HTTP_200_OK: {
-            "description": "Successful retrieval of a list of product offerings (potentially partial based on 'fields' query parameter).",
+            "description": (
+                "Successful retrieval of a list of product offerings "
+                "(potentially partial based on 'fields' query "
+                "parameter)."
+            ),
             "model": list[ProductOfferingPartial],
             "content": {
                 "application/json": {
                     "examples": {
                         "paginated_full_offerings": {
-                            "summary": "Paginated Full Offerings Example (limit=2, offset=0)",
+                            "summary": (
+                                "Paginated Full Offerings Example (limit=2, offset=0)"
+                            ),
                             "value": [
                                 {
                                     "id": "offer001",
                                     "href": "/productOffering/offer001",
                                     "name": "Basic Broadband 50",
-                                    "description": "Standard home broadband package with 50 Mbps download speed.",
+                                    "description": (
+                                        "Standard home broadband "
+                                        "package with 50 Mbps download "
+                                        "speed."
+                                    ),
                                     "version": "1.0",
                                     "isBundle": False,
                                     "isSellable": True,
@@ -255,7 +282,11 @@ async def get_product_offering(
                                     "id": "offer002",
                                     "href": "/productOffering/offer002",
                                     "name": "Premium Broadband 100",
-                                    "description": "Premium home broadband package with 100 Mbps download speed and TV bundle option.",
+                                    "description": (
+                                        "Premium home broadband "
+                                        "package with 100 Mbps download "
+                                        "speed and TV bundle option."
+                                    ),
                                     "version": "1.2",
                                     "isBundle": True,
                                     "isSellable": True,
@@ -267,7 +298,10 @@ async def get_product_offering(
                             ],
                         },
                         "paginated_partial_offerings": {
-                            "summary": "Paginated Partial Offerings Example (limit=1, offset=1, fields=id,name)",
+                            "summary": (
+                                "Paginated Partial Offerings Example: "
+                                "limit=1, offset=1, fields=id,name"
+                            ),
                             "value": [
                                 {"id": "offer002", "name": "Premium Broadband 100"}
                             ],
@@ -277,7 +311,10 @@ async def get_product_offering(
             },
         },
         status.HTTP_400_BAD_REQUEST: {
-            "description": "Bad Request - Invalid field(s) requested or invalid pagination parameters",
+            "description": (
+                "Bad Request - Invalid field(s) requested or "
+                "invalid pagination parameters"
+            ),
             "content": {
                 "application/json": {
                     "example": {"detail": "Invalid fields requested: ['invalidField']"}
@@ -301,7 +338,9 @@ async def list_product_offerings(
     ),  # Max limit 100 is a sensible default
     fields: str | None = Query(
         default=None,
-        description="Comma-separated list of top-level fields to return for each offering.",
+        description=(
+            "Comma-separated list of top-level fields to return for each offering."
+        ),
         examples=["id,name,@type"],
     ),
 ) -> Any:  # Return Any because it could be a list of models or a JSONResponse
@@ -309,11 +348,13 @@ async def list_product_offerings(
     List Product Offerings with pagination and field selection.
     """
     logger.info(
-        f"Received request for product offerings list with offset: {offset}, limit: {limit}, fields: {fields}"
+        f"Received request for product offerings list - "
+        f"offset: {offset}, limit: {limit}, fields: {fields}"
     )
 
     # Get all offering data and sort by ID for consistent pagination
-    # Sorting by ID is good practice for pagination, though not strictly required by TMF.
+    # Sorting by ID is good practice for pagination,
+    # though not strictly required by TMF.
     # Using .get("id", "") ensures robustness if an item somehow lacks an ID.
     sorted_offering_data = sorted(
         product_offerings_store.values(), key=lambda x: x.get("id", "")
@@ -327,7 +368,8 @@ async def list_product_offerings(
         except ValidationError as e:
             offering_id_for_error = data.get("id", f"unknown_at_index_{i}")
             logger.error(
-                f"Data validation error for offering ID '{offering_id_for_error}' during list construction: {e}",
+                f"Data validation error for offering ID "
+                f"'{offering_id_for_error}' during list construction: {e}",
                 exc_info=True,
             )
             # This indicates an internal data problem, hence 500
@@ -341,9 +383,11 @@ async def list_product_offerings(
 
     if not fields:
         # No field selection, return the paginated list of full (validated) models
-        # FastAPI will serialize these using ProductOfferingPartial as per response_model
+        # FastAPI will serialize these using ProductOfferingPartial
+        # as per response_model
         logger.debug(
-            f"Returning {len(paginated_models)} full models (offset={offset}, limit={limit})"
+            f"Returning {len(paginated_models)} full models - "
+            f"offset={offset}, limit={limit}"
         )
         return paginated_models
 
@@ -352,7 +396,9 @@ async def list_product_offerings(
     if not requested_fields_set:
         # Fields parameter was present but empty, return full models
         logger.debug(
-            f"Empty 'fields' parameter, returning {len(paginated_models)} full models (offset={offset}, limit={limit})"
+            f"Empty 'fields' parameter, returning "
+            f"{len(paginated_models)} full models - "
+            f"offset={offset}, limit={limit}"
         )
         return paginated_models
 
@@ -383,7 +429,8 @@ async def list_product_offerings(
         results_list.append(filtered_dict)
 
     logger.debug(
-        f"Returning {len(results_list)} filtered offerings (offset={offset}, limit={limit}, fields={requested_fields_set})"
+        f"Returning {len(results_list)} filtered offerings - "
+        f"offset={offset}, limit={limit}, fields={requested_fields_set}"
     )
     # Return the list of filtered dictionaries explicitly wrapped in a JSONResponse
     return JSONResponse(content=results_list)
