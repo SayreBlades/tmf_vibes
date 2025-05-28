@@ -33,3 +33,6 @@ Thumbs.db
 uv.lock
 core_platform/uv.lock
 some_legacy_platform/uv.lock
+
+# Aider files
+.aider.*
