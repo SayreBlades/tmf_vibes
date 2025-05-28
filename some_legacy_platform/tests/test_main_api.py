@@ -76,7 +76,7 @@ def test_get_product_offering_by_id_fields_selection_with_at_type() -> None:
     expected_keys = fields_to_request.split(",")
     assert sorted(list(data.keys())) == sorted(expected_keys)
     assert data["id"] == offering_id
-    assert data["@type"] == "ProductOffering" # Check using the alias
+    assert data["@type"] == "ProductOffering"  # Check using the alias
     assert "lifecycleStatus" in data
 
 
@@ -124,8 +124,8 @@ def test_get_product_offering_by_id_no_fields() -> None:
     assert "isBundle" in data
     assert "isSellable" in data
     assert "lifecycleStatus" in data
-    assert "@type" in data # Check alias handling in response
-    assert "@baseType" in data # Check alias handling in response
+    assert "@type" in data  # Check alias handling in response
+    assert "@baseType" in data  # Check alias handling in response
 
 
 # --- Tests for GET /health (already implemented) ---
@@ -141,7 +141,7 @@ def test_health_check() -> None:
 
 # --- Tests for GET /productOffering (List) ---
 
-TOTAL_OFFERINGS = len(VALID_OFFERING_IDS) # Should be 10
+TOTAL_OFFERINGS = len(VALID_OFFERING_IDS)  # Should be 10
 
 
 def test_list_product_offerings_default_pagination() -> None:
@@ -168,7 +168,7 @@ def test_list_product_offerings_custom_limit() -> None:
     assert isinstance(data, list)
     assert len(data) == limit
     if data:
-        assert data[0]["id"] == VALID_OFFERING_IDS[0] # Assuming sorted by ID
+        assert data[0]["id"] == VALID_OFFERING_IDS[0]  # Assuming sorted by ID
         assert data[1]["id"] == VALID_OFFERING_IDS[1]
 
 
@@ -183,7 +183,7 @@ def test_list_product_offerings_custom_offset() -> None:
     expected_len = max(0, min(TOTAL_OFFERINGS - offset, 10))
     assert len(data) == expected_len
     if data:
-        assert data[0]["id"] == VALID_OFFERING_IDS[offset] # Assuming sorted by ID
+        assert data[0]["id"] == VALID_OFFERING_IDS[offset]  # Assuming sorted by ID
 
 
 def test_list_product_offerings_offset_and_limit() -> None:
@@ -213,13 +213,13 @@ def test_list_product_offerings_offset_out_of_bounds() -> None:
 
 def test_list_product_offerings_limit_exceeds_available() -> None:
     """Test listing with a limit that exceeds available items after offset."""
-    offset = TOTAL_OFFERINGS - 2 # e.g., offset 8 for 10 items
-    limit = 5 # Request 5, but only 2 are available
+    offset = TOTAL_OFFERINGS - 2  # e.g., offset 8 for 10 items
+    limit = 5  # Request 5, but only 2 are available
     response = client.get(f"/productOffering?offset={offset}&limit={limit}")
     assert response.status_code == status.HTTP_200_OK
     data = response.json()
     assert isinstance(data, list)
-    assert len(data) == TOTAL_OFFERINGS - offset # Should be 2
+    assert len(data) == TOTAL_OFFERINGS - offset  # Should be 2
     if data:
         assert data[0]["id"] == VALID_OFFERING_IDS[offset]
 
@@ -231,7 +231,7 @@ def test_list_product_offerings_with_fields_selection() -> None:
     assert response.status_code == status.HTTP_200_OK
     data = response.json()
     assert isinstance(data, list)
-    assert len(data) == min(TOTAL_OFFERINGS, 10) # Default limit
+    assert len(data) == min(TOTAL_OFFERINGS, 10)  # Default limit
     if data:
         item = data[0]
         expected_keys = sorted(fields_to_request.split(","))
@@ -262,7 +262,7 @@ def test_list_product_offerings_pagination_and_fields() -> None:
             assert "version" in item
             assert "id" not in item
         assert data[0]["href"] == f"/productOffering/{VALID_OFFERING_IDS[offset]}"
-        assert data[1]["href"] == f"/productOffering/{VALID_OFFERING_IDS[offset+1]}"
+        assert data[1]["href"] == f"/productOffering/{VALID_OFFERING_IDS[offset + 1]}"
 
 
 def test_list_product_offerings_with_invalid_fields() -> None:
@@ -287,7 +287,9 @@ def test_list_product_offerings_empty_fields_parameter() -> None:
         assert len(data[0].keys()) > 2
         assert "id" in data[0]
         assert "name" in data[0]
-        assert "description" in data[0] # Example of a field that might be excluded by specific selection
+        assert (
+            "description" in data[0]
+        )  # Example of a field that might be excluded by specific selection
 
 
 def test_list_product_offerings_invalid_offset_negative() -> None:
@@ -312,4 +314,3 @@ def test_list_product_offerings_limit_too_large() -> None:
     """Test listing with limit greater than max allowed (100)."""
     response = client.get("/productOffering?limit=101")
     assert response.status_code == status.HTTP_422_UNPROCESSABLE_ENTITY
-

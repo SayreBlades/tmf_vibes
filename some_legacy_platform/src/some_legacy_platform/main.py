@@ -3,7 +3,7 @@
 import logging
 from collections.abc import AsyncGenerator
 from contextlib import asynccontextmanager
-from typing import Any, Optional
+from typing import Any
 
 from fastapi import FastAPI, HTTPException, Query, Response, status
 
@@ -139,7 +139,7 @@ async def health_check() -> Response:
 )
 async def get_product_offering(
     offering_id: str,
-    fields: Optional[str] = Query(
+    fields: str | None = Query(
         default=None,
         description="Comma-separated list of top-level fields to return.",
         examples=["id,name,description,@type"],
@@ -183,9 +183,7 @@ async def get_product_offering(
         return offering_model
 
     # --- Field Selection Logic ---
-    requested_fields_set = {
-        f.strip() for f in fields.split(",") if f.strip()
-    }
+    requested_fields_set = {f.strip() for f in fields.split(",") if f.strip()}
     if not requested_fields_set:
         # Fields parameter was present but empty, return full model instance
         logger.debug(
@@ -196,9 +194,7 @@ async def get_product_offering(
     # Get valid field names/aliases as they appear in JSON schema
     # Use the PARTIAL model here to get the list of valid keys for filtering
     valid_json_keys = set(
-        ProductOfferingPartial.model_json_schema(by_alias=True)[
-            'properties'
-        ].keys()
+        ProductOfferingPartial.model_json_schema(by_alias=True)["properties"].keys()
     )
 
     # Check for invalid requested fields
@@ -215,9 +211,7 @@ async def get_product_offering(
     # Dump the STRICT model to a dict using aliases, then filter
     full_dict = offering_model.model_dump(by_alias=True)
     filtered_dict = {
-        key: value
-        for key, value in full_dict.items()
-        if key in requested_fields_set
+        key: value for key, value in full_dict.items() if key in requested_fields_set
     }
 
     logger.debug(
@@ -301,13 +295,11 @@ async def get_product_offering(
     },
 )
 async def list_product_offerings(
-    offset: int = Query(
-        0, ge=0, description="Offset for pagination (0-indexed)."
-    ),
+    offset: int = Query(0, ge=0, description="Offset for pagination (0-indexed)."),
     limit: int = Query(
         10, ge=1, le=100, description="Limit for pagination (max 100)."
-    ), # Max limit 100 is a sensible default
-    fields: Optional[str] = Query(
+    ),  # Max limit 100 is a sensible default
+    fields: str | None = Query(
         default=None,
         description="Comma-separated list of top-level fields to return for each offering.",
         examples=["id,name,@type"],
@@ -333,7 +325,7 @@ async def list_product_offerings(
         try:
             all_offering_models.append(ProductOffering(**data))
         except ValidationError as e:
-            offering_id_for_error = data.get('id', f"unknown_at_index_{i}")
+            offering_id_for_error = data.get("id", f"unknown_at_index_{i}")
             logger.error(
                 f"Data validation error for offering ID '{offering_id_for_error}' during list construction: {e}",
                 exc_info=True,
@@ -356,9 +348,7 @@ async def list_product_offerings(
         return paginated_models
 
     # --- Field Selection Logic for the list ---
-    requested_fields_set = {
-        f.strip() for f in fields.split(",") if f.strip()
-    }
+    requested_fields_set = {f.strip() for f in fields.split(",") if f.strip()}
     if not requested_fields_set:
         # Fields parameter was present but empty, return full models
         logger.debug(
@@ -369,17 +359,13 @@ async def list_product_offerings(
     # Get valid field names/aliases as they appear in JSON schema
     # Use the PARTIAL model here to get the list of valid keys for filtering
     valid_json_keys = set(
-        ProductOfferingPartial.model_json_schema(by_alias=True)[
-            'properties'
-        ].keys()
+        ProductOfferingPartial.model_json_schema(by_alias=True)["properties"].keys()
     )
 
     # Check for invalid requested fields
     invalid_fields = requested_fields_set - valid_json_keys
     if invalid_fields:
-        logger.warning(
-            f"Invalid fields requested for offerings list: {invalid_fields}"
-        )
+        logger.warning(f"Invalid fields requested for offerings list: {invalid_fields}")
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
             detail=f"Invalid fields requested: {sorted(list(invalid_fields))}",

@@ -20,13 +20,13 @@ This document outlines the implementation of the Core TMF Platform acting as a p
 
 Goal: Establish the core project structure and basic API framework.
 
-*   [ ] Create `core_platform` directory structure mirroring `some_legacy_platform`
-*   [ ] Set up virtual environment with `uv`
-*   [ ] Install core dependencies: `fastapi`, `httpx`, `pydantic`, `python-multipart`, `pyyaml`
-*   [ ] Create base FastAPI app in `src/core_platform/main.py` with:
+*   [x] Create `core_platform` directory structure mirroring `some_legacy_platform`
+*   [x] Set up virtual environment with `uv`
+*   [x] Install core dependencies: `fastapi`, `httpx`, `pydantic`, `python-multipart`, `pyyaml`
+*   [x] Create base FastAPI app in `src/core_platform/main.py` with:
     *   Health check endpoint (`GET /health`)
     *   Empty router for product catalog endpoints
-*   [ ] Add Makefile commands for:
+*   [x] Add Makefile commands for:
     *   `run-core` - Start development server
     *   `test-core` - Run test suite
     *   `check` - Run linters/formatters
