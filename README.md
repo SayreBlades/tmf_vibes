@@ -1,5 +1,28 @@
 # tmf_vibes
 
+## System Components
+
+1. **Core TMF Platform** (`core_platform/`)
+   - Layer 2 abstraction providing standardized TMF APIs
+   - Current implementation focuses on TMF620 Product Catalog proxying
+   - Features:
+     - Configurable authentication
+     - Strict schema validation
+     - Zipkin distributed tracing
+     - JSON logging
+   - Run with:
+     ```bash
+     make run-core-platform
+     ```
+
+2. **Legacy Platform Mock** (`some_legacy_platform/`)
+   - Mock TMF620-compliant product catalog system
+   - Used for both development and testing
+   - Run with:
+     ```bash
+     make run-legacy-platform
+     ```
+
 ## Development Setup
 
 1.  **Clone the repository:**
@@ -18,24 +41,40 @@
     # On Windows (Command Prompt): .venv\Scripts\activate.bat
     # On Windows (PowerShell): .venv\Scripts\Activate.ps1
     ```
-    *Note: Subsequent commands assume the virtual environment is activated.*
 
-3.  **Install dependencies (using uv):**
+3.  **Install dependencies:**
     ```bash
-    # Installs the project in editable mode along with development dependencies
+    # Install all components
     uv pip install -e ".[dev]"
     ```
 
 4.  **Run tools:**
-    Ensure your virtual environment is activated (`source .venv/bin/activate`). This project uses a `Makefile` to simplify common development tasks.
+    ```bash
+    # Run all checks
+    make check
 
-    *   **Run all checks (format, lint, typecheck, test):**
-        ```bash
-        make check
-        ```
-        *(You can also run the underlying tools directly, e.g., `uv run pytest`)*
+    # Start core platform (port 8080)
+    make run-core-platform
 
-## Relevant TMF API Specifications for End-to-End Product Ordering Playbook
+    # Start legacy mock (port 8081)
+    make run-legacy-platform
+
+    # Run specific test suite
+    make test-core-platform
+    make test-legacy-platform
+    ```
+
+## Architecture Overview
+
+```mermaid
+graph TD
+    WebClient -->|TMF APIs| CorePlatform
+    CorePlatform -->|Proxied Calls| LegacySystem
+    CorePlatform --> Zipkin[(Zipkin)]
+    LegacySystem --> CorePlatform
+```
+
+## Relevant TMF API Specifications
 
 Here is a list of TMF API specifications relevant to the process of discovering, qualifying, quoting, and ultimately submitting a Product Order request, along with the reason for their relevance:
 
