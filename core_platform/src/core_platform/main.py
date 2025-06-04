@@ -1,8 +1,8 @@
 import logging
-
-from fastapi import FastAPI, status
-from fastapi.responses import PlainTextResponse
+from fastapi import FastAPI, status, Depends, Request, HTTPException
+from fastapi.responses import PlainTextResponse, JSONResponse
 from fastapi.routing import APIRouter
+from core_platform.auth import authenticate
 
 logger = logging.getLogger(__name__)
 
@@ -13,7 +13,7 @@ app = FastAPI(
 )
 
 
-# Health endpoint
+# Health endpoint - no authentication
 @app.get(
     "/health",
     summary="Health Check",
@@ -29,6 +29,27 @@ app = FastAPI(
 )
 async def health_check() -> str:
     return "OK"
+
+# Apply authentication to all other routes
+@app.middleware("http")
+async def auth_middleware(request: Request, call_next):
+    if request.url.path == "/health":
+        return await call_next(request)
+        
+    try:
+        authenticate(request)
+    except HTTPException as e:
+        return JSONResponse(
+            status_code=e.status_code,
+            content={
+                "code": "UNAUTHORIZED",
+                "reason": "Invalid credentials",
+                "status": e.status_code
+            },
+            headers=e.headers
+        )
+    
+    return await call_next(request)
 
 
 # Initialize the router for product catalog functionality

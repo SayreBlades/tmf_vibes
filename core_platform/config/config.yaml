@@ -1,0 +1,8 @@
+auth:
+  credentials:
+    - username: test_user
+      password: test_pass
+
+legacy_systems:
+  product_catalog:
+    base_url: http://localhost:8001

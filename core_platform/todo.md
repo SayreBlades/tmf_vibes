@@ -37,13 +37,13 @@ Goal: Establish the core project structure and basic API framework.
 
 Goal: Implement configurable authentication and legacy system URL management.
 
-*   [ ] Design YAML config file format for:
+*   [x] Design YAML config file format for:
     *   Authentication credentials (multiple pairs)
     *   Legacy system endpoints
     *   Default location: `./config/config.yaml`
-*   [ ] Implement config loader in `src/core_platform/config.py`:
+*   [x] Implement config loader in `src/core_platform/config.py`:
     *   Environment variable override support
-*   [ ] Add HTTP Basic Auth middleware:
+*   [x] Add HTTP Basic Auth middleware:
     *   Validate against configured credentials
     *   Reject invalid credentials with 401
 
